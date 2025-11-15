@@ -1,0 +1,169 @@
+.chatList {
+	position: relative;
+	border-radius: 0 50px 50px 0;
+	overflow: hidden;
+	padding: 20px 30px 10px 20px;
+	width: 100%;
+	max-width: 360px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	transition:
+		max-width 0.4s ease-in-out,
+		transform 0.4s ease-in-out,
+		opacity 0.4s ease-in-out;
+}
+
+.collapsed {
+	max-width: 50px;
+	overflow: hidden;
+}
+
+.chatListTitleContainer {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	padding: 0 20px;
+	opacity: 0;
+	margin-top: 10px;
+	align-items: center;
+	transition:
+		opacity 0.4s ease-in-out,
+		transform 0.4s ease-in-out;
+}
+
+.showChatListTitleContainer {
+	transform: translateX(0);
+	opacity: 1;
+}
+
+.hidden {
+	opacity: 0;
+	transform: translateX(-20px);
+	pointer-events: none;
+	display: none;
+}
+
+.chatListTitle {
+	font-weight: 600;
+	font-size: 19px;
+}
+
+.plusButton {
+	position: fixed;
+	right: 20px;
+	z-index: 1000;
+	transition: 0.5s;
+
+	&:hover {
+		transform: scale(1.05);
+
+		@media (max-width: 1200px) {
+			transform: scale(1);
+		}
+	}
+}
+
+.chatListItemsContainer {
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	flex-grow: 1;
+	margin-bottom: 80px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	opacity: 1;
+	gap: 10px;
+	transition:
+		opacity 0.4s ease-in-out,
+		transform 0.4s ease-in-out,
+		margin-bottom 0.4s ease-in-out;
+}
+
+.collapsed .chatListItemsContainer {
+	opacity: 0;
+	display: none;
+	transform: translateX(-20px);
+}
+
+.noChatsMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	font-weight: 600;
+	height: 90%;
+}
+
+.deleteAllButton {
+	color: red;
+	border-radius: 20px;
+	background: var(--btn-bg);
+	bottom: 1rem;
+	position: absolute;
+	font-weight: 600;
+	opacity: 0;
+	display: none;
+	z-index: 10;
+	width: calc(100% - 55px);
+	height: 64px;
+	transition:
+		opacity 0.4s ease-in-out,
+		transform 0.4s ease-in-out;
+	transform: translateY(20px);
+
+	&:active {
+		transform: scale(0.95);
+		box-shadow: none;
+	}
+
+	&:hover {
+		font-weight: 600;
+	}
+}
+
+.showDeleteAllButton {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.collapsedArrowIcon {
+	position: absolute;
+	right: 30px;
+	top: 50%;
+}
+
+.arrowIcon {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	cursor: pointer;
+	z-index: 0;
+	transition: transform 0.3s ease;
+}
+
+.arrowIcon,
+.collapsedArrowIcon {
+	&:active {
+		transform: scale(0.9);
+	}
+}
+
+@media (max-width: 1045px) {
+	.chatList {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding-top: 70px;
+		z-index: 20;
+		max-width: 100%;
+		background-color: var(--bg-secondary);
+	}
+
+	.arrowIcon {
+		display: none;
+	}
+}

@@ -1,0 +1,37 @@
+.container {
+	padding-bottom: 80px;
+
+	@media (max-width: 1660px) {
+		padding-bottom: 50px;
+	}
+
+	@media (max-width: 1400px) {
+		padding-bottom: 80px;
+	}
+
+	@media (max-width: 1300px) {
+		padding-bottom: 50px;
+	}
+
+	@media (max-width: 1200px) {
+		align-items: flex-start;
+		order: 1;
+		padding-bottom: 150px;
+	}
+
+	@media (max-width: 1050px) {
+		padding-bottom: 170px;
+	}
+
+	@media (max-width: 900px) {
+		padding-bottom: 170px;
+	}
+
+	@media (max-width: 500px) {
+		padding-bottom: 110px;
+	}
+
+	@media (max-width: 333px) {
+		padding-bottom: 80px;
+	}
+}

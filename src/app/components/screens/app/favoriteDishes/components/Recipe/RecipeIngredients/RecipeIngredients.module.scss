@@ -1,0 +1,21 @@
+.ingredients {
+	z-index: 1200;
+	padding: 1rem 1rem 0;
+	border-radius: 2rem;
+	flex: 1;
+	max-height: 16rem;
+	overflow-y: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	background: var(--input-bg);
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+@media (max-width: 1200px) {
+	.ingredients {
+		padding: 0.8rem 0.5rem 0;
+	}
+}

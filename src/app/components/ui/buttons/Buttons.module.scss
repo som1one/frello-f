@@ -1,0 +1,124 @@
+@import '../../../../app/styles/mixins';
+
+.buttonShaded {
+  display: flex;
+  gap: 40px;
+  border-radius: 18px;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: inherit;
+  padding: 12px 50px;
+  justify-content: center;
+  font-weight: 700;
+  background: var(--orange);
+  transition: background-color 0.4s, transform 0.2s, box-shadow 0.2s;
+
+  &::before {
+    @include gradient-border-button;
+  }
+
+  @media (min-width: 1200px) {
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.buttonUnpainted {
+  text-decoration: none;
+  font-size: inherit;
+  padding: 12px 50px;
+  font-weight: 700;
+  background: transparent;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.4s, transform 0.2s, box-shadow 0.2s;
+  border-radius: 18px;
+
+  &::before {
+    @include gradient-border-button;
+  }
+
+  @media (min-width: 1000px) {
+    &:hover {
+      background: var(--orange);
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+.logoutButton {
+  display: flex;
+  border-radius: 18px;
+  gap: 40px;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: inherit;
+  font-weight: 700;
+  background: red;
+  transition: background-color 0.4s, transform 0.2s, box-shadow 0.2s;
+
+  &::before {
+    border: 2px solid red;
+  }
+
+  @media (min-width: 1200px) {
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.mobileButtons {
+  @media (max-width: 500px) {
+    gap: 13px;
+    padding: 12px 12px;
+  }
+
+  @media (max-width: 333px) {
+    gap: 5px;
+    padding: 5px 5px;
+  }
+}
+
+
+.startButton {
+  @include size(200px,60px);
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.7s ease;
+
+  &:hover {
+    background: transparent;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    scale: .9;
+  }
+}

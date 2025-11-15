@@ -1,0 +1,19 @@
+
+.titleAndImage {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.mainTitle {
+  color: var(--text);
+  font-size: 40px;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+
+.titleLine {
+  position: absolute;
+  bottom: 0;
+}

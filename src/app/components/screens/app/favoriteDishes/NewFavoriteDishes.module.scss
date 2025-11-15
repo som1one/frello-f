@@ -1,0 +1,29 @@
+.container {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 20px;
+	background: var(--white-02);
+	border-radius: 50px;
+	animation: favoriteDishesAnimation 0.7s ease;
+	padding-bottom: 100px;
+	margin-top: 120px;
+}
+
+.noDishesContainer {
+	background: none;
+	width: 100%;
+	min-height: 100svh;
+}
+
+@keyframes favoriteDishesAnimation {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

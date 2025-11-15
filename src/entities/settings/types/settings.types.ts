@@ -1,0 +1,65 @@
+
+export interface UserSettings {
+	id: number
+	theme?: string
+	language?: string
+	mealFrequency?: number
+	email?: string
+	gender?: string
+	birthdate?: string
+	height?: number
+	weight?: number
+	favoriteFoods?: string[]
+	medicalRestrictions?: string[]
+	cookingPreferences?: string[]
+	allergies?: string[]
+	dietType?: string[]
+	personalRestrictions?: string[]
+	mealTimePreferences?: string[]
+	religiousRestrictions?: string[]
+	nutritionPreferences?: string[]
+	seasonalPreferences?: string[]
+	budgetPreferences?: string[]
+	cookingExperience?: string[]
+	nutritionGoal?: string[]
+	activityLevel?: string[]
+	advancedSettings?: {
+		vitaminD3?: number
+		ferritin?: number
+		vitaminB12?: number
+		vitaminC?: number
+		vitaminA?: number
+		vitaminE?: number
+		vitaminK?: number
+		iron?: number
+		magnesium?: number
+		calcium?: number
+		potassium?: number
+		sodium?: number
+		phosphorus?: number
+		zinc?: number
+		totalCholesterol?: number
+		ldlCholesterol?: number
+		triglycerides?: number
+		fastingGlucose?: number
+		hba1c?: number
+		homaIr?: number
+		insulin?: number
+		cortisol?: number
+		testosterone?: number
+		estrogen?: number
+		tsh?: number
+		t3Free?: number
+		t4Free?: number
+		antiTpo?: number
+		albumin?: number
+		totalProtein?: number
+		creatinine?: number
+		crp?: number
+		homocysteine?: number
+		glutathione?: number
+		mda?: number
+		totalAntioxidantStatus?: number
+	}
+	[key: string]: unknown
+}

@@ -1,0 +1,253 @@
+.container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100svh;
+	width: var(--nav-width);
+	z-index: 1;
+	pointer-events: auto;
+}
+
+.wrapper {
+	border-radius: 40px;
+	z-index: 1400;
+	height: 100%;
+	width: 100%;
+}
+
+.menuContainer {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 40px;
+	padding-bottom: 60px;
+	pointer-events: auto;
+	height: 100%;
+	z-index: 9000;
+}
+
+.nav {
+	width: 100%;
+	flex: 1;
+}
+
+.navList {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	list-style: none;
+	font-size: 17px;
+	padding: 0;
+	margin: 0;
+	transition:
+		background-color 0.3s,
+		transform 0.3s,
+		box-shadow 0.3s;
+
+	li.active {
+		background: var(--white-02);
+
+		@media (max-width: 1200px) {
+			border-radius: 50%;
+		}
+	}
+
+	li:hover {
+		background: var(--light-06-bg);
+	}
+
+	li.lightActive {
+		&:hover {
+			background: red;
+		}
+	}
+}
+
+.navItem {
+	display: flex;
+	align-items: center;
+	padding: 25px 10px 25px 15px;
+	cursor: pointer;
+	border-radius: 35px;
+	position: relative;
+	overflow: hidden;
+	transition:
+		background-color 0.3s,
+		transform 0.3s,
+		box-shadow 0.3s;
+}
+
+.linkWrapper {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 10px;
+}
+
+.title {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.navItem:active .iconChat,
+.navItem:active .iconFavorite,
+.navItem:active .iconPlan,
+.navItem:active .iconSettings {
+	animation: none;
+	flex-shrink: 0;
+
+	@media (max-width: 1200px) {
+		animation: clickEffect 0.5s;
+	}
+}
+
+/* NavigationMenu.module.scss */
+.navItem {
+	position: relative;
+	transform: translateX(0); /* Default state */
+	transition:
+		transform 0.3s ease-in-out,
+		background-color 0.3s ease-in-out;
+
+	/* Ensure inactive items are visible */
+	&.inactive {
+		opacity: 1; /* Remove opacity changes to keep items visible */
+	}
+
+	&.active {
+		transform: translateX(10px); /* Slide-in effect when active */
+		background-color: var(
+			--highlight
+		); /* Add a background color for active items */
+
+		@media (max-width: 1200px) {
+			transform: none;
+		}
+	}
+
+	/* Optional: Hover effect */
+	&:hover {
+		transform: translateX(15px);
+
+		@media (max-width: 1200px) {
+			transform: none;
+		}
+	}
+
+	/* Background animation */
+	.backgroundAnimation {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 5px;
+		//background-color: var(--orange); /* You can adjust this */
+		transition: width 0.3s ease-in-out;
+		width: 0;
+	}
+
+	/* Only active items will animate the background */
+	&.active .backgroundAnimation {
+		width: 100%;
+	}
+
+	/* Optional: Make inactive background invisible */
+	&.inactive .backgroundAnimation {
+		width: 0;
+	}
+
+	/* Wrapper transition */
+	.linkWrapper {
+		display: flex;
+		align-items: center;
+		opacity: 1; /* Keep it fully visible */
+		transition: transform 0.3s ease-in-out;
+	}
+}
+
+@media (max-width: 1200px) {
+	.menuContainer {
+		justify-content: space-around;
+		background: var(--white-02);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		padding: 0;
+		border-radius: 50px;
+		box-shadow: none;
+		overflow: visible;
+	}
+
+	.navItem {
+		border-radius: 50%;
+		padding: 15px;
+		margin-bottom: 0;
+	}
+
+	.title {
+		display: none;
+	}
+
+	.linkWrapper {
+		justify-content: center;
+	}
+
+	.nav {
+		flex-direction: row;
+		justify-content: space-around;
+		width: auto;
+	}
+}
+
+@media (max-width: 900px) {
+	.container {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		top: auto;
+		width: 100svw;
+		z-index: 1;
+		pointer-events: auto;
+		height: 60px;
+	}
+
+	.menuContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding: 0 10px;
+		height: 100%;
+		position: relative;
+		border-radius: 50px 50px 0 0;
+	}
+
+	.navList {
+		flex-direction: row;
+		gap: 16px;
+	}
+
+	.themeToggle {
+		position: absolute;
+		right: 10px;
+	}
+}
+
+@media (max-width: 460px) {
+	.themeToggle {
+		display: none;
+	}
+}
+
+@keyframes clickEffect {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.15);
+	}
+	100% {
+		transform: scale(1);
+	}
+}

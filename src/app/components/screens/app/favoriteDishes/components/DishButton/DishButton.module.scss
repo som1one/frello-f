@@ -1,0 +1,29 @@
+
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	background: var(--main-gradient);
+	padding: 20px;
+	border-radius: 35px;
+	height: 100%;
+	position: relative;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	transition: 0.4s;
+
+	&:hover img {
+		transform: rotate(90deg);
+		transition: transform 0.4s ease;
+	}
+}
+
+.buttonTitle {
+	display: flex;
+	font-weight: 800;
+	color: white;
+	margin: 0 15px;
+}

@@ -1,0 +1,32 @@
+
+
+.input {
+  padding: 22px;
+  border-radius: 25px;
+  border: none;
+  display: flex;
+  background: var(--bg-secondary);
+  color: var(--second-text);
+  transition: 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    color: var(--text);
+  }
+}
+
+.error {
+  border: 1px solid red;
+}
+
+@media(max-width: 1024px) {
+  .input {
+    font-size: 14px;
+    padding: 18px;
+    border-radius: 20px;
+  }
+}
+

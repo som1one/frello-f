@@ -1,0 +1,113 @@
+// Переменные
+$input-padding: 22px;
+$border-radius: 25px;
+$transition: 0.3s ease;
+$field-font-size: 17px;
+
+// Миксин для ховер/фокус
+@mixin hover-focus {
+
+	&:hover,
+	&:focus {
+		color: white;
+	}
+}
+
+// Общие стили для поля
+.field {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+
+	label {
+		font-weight: bold;
+		margin-left: 10px;
+		margin-bottom: 10px;
+		font-size: $field-font-size;
+	}
+
+	input,
+	select {
+		padding: $input-padding;
+		height: 68px;
+		border-radius: $border-radius;
+		border: none;
+		background: var(--dark-20-bg);
+		color: var(--second-text);
+		transition: $transition;
+		@include hover-focus;
+	}
+
+	.textBox {
+		padding: 20px;
+		border-radius: 30px;
+		background: var(--dark-20-bg);
+		height: 100%;
+		transition: $transition;
+		@include hover-focus;
+	}
+
+	.unitLabel {
+		transition: $transition;
+	}
+}
+
+// Темы
+.lightTheme {
+	.field {
+
+		input,
+		select,
+		.textBox {
+			color: #0D0E11;
+		}
+	}
+}
+
+.smallField {
+	flex: 1;
+	justify-content: center;
+}
+
+.lightFields {
+	background: white !important;
+}
+
+// Медиа-запросы (mobile-first)
+@media (min-width: 400px) {
+	.field {
+		font-size: 16px;
+	}
+}
+
+@media (min-width: 500px) {
+	.field {
+
+		input,
+		select {
+			font-size: $field-font-size;
+		}
+	}
+
+	.smallField {
+		max-width: none;
+	}
+}
+
+@media (min-width: 900px) {
+	.field {
+		margin-top: 20px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.field {
+		max-width: 500px;
+	}
+
+	.smallField {
+		width: 100%;
+		max-width: 500px;
+	}
+}

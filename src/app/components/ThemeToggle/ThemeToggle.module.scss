@@ -1,0 +1,92 @@
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	height: 40px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.iconTheme {
+	position: absolute;
+	top: 50%;
+	left: -10px;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	transition: transform 0.4s;
+}
+
+.iconTheme img {
+	width: 20px;
+	height: 20px;
+	transition:
+		opacity 0.4s,
+		transform 0.4s;
+}
+
+.lightIcon {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.darkIcon {
+	opacity: 0;
+	transform: scale(0.8);
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: var(--light-06-bg);
+	transition: background 0.4s;
+	border-radius: 34px;
+}
+
+.slider::before {
+	position: absolute;
+	content: '';
+	height: 28px;
+	width: 28px;
+	left: 6px;
+	bottom: 6px;
+	background: var(--main-gradient);
+	transition:
+		left 0.4s,
+		transform 0.4s;
+	border-radius: 50%;
+}
+
+input:checked + .slider {
+	background: var(--white-02);
+}
+
+input:checked + .slider::before {
+	left: 44px;
+	transform: scale(1.1);
+}
+
+input:checked + .slider .iconTheme {
+	transform: translateY(-50%) translateX(18px);
+}
+
+input:checked + .slider .iconTheme .lightIcon {
+	opacity: 0;
+	transform: scale(0.8);
+}
+
+input:checked + .slider .iconTheme .darkIcon {
+	opacity: 1;
+	transform: scale(1);
+}

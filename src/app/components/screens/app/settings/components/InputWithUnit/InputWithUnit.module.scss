@@ -1,0 +1,22 @@
+
+.inputWrapper {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 100%;
+}
+
+.inputWrapper:hover .unitLabel,
+.inputWrapper:focus-within .unitLabel {
+	color: var(--text);
+}
+
+.unitLabel {
+	position: absolute;
+	right: 20px;
+	font-size: 15px;
+	color: #666666;
+	pointer-events: none;
+	transition: 0.3s;
+	font-weight: 500;
+}

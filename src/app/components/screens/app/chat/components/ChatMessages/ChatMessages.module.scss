@@ -1,0 +1,79 @@
+.chatMain {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 10px 10px;
+	width: 100%;
+}
+
+.chatMessages {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: flex-start;
+	font-size: 16px;
+	width: 100%;
+	height: 100%;
+	scrollbar-width: none;
+	overflow: auto;
+	padding-bottom: 140px;
+}
+
+.emptyChat {
+	align-items: center;
+	justify-content: center;
+	font-weight: 100;
+	font-size: 30px;
+}
+
+.emptyChatMessage {
+	font-weight: 500;
+	text-align: center;
+	font-size: 30px;
+}
+
+.errorBanner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	background-color: #ff4d4d;
+	color: white;
+	border-radius: 8px;
+	margin: 10px;
+	font-size: 14px;
+
+	button {
+		background-color: #fff;
+		color: #ff4d4d;
+		border: none;
+		padding: 8px 16px;
+		border-radius: 4px;
+		cursor: pointer;
+		font-weight: bold;
+
+		&:hover {
+			background-color: #f0f0f0;
+		}
+	}
+
+	&.darkMode {
+		background-color: #cc0000;
+		color: #fff;
+
+		button {
+			background-color: #333;
+			color: #fff;
+
+			&:hover {
+				background-color: #444;
+			}
+		}
+	}
+}
+
+@media (max-width: 500px) {
+	.emptyChatMessage {
+		font-size: 20px;
+	}
+}

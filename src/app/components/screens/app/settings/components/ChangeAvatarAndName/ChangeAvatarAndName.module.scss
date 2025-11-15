@@ -1,0 +1,120 @@
+.container {
+	background: var(--white-02);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 40px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	background: var(--white-02);
+	width: 150px;
+	padding: 13px 30px;
+	justify-content: center;
+}
+
+.light {
+	transition: 0.3s;
+	background: var(--main-bg);
+}
+
+.avatar_label {
+	width: 90px;
+	height: 90px;
+	display: block;
+	border-radius: 50%;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+	background: var(--white-02);
+	transition:
+		background 0.3s ease,
+		transform 0.3s ease;
+
+	&:hover {
+		.avatar,
+		.default_icon {
+			transform: scale(1.05);
+			opacity: 0.9;
+		}
+	}
+}
+
+.avatar {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.default_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.default_icon {
+	width: 25px;
+	height: 25px;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.avatarInput {
+	display: none;
+}
+
+.nameContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.profileName {
+	font-size: 18px;
+	font-weight: bold;
+	max-width: 149px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.nameField {
+	margin-top: 15px;
+}
+
+.error {
+	color: red;
+	font-size: 12px;
+	margin-top: 4px;
+	display: block;
+}
+
+
+/* Анимации для CSSTransition */
+.modalEnter {
+  opacity: 0;
+}
+.modalEnterActive {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+.modalExit {
+  opacity: 1;
+}
+.modalExitActive {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+@media(max-width: 768px) {
+	.container {
+		width: 100%;
+	}
+}

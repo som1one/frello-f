@@ -1,0 +1,20 @@
+
+
+.label {
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
+@media(max-width: 1024px) {
+  .label {
+    font-size: 14px;
+  }
+}
+
+@media(max-width: 768px) {
+  .label {
+    font-size: 12px;
+  }
+}

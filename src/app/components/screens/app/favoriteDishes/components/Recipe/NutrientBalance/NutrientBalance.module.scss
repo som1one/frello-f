@@ -1,0 +1,101 @@
+.nutrientCirclesWrapper {
+	z-index: 1200;
+	display: flex;
+	flex-direction: column;
+	background: var(--input-bg);
+	padding: 20px;
+	border-radius: 50px;
+}
+
+.calorieTitle {
+	font-weight: 800;
+	color: var(--orange);
+	font-size: 20px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding-bottom: 20px;
+}
+
+.nutrientContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+}
+
+.nutrientText {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-weight: 800;
+	font-size: 18px;
+	padding-top: 15px;
+
+	&:first-child {
+		padding-top: 0;
+	}
+}
+
+.miniCircle {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+.nutrientCircles {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
+.nutrientCircle1,
+.nutrientCircle2,
+.nutrientCircle3 {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.nutrientCircle1 {
+	width: 63px;
+	height: 63px;
+}
+
+.nutrientCircle2 {
+	width: 105px;
+	height: 105px;
+}
+
+.nutrientCircle3 {
+	width: 147px;
+	height: 147px;
+}
+
+// @media (max-width: 1100px) {
+// 	.nutrientContainer {
+// 		flex-direction: column;
+// 	}
+// }
+
+@media (max-width: 500px) {
+	.nutrientCirclesWrapper {
+		padding: 20px 30px 30px;
+	}
+
+	.nutrientTitle {
+		padding-bottom: 30px;
+	}
+
+	.nutrientText {
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 380px) {
+	.nutrientText {
+		padding-left: 12px;
+		font-size: 14px;
+	}
+}

@@ -1,0 +1,293 @@
+.rightSection {
+	transition: opacity 0.3s ease;
+	opacity: 1;
+	display: flex;
+	flex-direction: column;
+	background: var(--white-02);
+	padding: 20px;
+	border-radius: 50px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.calendar {
+	text-align: center;
+	margin-bottom: 20px;
+	height: 94%;
+}
+
+.daySelected {
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 30px;
+	padding: 20px 40px 20px 30px;
+	border-radius: 30px;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.backButton {
+	position: absolute;
+	right: 87%;
+	cursor: pointer;
+	transition: transform 0.3s ease;
+
+	&:hover {
+		transform: scale(1.2);
+	}
+}
+
+.daySelectedTitle {
+	max-width: 76%;
+}
+
+.rightSectionContainer {
+	z-index: 100;
+}
+
+.statisticsSection {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.nutrientCirclesWrapper {
+	display: flex;
+	flex-direction: column;
+	background: var(--white-02);
+	position: relative;
+	padding: 40px 20px;
+	border-radius: 50px;
+	margin-bottom: 30px;
+}
+
+.nutrientContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.nutrientText {
+	padding-right: 220px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 20px;
+}
+
+.nutrientText h1 {
+	font-weight: bold;
+	font-size: 18px;
+	text-align: left;
+	padding-top: 8px;
+
+	@media (max-width: 500px) {
+		font-size: 17px;
+	}
+
+	@media (max-width: 400px) {
+		font-size: 16px;
+	}
+
+	@media (max-width: 333px) {
+		padding-left: 12px;
+		font-size: 15px;
+	}
+
+	&:first-child {
+		padding-top: 0;
+	}
+}
+
+.miniCircle {
+	width: 10px;
+	height: 10px;
+	margin-left: -20px;
+	margin-top: 9px;
+	border-radius: 50%;
+	position: absolute;
+}
+
+.nutrientCircles {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+}
+
+.nutrientCircle1,
+.nutrientCircle2,
+.nutrientCircle3 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	stroke-linecap: round;
+	position: absolute;
+}
+
+.nutrientCircle1 {
+	z-index: 888;
+	background: none;
+
+	width: 53px;
+	height: 53px;
+}
+
+.nutrientCircle2 {
+	z-index: 888;
+	background: none;
+	width: 95px;
+	height: 95px;
+}
+
+.nutrientCircle3 {
+	width: 137px;
+	height: 137px;
+}
+
+.timeAndCaloriesContainer {
+	display: flex;
+	gap: 20px;
+	margin-top: 10px;
+}
+
+.timeWrapper {
+	background: var(--white-02);
+	border-radius: 50px;
+	padding: 10px;
+	order: -1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.timeTitle {
+	font-weight: bold;
+	font-size: 20px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding-bottom: 15px;
+}
+
+.timeText {
+	font-weight: bold;
+	font-size: 30px;
+	color: var(--orange);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.ingredientsAndInstructionsTabContainer {
+	display: flex;
+	position: relative;
+	background: var(--white-02);
+	border-radius: 20px;
+	margin-top: 30px;
+	overflow: hidden;
+}
+
+.tabButton {
+	flex: 1;
+	padding: 15px;
+	border-radius: 20px;
+	font-size: 16px;
+	text-align: center;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	z-index: 1;
+	transition: 0.4s;
+
+	&.active {
+		font-weight: bold;
+		border-radius: 20px;
+		color: white;
+	}
+
+	&:hover {
+		font-weight: bold;
+	}
+}
+
+.slider {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 50%;
+	background: linear-gradient(to right, var(--orange), var(--lightOrange));
+	border-radius: 20px;
+	transition: 0.4s;
+}
+
+.content {
+	padding: 20px;
+	border-radius: 16px;
+	margin-top: 5px;
+	transition: 0.4s;
+	height: 100%;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	h3 {
+		margin-bottom: 10px;
+		font-weight: 600;
+		font-size: 20px;
+	}
+
+	p {
+		line-height: 1.5;
+		text-align: center;
+		max-height: 100%;
+	}
+}
+
+.ul {
+	text-align: left;
+	width: 100%;
+}
+
+@media (min-width: 2000px) {
+	.leftIcon {
+		width: 50px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.hidden {
+		display: none;
+		pointer-events: none;
+	}
+}
+
+@media (max-width: 1100px) {
+	.nutrientContainer {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 530px) {
+	.timeAndCaloriesContainer {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 500px) {
+	.daySelectedTitle {
+		font-size: 29px;
+	}
+
+	.timeWrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 210px;
+		padding: 17px;
+	}
+}

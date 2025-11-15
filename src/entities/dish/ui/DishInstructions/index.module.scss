@@ -1,0 +1,15 @@
+
+.listItem {
+	display: flex;
+	align-items: flex-start; // Выравнивание по верхнему краю
+	padding: 8px 0;
+	font-size: 16px;
+	color: var(--text);
+	font-weight: 600;
+	transition: color 0.2s;
+}
+
+.checked span {
+	color: #888;
+	text-decoration: line-through; // Зачеркивание только текста
+}

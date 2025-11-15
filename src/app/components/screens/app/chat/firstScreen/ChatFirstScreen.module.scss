@@ -1,0 +1,206 @@
+@import './_mixins';
+
+.chatContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 96svh;
+  transform: translateX(100px);
+
+  @media (max-width: 1366px) {
+    transform: translateX(70px);
+  }
+
+  @media (max-width: 1200px) {
+    transform: translateX(0);
+    transform: translateY(-70px);
+  }
+
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.container {
+  border-radius: 30px;
+  padding: 40px;
+  width: 70%;
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+
+  @media (max-width: 1660px) {
+    width: 71%;
+  }
+
+  @media (max-width: 900px) {
+    width: 77%;
+  }
+
+  @media (max-width: 830px) {
+    width: 81%;
+  }
+
+  @media (max-width: 800px) {
+    width: 86%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  @media (max-width: 400px) {
+    padding: 26px;
+  }
+
+  @media (max-width: 370px) {
+    padding: 24px;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.header h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+
+  @media (max-width: 500px) {
+    font-size: 28px;
+  }
+
+  @media (max-width: 420px) {
+    font-size: 26px;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 333px) {
+    font-size: 21px;
+  }
+}
+
+.header p {
+  font-size: 20px;
+
+  @media (max-width: 500px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 333px) {
+    font-size: 13px;
+  }
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  width: 87%;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.card {
+  background: var(--dark-14-bg);
+  border-radius: 30px;
+  padding: 20px;
+  text-align: center;
+  width: 30%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Center content vertically */
+}
+
+.card img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+}
+
+
+
+.input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 50px;
+  /* Ensure input text doesn't overlap with button */
+
+
+  @media (max-width: 1550px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1400px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 500px) {
+    padding-right: 6px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 370px) {
+    font-size: 12px;
+  }
+}
+
+.button {
+  @include size(55px, 55px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  margin-top: 8px;
+  right: 5px;
+
+  @media (max-width: 500px) {
+    @include size(50px, 50px);
+  }
+
+  @media (max-width: 370px) {
+    @include size(47px, 47px);
+  }
+
+  @media (max-width: 333px) {
+    @include size(44px, 44px);
+  }
+}
+
+.button img {
+  @include size(100%, 100%);
+  object-fit: contain;
+}

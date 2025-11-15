@@ -1,0 +1,26 @@
+.birthdateField {
+	margin-right: 20px;
+	background-color: var(--bg-secondary);
+	padding: 22px;
+	border-radius: 25px;
+	border: none;
+	display: flex;
+	color: var(--second-text);
+	transition: 0.3s ease;
+	font-size: 16px;
+	font-weight: 500;
+	width: 100%;
+
+	&:hover,
+	&:focus {
+		color: var(--text);
+	}
+}
+
+@media (max-width: 1024px) {
+	.birthdateField {
+		font-size: 14px;
+		padding: 18px;
+		border-radius: 20px;
+	}
+}

@@ -1,0 +1,246 @@
+.recipe {
+	position: relative;
+	background-size: cover;
+	font-weight: 600;
+	border-radius: 2rem;
+	padding: 1.5rem;
+
+	&:hover {
+		.menuIcon {
+			opacity: 1;
+			cursor: pointer;
+		}
+	}
+
+	h3 {
+		font-weight: 600;
+		color: #f28c38;
+		letter-spacing: 0.03em;
+		font-size: 1.2rem;
+		text-align: center;
+		margin-bottom: 0.5rem;
+	}
+
+	ol {
+		padding: 1rem 0 1rem 1.5rem;
+
+		li {
+			margin-bottom: 0.5rem;
+			letter-spacing: 0.03em;
+		}
+	}
+
+	ol {
+		list-style-type: decimal;
+	}
+
+	&:not(:first-child) {
+		margin-top: 2rem;
+	}
+}
+
+.title {
+	position: relative;
+	z-index: 1200;
+	font-weight: 600;
+	text-align: center;
+	letter-spacing: 0.03em;
+	font-size: 1.8rem;
+	max-width: 90%;
+	margin: 0 auto 2rem;
+}
+
+.firstBlock {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+	justify-content: space-between;
+}
+
+.secondBlockCaloriesAndNutrients {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+}
+
+.instructions {
+	z-index: 1200;
+	padding: 1rem 1rem 0;
+	border-radius: 2rem;
+	flex: 1;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	background: var(--input-bg);
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.recipe:hover .menuIcon {
+	opacity: 1;
+}
+
+.menu {
+	position: absolute;
+	top: 15px;
+	right: 100px;
+	border-radius: 30px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	z-index: 2000;
+	padding: 10px;
+	animation: fadeIn 0.3s ease-in-out;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	transition: 0.5s;
+
+	&:active {
+		transform: scale(0.95);
+		box-shadow: none;
+	}
+}
+
+.menuItem {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 30px;
+	transition: 0.5s;
+
+	&:hover {
+		background: var(--dark-14-bg);
+	}
+
+	img {
+		margin-right: 7px;
+	}
+
+	span {
+		font-size: 16px;
+		margin-right: 7px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.recipe {
+		padding: 1.2rem;
+		transform: scale(0.98);
+	}
+
+	.ingredients,
+	.instructions {
+		padding: 0.8rem 0.5rem 0;
+	}
+
+	.menu {
+		right: 80px;
+	}
+}
+
+@media (max-width: 900px) {
+	.title {
+		max-width: 80%;
+		font-size: 1.6rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.firstBlock {
+		flex-direction: column;
+	}
+
+	.secondBlockCaloriesAndNutrients {
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.firstBlockWrapper {
+		order: 1;
+	}
+
+	.secondBlockWrapper {
+		order: -1;
+	}
+}
+
+.secondBlock {
+	display: flex;
+	flex-direction: row;
+	gap: 30px;
+}
+
+.calorieCircle {
+	background: var(--input-bg);
+	border-radius: 50px;
+	z-index: 1200;
+	width: 260px;
+	height: 260px;
+	padding: 20px 50px 50px;
+}
+
+.timeWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.timeText {
+	font-weight: 700;
+	font-size: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+@media (max-width: 600px) {
+	.recipe {
+		padding: 1rem;
+
+		&:not(:first-child) {
+			margin-top: 1rem;
+		}
+	}
+
+	.title {
+		max-width: 70%;
+		font-size: 1.4rem;
+	}
+
+	.secondBlockCaloriesAndNutrients {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 500px) {
+	.secondBlock {
+		flex-direction: column;
+	}
+
+	.calorieCircle {
+		width: 100%;
+		height: 266px;
+	}
+
+	.timeWrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 210px;
+		padding: 50px;
+	}
+}
+
+@media (max-width: 400px) {
+	.calorieCircle {
+		height: 256px;
+	}
+}

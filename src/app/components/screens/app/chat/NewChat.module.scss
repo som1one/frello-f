@@ -1,0 +1,31 @@
+.chatContainer {
+	display: flex;
+	height: 92.5svh;
+	width: 100%;
+	border-radius: 50px;
+	position: relative;
+	overflow: hidden;
+	background-color: var(--white-02);
+}
+
+/* Анимации для CSSTransition */
+.modalEnter {
+	opacity: 0;
+}
+.modalEnterActive {
+	opacity: 1;
+	transition: opacity 300ms ease-in-out;
+}
+.modalExit {
+	opacity: 1;
+}
+.modalExitActive {
+	opacity: 0;
+	transition: opacity 300ms ease-in-out;
+}
+
+@media(max-width: 900px) {
+	.chatContainer {
+		height: 87svh;
+	}
+}

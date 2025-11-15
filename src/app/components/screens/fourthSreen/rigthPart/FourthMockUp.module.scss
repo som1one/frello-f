@@ -1,0 +1,65 @@
+.mockup {
+  display: flex;
+}
+
+.bgGradient {
+  position: absolute;
+  transform: rotate(30deg);
+  width: 1000px;
+  margin-left: -70px;
+  margin-top: -163px;
+  z-index: 0;
+
+  @media (max-width: 1660px) {
+    margin-top: -270px;
+    margin-left: -180px;
+  }
+
+  @media (max-width: 1024px) {
+    max-width: none;
+    margin-top: -270px;
+  }
+
+  @media (max-width: 500px) {
+    max-width: 150%;
+  }
+
+  @media (max-width: 420px) {
+    margin-top: -210px;
+    margin-left: -130px;
+  }
+}
+
+.mock {
+  position: relative;
+  z-index: 1;
+  width: 830px;
+}
+
+.pcMockup {
+  display: block;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.phoneMockup {
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mock {
+    width: 700px;
+  }
+}
+
+@media (max-width: 500px) {
+  .mockup {
+    padding-top: 40px;
+  }
+}

@@ -1,0 +1,70 @@
+@mixin size($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+@mixin main-gradient-text {
+	background: var(--main-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+@mixin reverse-main-gradient-text {
+	background: var(--reverse-main-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+@mixin light-main-gradient-text {
+	background: var(--light-main-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+@mixin platinum-gradient-text {
+	background: var(--platinum-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+@mixin border-input($width, $height) {
+	@include size($width, $height);
+	border-radius: 7px;
+	background-color: transparent;
+	border: 2px solid #3f3f46dc;
+	transition:
+		border 1s ease,
+		box-shadow 1s ease;
+	position: relative;
+	z-index: 5; /* Input z-index */
+	padding: 15px;
+	font-size: 15px; /* Размер текста внутри инпута */
+	font-weight: 600;
+}
+
+@mixin border-input-focus {
+	border: 2px solid transparent;
+	background-image: linear-gradient(#131316, #131316), var(--main-gradient);
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+	transition:
+		border 1s ease,
+		box-shadow 1s ease;
+}
+
+@mixin gradient-border-button {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 18px;
+	border: 2px solid transparent;
+	background: var(--main-gradient) border-box;
+	-webkit-mask:
+		linear-gradient(#fff 0 0) padding-box,
+		linear-gradient(#fff 0 0);
+	-webkit-mask-composite: destination-out;
+	mask-composite: exclude;
+}

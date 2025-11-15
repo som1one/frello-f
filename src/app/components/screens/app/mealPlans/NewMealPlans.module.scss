@@ -1,0 +1,228 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding-top: 20px;
+	animation: favoriteDishesAnimation 0.7s ease;
+}
+
+.noMealPlanContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.noDishesContainer {
+	background: none;
+	display: flex;
+	position: absolute;
+	top: 45%;
+	transform: translateY(-50%);
+	margin-left: 0;
+	gap: 0;
+	animation: none;
+	align-items: center;
+}
+
+.title {
+	z-index: 1200;
+	position: relative;
+	text-align: center;
+	letter-spacing: 0.03em;
+	margin-bottom: 40px;
+	font-size: 29px;
+	max-width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.regenerateButton {
+	width: 100%;
+	background: var(--main-gradient);
+	padding: 20px;
+	border-radius: 35px;
+}
+
+.regenerateMealPlanButton {
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	height: 100%;
+	position: relative;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	border-radius: 35px;
+	transition: 0.4s;
+	justify-content: center;
+}
+
+.regenerateMealPlanImage {
+	transition: transform 0.4s ease;
+}
+
+.regenerateMealPlanButton:hover .regenerateMealPlanImage {
+	transform: rotate(90deg);
+}
+
+.regenerateMealPlanButtonTitle {
+	display: flex;
+	font-weight: 800;
+	color: white;
+	margin: 0 15px;
+}
+
+.middleSection {
+	background: var(--white-02);
+	padding: 30px;
+	border-radius: 50px;
+	width: 100%;
+
+	@media (max-width: 1500px) {
+		background: none;
+		padding: 0px;
+	}
+
+	h2 {
+		font-size: 22px;
+		margin: 7px 0;
+		font-weight: 800;
+	}
+}
+
+.description {
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.calorieSquareContainer {
+	width: 80%;
+	overflow: hidden;
+	height: 14svh;
+	position: relative;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	margin: 30px auto 0;
+	border-radius: 35px;
+	background: var(--white-02);
+}
+
+.calorieSquare {
+	width: 100%;
+	background: var(--main-gradient);
+	position: absolute;
+	border-radius: 35px;
+	bottom: 0;
+	left: 0;
+	transition: height 0.5s ease;
+}
+
+.calorieCountText {
+	text-align: center;
+	font-weight: 800;
+	z-index: 99999999;
+	font-size: 19px;
+	padding: 20px;
+}
+
+.rightSection {
+	transition: opacity 0.3s ease;
+	opacity: 1;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.noRightSection {
+	grid-template-columns: 1fr;
+}
+
+@media (max-width: 1500px) {
+	.rightSectionHeader {
+		flex-direction: column;
+	}
+
+	.header {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 800px) {
+	.calorieSquareContainer {
+		width: 100%;
+	}
+}
+
+// @media (max-width: 1200px) {
+// 	.containerHidden {
+// 		width: 0;
+// 	}
+// 	.middleSectionHidden {
+// 		display: none;
+// 	}
+
+// 	.hidden {
+// 		display: none;
+// 		pointer-events: none;
+// 	}
+
+// 	.center {
+// 		position: absolute;
+// 		top: 50%;
+// 		margin-top: -50px;
+// 		padding: 0;
+// 		left: 0;
+// 		width: 90svw;
+// 		height: 90svh;
+
+// 		z-index: 99999999;
+// 		backdrop-filter: blur(20px);
+// 		-webkit-backdrop-filter: blur(20px);
+// 		color: white;
+// 		font-size: 20px;
+// 		font-weight: 700;
+// 		text-align: center;
+// 	}
+// }
+
+// @media(max-width: 600px) {
+// 	.container {
+// 		padding: 20px;
+// 		padding-bottom: 100px;
+// 	}
+
+// 	.middleSection {
+// 		padding: 20px;
+// 	}
+// }
+
+// @media (max-width: 500px) {
+// 	.header {
+// 		flex-direction: column;
+// 	}
+// }
+
+@keyframes favoriteDishesAnimation {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

@@ -1,0 +1,407 @@
+.container {
+	margin-top: 60px;
+	padding-top: 80px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: var(--main-dark-bg);
+	padding: 24px;
+}
+
+.iconContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.lineImage {
+	position: absolute;
+	margin-left: 320px;
+	margin-top: -388px;
+
+	@media (max-width: 1200px) {
+		margin-top: -780px;
+	}
+
+	@media (max-width: 900px) {
+		margin-top: -810px;
+	}
+
+	@media (max-width: 500px) {
+		margin-left: 0;
+		margin-top: -860px;
+	}
+
+	@media (max-width: 400px) {
+		margin-top: -840px;
+	}
+
+	@media (max-width: 333px) {
+		margin-top: -910px;
+	}
+}
+
+.image {
+	@media (max-width: 400px) {
+		width: 300px;
+	}
+}
+
+.pricingSection {
+	display: flex;
+	justify-content: center;
+	background: var(--tab-bg);
+	border-radius: 48px;
+	align-items: stretch;
+	flex-wrap: nowrap; /* Изменение на горизонтальное размещение */
+	padding: 20px 10px;
+	margin-top: 60px;
+
+	@media (max-width: 1200px) {
+		flex-direction: column;
+	}
+
+	@media (max-width: 380px) {
+		border-radius: 0;
+	}
+}
+
+.title {
+	font-size: 40px;
+	margin-bottom: 60px;
+	font-weight: 900;
+
+	@media (max-width: 1200px) {
+		text-align: center;
+	}
+
+	@media (max-width: 500px) {
+		margin-bottom: 70px;
+	}
+
+	@media (max-width: 380px) {
+		font-size: 37px;
+	}
+
+	@media (max-width: 333px) {
+		font-size: 31px;
+	}
+}
+
+.planContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	border-radius: 48px;
+	transition: transform 0.5s ease-in-out; /* Плавное перемещение */
+	overflow: hidden; /* Оставляем только одну карточку видимой */
+}
+
+.planSlider {
+	display: flex;
+	transition: transform 0.5s ease-in-out; /* Плавное изменение контента */
+}
+
+.slide {
+	min-width: 100%; /* Каждый слайд занимает 100% ширины */
+	transition: opacity 0.5s ease-in-out; /* Плавное изменение opacity для текста */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.planCard {
+	width: 360px;
+	min-height: 380px;
+	border-radius: 48px;
+	background: var(--main-gradient);
+	padding: 20px;
+	text-align: center;
+	overflow: hidden;
+	color: white;
+	position: relative;
+
+	@media (max-width: 1200px) {
+		margin-top: 30px;
+	}
+
+	@media (max-width: 600px) {
+		margin-top: 0px;
+	}
+
+	@media (max-width: 380px) {
+		width: 350px;
+	}
+
+	@media (max-width: 370px) {
+		width: 340px;
+	}
+
+	@media (max-width: 333px) {
+		width: 300px;
+	}
+}
+
+.planTitle {
+	font-size: 1.8rem;
+	font-weight: 900;
+	margin: 10px 0;
+}
+
+.priceContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.price {
+	font-size: 2.5rem;
+	font-weight: 900;
+	margin-top: 40px;
+}
+
+.oldPrice {
+	font-size: 1.5rem;
+	text-decoration: line-through;
+	position: absolute;
+	margin-top: 20px;
+	width: 100%;
+}
+
+.discount {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.billingInfo {
+	font-size: 1rem;
+	margin-bottom: 20px;
+}
+
+.planButton {
+	background-color: white;
+	color: var(--orange);
+	padding: 12px 24px;
+	border: none;
+	border-radius: 50px;
+	font-size: 1rem;
+	margin-top: 30px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.6s ease;
+
+	&:hover {
+		background: transparent;
+		color: white;
+		border: 1px solid white;
+		transform: scale(1.2);
+	}
+}
+
+/* Стрелки */
+.arrowPrev,
+.arrowNext {
+	position: absolute;
+	top: 50%;
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+	cursor: pointer;
+	transform: translateY(-50%);
+	z-index: 10;
+	width: 40px;
+	height: 40px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	transition: 0.6s ease;
+
+	&:hover {
+		scale: 1.2;
+	}
+}
+
+.arrowPrev {
+	left: 20px;
+	background-image: url('/icons/arrows/t.png');
+}
+
+.arrowNext {
+	right: 20px;
+	background-image: url('/icons/arrows/t.png');
+	transform: translateY(-50%) scaleX(-1); /* Flip the right arrow */
+}
+
+/* Стили для индикатора слайда */
+.slideIndicator {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: #ddd;
+	margin: 0 5px;
+}
+
+.active {
+	background-color: var(--orange);
+}
+
+.featuresList {
+	border-radius: 16px;
+	padding: 20px;
+	padding-bottom: 0;
+}
+
+.featuresList h1 {
+	font-size: 29px;
+	margin-bottom: 10px;
+	font-weight: 700;
+
+	@media (max-width: 500px) {
+		font-size: 27px;
+		margin-bottom: 20px;
+	}
+
+	@media (max-width: 400px) {
+		font-size: 24px;
+	}
+}
+
+.featuresList p {
+	margin-bottom: 30px;
+
+}
+
+.featuresList ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.featuresList li {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 18px;
+	padding-left: 30px;
+	position: relative;
+
+	@media (max-width: 400px) {
+		font-size: 15px;
+	}
+}
+
+.featuresList li::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	background-image: url('/icons/checkbox/check.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.featuresListContainer {
+	color: var(--text);
+}
+
+.modalContent {
+	background: var(--bg-secondary); /* Белый фон для светлой темы */
+	border-radius: 16px;
+	padding: 24px;
+	max-width: 400px;
+	width: 90%;
+	margin: 50px auto;
+	box-shadow: 0 4px 20px var(--dark-20-bg); /* Тень из твоих стилей */
+	position: relative;
+	text-align: center;
+	color: var(--text); /* Цвет текста из твоих стилей */
+}
+
+.modalTitle {
+	font-size: 1.8rem;
+	font-weight: 700;
+	margin-bottom: 16px;
+}
+
+.modalBody {
+	margin-bottom: 24px;
+	font-size: 1rem;
+	line-height: 1.5;
+
+	p {
+		margin: 8px 0;
+	}
+
+	strong {
+		font-weight: 600;
+	}
+}
+
+.modalActions {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.confirmButton,
+.cancelButton {
+	padding: 12px 24px;
+	border: none;
+	border-radius: 50px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background 0.3s ease,
+		transform 0.3s ease;
+}
+
+.confirmButton {
+	background: var(--orange); /* Используем #f9881f */
+	color: var(--text-invert); /* Белый текст для контраста */
+
+	&:hover {
+		background: var(--lightOrange); /* #ff774c для ховера */
+		transform: scale(1.05);
+	}
+}
+
+.cancelButton {
+	background: var(--tab-bg-secondary); /* Серый фон для отмены */
+	color: var(--text); /* Цвет текста из твоих стилей */
+
+	&:hover {
+		background: var(--tab-bg-hover); /* Лёгкое затемнение для ховера */
+		transform: scale(1.05);
+	}
+}
+
+.modalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+}
+
+@media (max-width: 768px) {
+	.planContainer {
+		flex-direction: column;
+		align-items: center;
+	}
+}

@@ -1,0 +1,140 @@
+// components/screens/firstScreen/FirstScreen.module.scss
+@import '../../../../app/styles/mixins';
+
+.container {
+	background: var(--main-dark-bg);
+	color: white;
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.wrapper {
+	position: relative;
+	width: 100%;
+	max-width: 1440px; // Ограничиваем максимальную ширину
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+}
+
+.imageWrapper {
+	position: absolute;
+	top: 0;
+	left: 50%; // Центрируем по горизонтали
+	transform: translateX(-50%); // Смещаем влево на половину ширины
+	width: 100%;
+	max-width: 1200px; // Ограничиваем ширину картинки
+	height: 100%;
+	z-index: 0; // Картинка на заднем плане
+}
+
+.content {
+	position: relative;
+	z-index: 1; // Контент поверх картинки
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin-top: -240px;
+}
+
+.title {
+	font-size: 90px;
+	line-height: 110%;
+	@include platinum-gradient-text;
+}
+
+.continuation {
+	font-size: 58px;
+	font-weight: 700;
+}
+
+.text {
+	font-size: 20px;
+	padding-top: 20px;
+	line-height: 1.4;
+	font-weight: 500;
+}
+
+.button {
+	cursor: pointer;
+	display: flex;
+	margin-top: 43px;
+	align-items: center;
+	justify-content: center;
+}
+
+.customButton {
+	@include size(auto, 57px);
+	font-weight: bold;
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.arrow {
+	@include size(63px, 17px);
+	margin-left: -12px;
+}
+
+// Адаптив
+@media (max-width: 1300px) {
+	.imageWrapper {
+		max-width: 80%; // Уменьшаем ширину картинки на экранах до 1300px
+		height: 80%; // Уменьшаем высоту для пропорциональности
+	}
+}
+
+@media (max-width: 1024px) {
+	.title {
+		font-size: 60px;
+	}
+	.continuation {
+		font-size: 50px;
+	}
+	.text {
+		font-size: 17px;
+	}
+	.imageWrapper {
+		max-width: 85%; // Еще чуть уменьшаем для планшетов
+		height: 75%;
+	}
+}
+
+@media (max-width: 500px) {
+	.title {
+		font-size: 44px;
+	}
+	.continuation {
+		font-size: 36px;
+	}
+	.text {
+		font-size: 15px;
+	}
+	.customButton {
+		@include size(240px, 48px);
+		font-size: 16px;
+	}
+	.arrow {
+		@include size(50px, 14px);
+	}
+	.wrapper {
+		padding: 10px;
+	}
+	.imageWrapper {
+		max-width: 90%; // На мобильных чуть больше, но не от края до края
+		height: 70%;
+	}
+}
+
+@media (min-width: 2000px) {
+	.wrapper {
+		max-width: 1600px; // Для больших экранов
+	}
+}

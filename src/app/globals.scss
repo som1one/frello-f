@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'styles/mixins';
+
+:root {
+	--main-gradient: linear-gradient(
+		to bottom right,
+		var(--orange),
+		var(--lightOrange)
+	);
+	--nav-width: 260px;
+	--bg-tertiary: rgba(255, 255, 255, 0.01);
+
+	--orange: #f9881f;
+	--lightOrange: #ff774c;
+	--reverse-main-gradient: linear-gradient(
+		to bottom right,
+		var(--lightOrange),
+		var(--orange)
+	);
+	--light-main-gradient: linear-gradient(
+		to bottom right,
+		var(--orange),
+		#f3fbd2
+	);
+	--light-gradient: linear-gradient(
+		to bottom right,
+		rgba(0, 0, 0, 0.13),
+		#f3fbd2
+	);
+	--main-dark-bg: #0d0e11;
+	--main-bg: #f6f7fa;
+	--second-text: #747781;
+	--dark-14-bg: rgba(0, 0, 0, 0.14);
+	--light-13-bg: rgba(139, 140, 145, 0.13);
+	--light-06-bg: rgba(139, 140, 145, 0.06);
+	--white-01: rgba(255, 255, 255, 0.01);
+	--white-02: rgba(255, 255, 255, 0.02);
+	--white-05: rgba(255, 255, 255, 0.05);
+	--dark-20-bg: rgba(0, 0, 0, 0.2);
+	--dark-30-bg: rgba(0, 0, 0, 0.3);
+	--border-input: #3f3f46;
+	--card-bg: linear-gradient(180deg, #151418, #191725);
+	--grey-text: #70707b;
+	--platinum-gradient: linear-gradient(to right, #9a9a9a, #ffffff 51%, #999999);
+
+	--bg: #202020;
+	--white: #ffffff;
+	--gray: #c9c8c8;
+	--black-lt: #2a2929;
+	--black-dk: #252525;
+	--track-color-rgb: 136, 0, 0;
+	--shadow: rgba(0, 0, 0, 0.5);
+
+	/* New  */
+	--text: #3b3b3b;
+	--text-invert: #ffffff;
+
+	--bg: #f6f7fa;
+	--bg-secondary: #ffffff;
+	--tab-bg: rgba(139, 140, 145, 0.06);
+	--tab-bg-hover: rgba(139, 140, 145, 0.13);
+	--tab-bg-secondary: #eae8e8;
+	--input-bg: #f8f8f9;
+	--input-text: #0d0e11;
+	--message-bg: rgba(0, 0, 0, 0.05);
+	--btn-bg: #f8f8f9;
+	--white-05: #ffffff;
+	--dark-100-bg: rgba(245, 245, 245, 0.1);
+
+	@media (max-width: 1200px) {
+		--nav-width: 95px;
+	}
+
+	@media (max-width: 900px) {
+		--nav-width: 0;
+	}
+}
+
+.dark {
+	--text: #ffffff;
+	--text-invert: #3b3b3b;
+	--bg: #0d0e11;
+	--bg-secondary: #0d0e10;
+	--tab-bg: rgba(139, 140, 145, 0.06);
+	--tab-bg-hover: rgba(255, 255, 255, 0.08);
+	--tab-bg-secondary: rgba(0, 0, 0, 0.2);
+	--input-bg: rgba(255, 255, 255, 0.02);
+	--input-text: #747781;
+	--message-bg: rgba(255, 255, 255, 0.02);;
+	--btn-bg: #151619;
+	--white-05: rgba(255, 255, 255, 0.02);
+	--dark-100-bg: rgba(24, 24, 24, 0.8);
+}
+
+body {
+	@include size(100svw, auto);
+	margin: 0;
+	/* background: var(--main-bg); */
+	background: var(--bg);
+	overflow-x: hidden;
+	color: white;
+	position: relative;
+	accent-color: var(--orange);
+	font-weight: 500;
+}
+
+* {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	background-color: var(
+		--scroll-bg
+	); // Sets the background color for the over-scroll area
+}
+
+button,
+Link,
+a,
+img,
+Image,
+input,
+textarea,
+select,
+option {
+	outline: none;
+}
+
+img,
+Image {
+	pointer-events: none;
+	user-select: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+Link {
+	text-decoration: none;
+}
+
+button {
+	cursor: pointer;
+}
+
+/* Предотвращаем масштабирование при фокусировке на инпуте */
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	/* Removes the outline completely */
+	box-shadow: none;
+	/* Removes any shadow */
+	border-color: transparent;
+	/* Ensures no border color is applied */
+
+	@media (max-width: 1200px) {
+		outline: none;
+		box-shadow: none;
+		transform: none;
+		-webkit-transform: none;
+		/* For WebKit browsers */
+		-moz-transform: none;
+		/* For Firefox */
+		-ms-transform: none;
+		/* For IE */
+		-o-transform: none;
+		/* For Opera */
+	}
+}
+
+input,
+textarea,
+select {
+	&::placeholder {
+		color: inherit;
+		transition: color 0.3s ease;
+	}
+}
+
+/* Remove the white spinners (arrows) in number inputs */
+input[type='number'] {
+	-moz-appearance: textfield;
+	/* For Firefox */
+	-webkit-appearance: none;
+	/* For Chrome, Safari, and Opera */
+	appearance: none;
+	/* For other browsers */
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* For Mozilla Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+.no-scroll {
+	overflow: hidden;
+}
+
+.landingBackground {
+	@include size(100svw, auto);
+}
+
+.light-theme {
+	--main-dark-bg: #f1f1f1;
+	color: #3b3b3b;
+	--white-02: white;
+}
+
+::selection {
+	background-color: #f9881f;
+	color: white;
+	/* Цвет текста при выделении */
+}
+
+/* Для вебкита-браузеров (Safari, Chrome, etc.) */
+::-webkit-selection {
+	background-color: #f9881f;
+	color: white;
+	/* Цвет текста при выделении */
+}
+
+.container {
+	width: 1400px;
+	max-width: 95%;
+	margin: 0 auto;
+}

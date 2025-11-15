@@ -1,0 +1,92 @@
+/* Modal Overlay */
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw; /* Используем 100% ширины экрана */
+	height: 100vh; /* Используем 100% высоты экрана */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+	z-index: 9999999; /* Очень высокий z-index, чтобы быть поверх всего */
+}
+
+/* Dialog */
+.dialog {
+	background: #141516;
+	padding: 40px 20px;
+	border-radius: 30px;
+	width: 100%; /* Сделаем ширину 100%, чтобы подстраиваться под размер экрана */
+	max-width: 400px; /* Максимальная ширина 400px */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	position: relative;
+	z-index: 9999999; /* Высокий z-index */
+}
+
+/* Убедитесь, что модал занимает весь экран на мобильных устройствах */
+@media (max-width: 768px) {
+	.modalOverlay {
+		height: 100vh; /* Убедитесь, что overlay охватывает весь экран */
+		width: 100vw;
+	}
+	
+	.dialog {
+		width: 90%; /* Диалоговый блок на мобильных устройствах */
+		padding: 30px 20px;
+		max-width: 400px;
+	}
+}
+
+@media (max-width: 500px) {
+	.dialog {
+		width: 95%; /* Ширина ещё больше на маленьких экранах */
+		padding: 25px 15px;
+	}
+}
+
+.title {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+
+.input {
+	width: 100%;
+	padding: 10px;
+	margin: 20px 0;
+	border-radius: 15px;
+	background: var(--white-02);
+}
+
+.buttonContainer {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.renameButton,
+.cancelButton {
+	border: none;
+	padding: 10px 30px;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: 0.4s;
+	color: white;
+}
+
+.renameButton {
+	background-color: #4caf50;
+	
+	&:hover {
+		background: #3c8c40;
+	}
+}
+
+.cancelButton {
+	background: red;
+	
+	&:hover {
+		background: #990000;
+	}
+}

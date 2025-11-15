@@ -1,0 +1,46 @@
+{
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"@components": ["./src/app/components/*"],
+			"@screens": ["./src/app/components/screens/*"],
+			"@ui": ["./src/app/components/ui/*"],
+			"@app": ["./src/app/*"],
+			"@shared": ["./src/app/shared/*"],
+			"@hooks": ["./src/app/hooks/*"],
+			"@types": ["./src/app/types/*"],
+			"@utils": ["./src/app/utils/*"],
+			"@context": ["./src/app/context/*"],
+			"@constants": ["./src/app/constants/*"],
+			"@api": ["./src/app/api/*"],
+			"@styles": ["./src/app/styles/*"],
+		}
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"src/components/screens/secondScreen/slider/Slider.tsx",
+		"src/components/screens/secondScreen/SecondScreen.tsx",
+		"src/app/api/chatgpt.ts"
+	],
+	"exclude": ["node_modules"]
+}

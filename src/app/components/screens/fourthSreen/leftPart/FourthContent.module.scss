@@ -1,0 +1,170 @@
+@import '../../../../app/styles/mixins';
+.content {
+	display: flex;
+	flex-direction: column;
+
+	@media (max-width: 1660px) {
+		padding-left: 90px;
+	}
+}
+
+.title {
+	line-height: 62px;
+	max-width: 832px;
+	padding-top: 8px;
+	font-size: 38px;
+	font-weight: 700;
+	margin-bottom: 28px;
+	z-index: 100;
+	position: relative;
+	padding-left: 33px;
+
+	@media (max-width: 1660px) {
+		min-width: 662px;
+	}
+}
+.secTitle {
+	@include main-gradient-text;
+}
+
+.description {
+	letter-spacing: 0.03em;
+	max-width: 676px;
+	font-size: 18px;
+	line-height: 1.7;
+	font-weight: 400;
+	padding-left: 22px;
+	z-index: 1100;
+}
+
+.description2 {
+	letter-spacing: 0.03em;
+	max-width: 676px;
+	font-size: 18px;
+	line-height: 1.7;
+	font-weight: 400;
+	padding-top: 30px;
+	padding-left: 22px;
+	z-index: 1100;
+}
+
+.button {
+	width: 260px;
+	height: 60px;
+	font-weight: bold;
+}
+
+.moreButton {
+	padding-top: 31px;
+	padding-left: 22px;
+}
+
+.ellipse {
+	width: 76px;
+	margin-left: 11px;
+	position: absolute;
+	z-index: 1;
+}
+
+@media (max-width: 1400px) {
+	.content {
+		padding-left: 15px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.title {
+		margin-bottom: 30px;
+		min-width: 542px;
+	}
+	.content {
+		padding-left: 10px;
+	}
+	.ellipse {
+		width: 70px;
+	}
+
+	.button {
+		width: 280px;
+		height: 60px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 1024px) {
+	.content {
+		padding-left: 0;
+		padding-right: 20px;
+		padding-top: 30px;
+	}
+	.moreButton {
+		padding-top: 40px;
+	}
+	.description,
+	.description2 {
+		padding-top: 18px;
+		max-width: 702px;
+	}
+}
+
+@media (max-width: 768px) {
+	.title {
+		line-height: 45px;
+		padding-top: 10px;
+		padding-left: 29px;
+	}
+}
+
+@media (max-width: 500px) {
+	.title {
+		font-size: 23px;
+		line-height: 40px;
+		padding-top: 5px;
+		padding-left: 27px;
+		margin-bottom: 10px;
+		min-width: 382px;
+	}
+	.content {
+		padding-right: 0;
+		width: 98%;
+	}
+	.description,
+	.description2 {
+		font-size: 14px;
+		letter-spacing: 0.06em;
+		padding-left: 10px;
+	}
+	.moreButton {
+		padding-left: 0;
+		display: flex;
+		justify-content: center;
+	}
+	.ellipse {
+		width: 49px;
+	}
+}
+
+@media (max-width: 420px) {
+	.description, .description2 {
+		padding-left: 0;
+	}
+}
+
+@media (max-width: 400px) {
+	.description, .description2 {
+		padding-left: 10px;
+	}
+}
+
+@media (max-width: 333px) {
+	.ellipse {
+		margin-left: 0;
+	}
+	.title {
+		padding-left: 15px;
+	}
+}
+
+.colorText {
+	@include main-gradient-text;
+}

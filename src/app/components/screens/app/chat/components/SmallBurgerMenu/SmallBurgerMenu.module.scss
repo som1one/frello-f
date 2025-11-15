@@ -1,0 +1,41 @@
+.burgerMenu {
+	flex-direction: column;
+	cursor: pointer;
+	gap: 4px;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	z-index: 1100;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: var(--bg-secondary);
+	align-items: center;
+	justify-content: center;
+	transition: 0.4s;
+	display: flex;
+}
+
+.burgerIcon {
+	width: 30px;
+	height: 4px;
+	background-color: white;
+	border-radius: 2px;
+	transition: all 0.4s ease-in-out;
+}
+
+.lightBurgerIcon {
+	background: #141516;
+}
+
+.menuOpen .burgerIcon:nth-child(1) {
+	transform: rotate(45deg) translate(6.5px, 5px);
+}
+
+.menuOpen .burgerIcon:nth-child(2) {
+	opacity: 0;
+}
+
+.menuOpen .burgerIcon:nth-child(3) {
+	transform: rotate(-45deg) translate(6.25px, -5px);
+}

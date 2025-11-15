@@ -1,0 +1,92 @@
+// Layout.module.scsspadding-left
+
+@import '../styles/mixins';
+
+.container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 100svh;
+	height: auto;
+	overflow: hidden;
+	background: var(--main-dark-bg);
+	transition: 0.7s ease;
+}
+
+.childContainer {
+	padding-left: calc(var(--nav-width) + 40px);
+	padding-right: 40px;
+	min-height: 100svh;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	transition: transform 0.5s ease-in-out;
+}
+
+.circle1,
+.circle2,
+.circle3 {
+	position: fixed;
+	width: 270px;
+	height: 270px;
+	background-color: var(--orange);
+	border-radius: 50%;
+	filter: blur(130px);
+	opacity: 0.5;
+	transition: 0.7s;
+
+	@media (max-width: 1600px) {
+		width: 250px;
+		height: 250px;
+	}
+
+	@media (max-width: 500px) {
+		width: 250px;
+		height: 250px;
+	}
+}
+
+.circle1 {
+	top: 1%;
+	left: -4%;
+}
+
+.circle2 {
+	right: -3%;
+	width: 400px;
+	bottom: -130px;
+}
+
+.circle3 {
+	width: 400px;
+	height: 400px;
+	right: -11%;
+	top: -8%;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
+}
+
+.lightCircle {
+	opacity: 0;
+}
+
+@media (max-width: 1024px) {
+	.childContainer {
+		padding-right: 24px;
+		padding-left: calc(var(--nav-width) + 24px);
+	}
+}
+
+@media (max-width: 900px) {
+	.childContainer {
+		padding-left: 24px;
+	}
+}
+
+@media (max-width: 768px) {
+	.childContainer {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}

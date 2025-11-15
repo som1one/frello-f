@@ -1,0 +1,258 @@
+@import '../../../../app/styles/mixins';
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100svh;
+	background-color: var(--main-dark-bg);
+	padding: 20px;
+	color: white;
+	box-sizing: border-box;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.formWrapper {
+	width: 470px;
+	padding: 40px 50px;
+	background: var(--white-01);
+	border-radius: 28px;
+	overflow: hidden; /* Чтобы элементы не выходили за пределы */
+	transition: height 0.3s ease; /* Плавное изменение высоты */
+
+	@media (max-width: 1050px) {
+		scale: 1.4;
+	}
+
+	@media (max-width: 500px) {
+		scale: 1;
+		padding: 0 10px;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.eyeButton {
+	position: absolute;
+	right: 20px;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 24px; /* Фиксированная высота кнопки */
+
+	@media (max-width: 333px) {
+		margin-top: 12px;
+	}
+}
+
+.eyeIcon {
+	width: 24px; /* Фиксированная ширина иконки */
+	height: 24px; /* Фиксированная высота иконки */
+	transition: transform 0.5s ease; /* Плавное увеличение */
+}
+
+.eyeButton:hover .eyeIcon {
+	transform: scale(1.1); /* Увеличение иконки */
+}
+
+.form {
+	height: 100%; // Занимает всю высоту родителя
+	position: relative; // Для использования абсолютного позиционирования
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.formContent {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+	margin-bottom: 24px;
+}
+
+.passwordWrapper {
+	display: flex;
+
+}
+
+.input {
+	background: var(--white-02);
+	padding: 20px;
+	border-radius: 20px;
+	border: none;
+	width: 100%;
+	color: var(--second-text);
+
+	&:hover,
+	&:focus {
+		color: white;
+	}
+
+	@media (max-width: 333px) {
+		padding: 13px;
+	}
+}
+
+.button {
+	width: 100%;
+	padding: 20px;
+	font-size: 17px;
+	margin-top: 20px;
+	border: none;
+	border-radius: 20px;
+	font-weight: 800;
+	background-color: var(--orange);
+	cursor: pointer;
+	transition: background-color 0.5s ease;
+
+	@media (max-width: 333px) {
+		padding: 12px;
+	}
+}
+
+.button:hover {
+	background-color: var(--lightOrange);
+}
+
+.secondText {
+	display: flex;
+	width: 100%;
+	gap: 10px;
+	text-align: center;
+	font-weight: 700;
+	flex-direction: row;
+	justify-content: center;
+
+	@media (max-width: 500px) {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+.title {
+	font-size: 30px;
+	font-weight: 900;
+	text-align: center;
+	margin-bottom: 20px;
+
+	@media (max-width: 333px) {
+		font-size: 25px;
+	}
+}
+
+.errorText {
+	color: red;
+	text-align: start;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.spanText {
+	cursor: pointer;
+	position: relative;
+	display: inline-block; // Это нужно для корректного позиционирования псевдоэлемента
+
+	&::after {
+		content: '';
+		position: absolute;
+		left: 50%; // Начало линии из центра
+		bottom: -2px; // Расположение линии чуть ниже текста
+		width: 0; // Изначально линия невидима
+		height: 2px; // Толщина линии
+		background-color: currentColor; // Цвет линии совпадает с цветом текста
+		transform: translateX(-50%); // Центрирование линии относительно текста
+		transition: width 0.3s ease; // Плавное увеличение ширины линии
+
+		@media (max-width: 500px) {
+			width: 100%;
+		}
+	}
+
+	&:hover::after {
+		width: 100%; // Линия расширяется на всю ширину текста при наведении
+	}
+}
+
+/* Анимации */
+@keyframes scaleIn {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes scaleOut {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
+
+.scaleIn {
+	animation: scaleIn 0.4s ease forwards;
+}
+
+.scaleOut {
+	animation: scaleOut 0.4s ease forwards;
+}
+
+.circle,
+.circle2 {
+	width: 500px !important;
+	height: 500px !important;
+	bottom: -6%;
+	left: 0;
+	filter: blur(160px) !important;
+
+	@media (max-width: 500px) {
+		width: 200px !important;
+		height: 200px !important;
+		opacity: 0.8 !important;
+		bottom: 0;
+	}
+}
+
+.circle2 {
+	top: -6%;
+	left: 80%;
+}
+
+.checkboxWrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin-top: 12px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--second-text);
+	overflow-wrap: break-word;
+	white-space: normal;
+
+	input {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+	}
+}
+
+.policyLink {
+	color: var(--text);
+	text-decoration: underline;
+	word-break: break-word;
+}

@@ -1,0 +1,127 @@
+.checkboxContainer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+  width: 100%;
+}
+
+.checkbox {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.checkbox + label {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border: 2px solid var(--orange);
+	border-radius: 10px;
+	position: relative;
+	cursor: pointer;
+	transition:
+		background-color 0.3s ease,
+		transform 0.2s ease; // Add transform transition
+}
+
+.checkbox + label:after {
+	content: '';
+	position: absolute;
+	left: 8px;
+	top: 7px;
+	width: 10px;
+	height: 14px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(90deg) translateY(-3px); // Start at -45 degrees
+	opacity: 0;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease; // Increased transition time for smoother effect
+}
+
+.checkbox:checked + label {
+	background: linear-gradient(
+		to bottom right,
+		var(--orange),
+		var(--lightOrange)
+	);
+	border: none;
+	transform: scale(1.1); // Scale effect on check
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Add shadow on check
+}
+
+.checkbox:checked + label:after {
+	opacity: 1;
+	transform: rotate(45deg) translateY(-3px); // Rotate to 45 degrees on check
+}
+
+.checkbox:disabled + label {
+	background: var(--gray-03); // Серый фон для отключённого состояния
+	border-color: var(--gray-02); // Менее яркая обводка
+	cursor: not-allowed; // Курсор для отключённого состояния
+	opacity: 0.6; // Полупрозрачность для визуальной индикации
+}
+
+.loader {
+	width: 15px; // Ещё крупнее
+	height: 15px;
+	border: 2px solid #fff; // Яркий белый цвет
+	border-top: 2px solid transparent; // Прозрачная часть для эффекта вращения
+	border-radius: 50%;
+	animation: spin 0.6s linear infinite;
+	position: absolute; // Центрируем в label
+	top: 28%;
+	left: 25%;
+	transform: translate(-50%, -50%);
+}
+
+.loadingLabel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--gray-03);
+	border-color: var(--gray-02);
+	opacity: 0.8;
+	width: 30px; // Фиксируем размеры label
+	height: 30px;
+	animation: pulse 1.5s ease-in-out infinite;
+	position: relative; // Для позиционирования лоадера
+	overflow: hidden;
+}
+
+.lebel {
+	flex-shrink: 0;
+}
+
+.textWrapper {
+  display:flex;
+  flex: 1;
+  width: 100%;
+  min-width: 0;              /* ← оставь */
+  overflow-wrap: anywhere;   /* ← нормальный перенос */
+  text-align: start;
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 0.8;
+	}
+	50% {
+		opacity: 0.4;
+	}
+	100% {
+		opacity: 0.8;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
