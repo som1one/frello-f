@@ -4,7 +4,7 @@ import { getAccessToken } from '@/services/auth-token.service';
 import { authService } from '@/services/auth.service';
 
 const options: CreateAxiosDefaults = {
-	baseURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4200/api',
+	baseURL: 'https://frello.ru/api',
 	headers: {
 		'Content-Type': 'application/json',
 	},
@@ -42,6 +42,17 @@ axiosWithAuth.interceptors.response.use(
 				console.log('Email not verified, redirecting to /verify-email');
 				// Перенаправляем на страницу верификации
 				if (typeof window !== 'undefined') {
+					// Извлекаем email из тела запроса и сохраняем в localStorage
+					try {
+						const requestData = originalRequest.data ? JSON.parse(originalRequest.data) : null;
+						if (requestData?.email) {
+							localStorage.setItem('email', requestData.email);
+							console.log('Saved email to localStorage:', requestData.email);
+						}
+					} catch (e) {
+						console.error('Failed to parse request data:', e);
+					}
+
 					window.location.href = '/verify-email';
 				}
 				throw new Error('Email не подтверждён');

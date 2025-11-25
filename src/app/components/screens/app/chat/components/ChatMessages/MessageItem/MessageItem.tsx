@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import sanitizeHtml from 'sanitize-html'
 
@@ -40,16 +40,24 @@ export const MessageItem = ({
 	lastUserMessageId
 }: PropTypes) => {
 	const [isLiked, setIsLiked] = useState(message.isLiked)
-	const handleAddToFavorites = () => {
+
+	// Sync local state with message prop
+	useEffect(() => {
+		setIsLiked(message.isLiked)
+	}, [message.isLiked])
+
+	const handleAddToFavorites = async () => {
 		try {
-			toggleFavorite({ chatId: activeChatId, messageId: message.id })
+			console.log('Save button clicked:', { chatId: activeChatId, messageId: message.id, isLiked })
+			await toggleFavorite({ chatId: activeChatId, messageId: message.id })
+			console.log('toggleFavorite completed successfully')
 			toast.success('Успешно добавлено в избранное', {
-				duration: 10000
+				duration: 3000
 			})
 			setIsLiked(true)
 		} catch (e) {
-			console.error(e)
-			toast.success('Произошла ошибка, попробуйте позже', {
+			console.error('Error saving to favorites:', e)
+			toast.error('Произошла ошибка, попробуйте позже', {
 				duration: 10000
 			})
 			setIsLiked(false)
@@ -77,7 +85,8 @@ export const MessageItem = ({
 			[styles.leftMessage]: !message.isUser,
 			[styles.rightMessageCollapsed]: isCollapsed && message.isUser,
 			[styles.leftMessageCollapsed]: isCollapsed && !message.isUser,
-			[styles.favorableMessage]: isFavorable && isLast
+			[styles.favorableMessage]: isFavorable,
+			[styles.lastAiMessage]: isLast && !message.isUser // Добавляем margin-bottom ТОЛЬКО для последнего сообщения ИИ
 		})
 	}
 
@@ -114,48 +123,48 @@ export const MessageItem = ({
 			{
 				// Loading dots for the last message
 				isLast &&
-					!message.isUser &&
-					(isSendMessageLoading || isRegenerating) && (
-						<div className={styles.loadingDots}>
-							<span>.</span>
-							<span>.</span>
-							<span>.</span>
-						</div>
-					)
+				!message.isUser &&
+				(isSendMessageLoading || isRegenerating) && (
+					<div className={styles.loadingDots}>
+						<span className={styles.loadingText}>Пожалуйста, подождите</span>
+						<span className={styles.dot}>.</span>
+						<span className={styles.dot}>.</span>
+						<span className={styles.dot}>.</span>
+					</div>
+				)
 			}
 
 			{
-				// Left panel buttons
-				isFavorable && isLast && (
+				// Left panel buttons - removed isLast condition
+				isFavorable && (
 					<div
 						className={cn(styles.leftMessagePanel, {
 							// [styles.hiddenWhileRenaming]: isRenaming,
 							[styles.lightLeftMessagePanel]: !isDarkMode
 						})}
 					>
-						{isLiked ? null : (
-							<div className={styles.buttonWithText}>
-								<button
-									className={cn(
-										styles.leftMessagePanelButton,
-										styles.firstButton
-									)}
-									onClick={handleAddToFavorites}
-								>
-									<Image
-										src={
-											!isDarkMode
-												? '/icons/forMealPlans/active-light-like.png'
-												: '/icons/forMealPlans/active-like.png'
-										}
-										alt='Add to favorites'
-										width={28}
-										height={28}
-									/>
-								</button>
-								<span className={styles.buttonText}>Сохранить</span>
-							</div>
-						)}
+						<button
+							className={cn(
+								styles.leftMessagePanelButton,
+								styles.firstButton
+							)}
+							onClick={handleAddToFavorites}
+							disabled={isLiked}
+						>
+							<Image
+								src={
+									!isDarkMode
+										? '/icons/forMealPlans/active-light-like.png'
+										: '/icons/forMealPlans/active-like.png'
+								}
+								alt='Add to favorites'
+								width={28}
+								height={28}
+							/>
+							<span className={styles.buttonText}>
+								{isLiked ? 'Сохранено' : 'Сохранить'}
+							</span>
+						</button>
 					</div>
 				)
 			}

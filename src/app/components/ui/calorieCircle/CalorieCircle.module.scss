@@ -6,6 +6,12 @@
 	width: 260px;
 	height: 260px;
 	padding: 20px 50px 50px;
+
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+	}
 }
 
 .calorieTitle {
@@ -16,6 +22,7 @@
 	text-align: center;
 	justify-content: center;
 	padding-bottom: 20px;
+	white-space: nowrap;
 }
 
 .calorieTextIcon {

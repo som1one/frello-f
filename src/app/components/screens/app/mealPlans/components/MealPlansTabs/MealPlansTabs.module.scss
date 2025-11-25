@@ -19,6 +19,8 @@
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	background: var(--white-02);
+	/* В темной теме: rgba(255, 255, 255, 0.02) - виден на темном фоне */
+	/* В светлой теме: #f4f4f4 - переопределено в globals.scss */
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -26,6 +28,14 @@
 
 	&:hover .menuIcon {
 		opacity: 1;
+	}
+
+	// В светлой теме делаем фон контейнера более заметным
+	:global(body.light-theme) &,
+	:global(html.light) &,
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Более темный серый фон контейнера для лучшей видимости в светлой теме */
 	}
 }
 
@@ -62,6 +72,27 @@
 		color: white;
 		font-weight: bold;
 		background: none;
+	}
+
+	// В светлой теме кнопки должны быть темнее контейнера, чтобы был виден контраст
+	// Контейнер в светлой теме: #e8e8e8
+	// Кнопки должны быть темнее, чтобы был виден фон контейнера между ними
+	:global(body.light-theme) &,
+	:global(html.light) &,
+	:global(.light-theme) & {
+		background: #d5d5d5 !important;
+		/* Серый фон для каждой кнопки, темнее контейнера (#e8e8e8) для видимости */
+		box-shadow: none !important;
+
+		&:hover {
+			background: #c8c8c8 !important;
+			/* Темнее при наведении */
+		}
+
+		&.activeTab {
+			background: none !important;
+			box-shadow: none !important;
+		}
 	}
 }
 

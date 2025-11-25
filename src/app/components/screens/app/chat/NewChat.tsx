@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import useIsMobile from '@/hooks/useIsMobile'
@@ -18,6 +19,7 @@ import { useChat } from '@/feature/chat/model/useChat'
 import { ModalWithTransition } from '@/shared/ui/ModalWithTransition/ModalWithTransition'
 
 export const NewChat = () => {
+	const searchParams = useSearchParams()
 	const {
 		chats: chatList,
 		deleteChat,
@@ -65,6 +67,16 @@ export const NewChat = () => {
 	useEffect(() => {
 		setIsSettingsModalOpen(!isSettingsFilled)
 	}, [isSettingsFilled])
+
+	// Auto-send message from query parameter
+	useEffect(() => {
+		const message = searchParams.get('message')
+		if (message && activeChatId && !isSendMessageLoading) {
+			sendMessage(message)
+			// Clear query parameter after sending
+			window.history.replaceState({}, '', '/chat')
+		}
+	}, [searchParams, activeChatId, sendMessage, isSendMessageLoading])
 
 	if (isChatListLoading) {
 		return <Loading />

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { NutrientBalance } from './NutrientBalance/NutrientBalance'
 import styles from './Recipe.module.scss'

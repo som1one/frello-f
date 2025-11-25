@@ -5,31 +5,23 @@
 @import 'styles/mixins';
 
 :root {
-	--main-gradient: linear-gradient(
-		to bottom right,
-		var(--orange),
-		var(--lightOrange)
-	);
+	--main-gradient: linear-gradient(to bottom right,
+			var(--orange),
+			var(--lightOrange));
 	--nav-width: 260px;
 	--bg-tertiary: rgba(255, 255, 255, 0.01);
 
 	--orange: #f9881f;
 	--lightOrange: #ff774c;
-	--reverse-main-gradient: linear-gradient(
-		to bottom right,
-		var(--lightOrange),
-		var(--orange)
-	);
-	--light-main-gradient: linear-gradient(
-		to bottom right,
-		var(--orange),
-		#f3fbd2
-	);
-	--light-gradient: linear-gradient(
-		to bottom right,
-		rgba(0, 0, 0, 0.13),
-		#f3fbd2
-	);
+	--reverse-main-gradient: linear-gradient(to bottom right,
+			var(--lightOrange),
+			var(--orange));
+	--light-main-gradient: linear-gradient(to bottom right,
+			var(--orange),
+			#f3fbd2);
+	--light-gradient: linear-gradient(to bottom right,
+			rgba(0, 0, 0, 0.13),
+			#f3fbd2);
 	--main-dark-bg: #0d0e11;
 	--main-bg: #f6f7fa;
 	--second-text: #747781;
@@ -37,8 +29,8 @@
 	--light-13-bg: rgba(139, 140, 145, 0.13);
 	--light-06-bg: rgba(139, 140, 145, 0.06);
 	--white-01: rgba(255, 255, 255, 0.01);
-	--white-02: rgba(255, 255, 255, 0.02);
-	--white-05: rgba(255, 255, 255, 0.05);
+	--white-02: #f4f4f4;
+	--white-05: #f4f4f4;
 	--dark-20-bg: rgba(0, 0, 0, 0.2);
 	--dark-30-bg: rgba(0, 0, 0, 0.3);
 	--border-input: #3f3f46;
@@ -63,7 +55,7 @@
 	--tab-bg: rgba(139, 140, 145, 0.06);
 	--tab-bg-hover: rgba(139, 140, 145, 0.13);
 	--tab-bg-secondary: #eae8e8;
-	--input-bg: #f8f8f9;
+	--input-bg: #f4f4f4;
 	--input-text: #0d0e11;
 	--message-bg: rgba(0, 0, 0, 0.05);
 	--btn-bg: #f8f8f9;
@@ -89,22 +81,40 @@
 	--tab-bg-secondary: rgba(0, 0, 0, 0.2);
 	--input-bg: rgba(255, 255, 255, 0.02);
 	--input-text: #747781;
-	--message-bg: rgba(255, 255, 255, 0.02);;
+	--message-bg: rgba(255, 255, 255, 0.02);
+	;
 	--btn-bg: #151619;
 	--white-05: rgba(255, 255, 255, 0.02);
 	--dark-100-bg: rgba(24, 24, 24, 0.8);
+	--white-02: rgba(255, 255, 255, 0.02);
 }
 
 body {
-	@include size(100svw, auto);
+	width: 100%;
+	height: 100%;
 	margin: 0;
 	/* background: var(--main-bg); */
 	background: var(--bg);
 	overflow-x: hidden;
+	/* СКРОЛЛ РАБОТАЕТ! убрали overflow-y: hidden */
 	color: white;
 	position: relative;
 	accent-color: var(--orange);
 	font-weight: 500;
+	touch-action: pan-y; // Разрешаем вертикальный скролл на touch устройствах
+
+	/* Скрываем ВИЗУАЛЬНО скроллбар, но скролл работает */
+	scrollbar-width: none !important;
+	/* Firefox */
+	-ms-overflow-style: none !important;
+	/* IE 10+ */
+
+	&::-webkit-scrollbar {
+		display: none !important;
+		/* Chrome/Safari/Webkit */
+		width: 0 !important;
+		height: 0 !important;
+	}
 }
 
 * {
@@ -117,9 +127,27 @@ body {
 }
 
 html {
-	background-color: var(
-		--scroll-bg
-	); // Sets the background color for the over-scroll area
+	background-color: var(--scroll-bg); // Sets the background color for the over-scroll area
+	touch-action: pan-y; // Разрешаем вертикальный скролл на touch устройствах
+	overflow-x: hidden;
+	/* СКРОЛЛ РАБОТАЕТ! убрали overflow-y: hidden */
+	width: 100%;
+	height: 100%;
+}
+
+/* Глобальное скрытие скроллбара для всех элементов */
+* {
+	scrollbar-width: none !important;
+	/* Firefox */
+	-ms-overflow-style: none !important;
+	/* IE 10+ */
+}
+
+*::-webkit-scrollbar {
+	display: none !important;
+	/* Chrome/Safari/Webkit */
+	width: 0 !important;
+	height: 0 !important;
 }
 
 button,
@@ -218,10 +246,20 @@ input[type='number'] {
 	@include size(100svw, auto);
 }
 
+// Светлая тема - применяется к html и body
+// Убеждаемся, что переменные применяются с правильной специфичностью
+html.light,
+html.light body,
+body.light-theme,
+.light-theme {
+	--white-02: #f4f4f4; // Серый фон для контейнеров в светлой теме
+	--input-bg: #f4f4f4; // Серый фон для инпутов и блоков в светлой теме
+	--white-05: #f4f4f4; // Серый фон для светлой темы
+}
+
 .light-theme {
 	--main-dark-bg: #f1f1f1;
 	color: #3b3b3b;
-	--white-02: white;
 }
 
 ::selection {

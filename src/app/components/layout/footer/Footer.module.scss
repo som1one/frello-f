@@ -1,9 +1,10 @@
-
 .container {
-  background-color: var(--main-dark-bg);
+  // background-color: var(--main-dark-bg); // Removed to allow global background and circles to show
   color: #ffffff;
   padding: 60px 300px;
   margin-top: 50px;
+  position: relative; // Для правильного stacking context
+  z-index: 1; // Ниже кругов (которые на z-index: 10 когда видимы)
 
   @media (max-width: 1660px) {
     padding: 60px 170px;
@@ -32,6 +33,8 @@
   align-items: center;
   text-align: center;
   padding: 48px 16px 170px;
+  position: relative; // Для правильного позиционирования
+  z-index: 1; // Ниже кругов, но выше фона
 
   @media (max-width: 830px) {
     padding: 48px 16px 110px;
@@ -113,15 +116,19 @@
   @media (max-width: 500px) {
     font-size: 33px;
   }
+
   @media (max-width: 420px) {
     font-size: 30px;
   }
+
   @media (max-width: 400px) {
     font-size: 28px;
   }
+
   @media (max-width: 380px) {
     font-size: 25px;
   }
+
   @media (max-width: 370px) {
     font-size: 24px;
   }

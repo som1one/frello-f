@@ -2,8 +2,74 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	position: relative;
+	overflow: hidden;
+	z-index: 1; // Ensure container and its children are above circles
 }
 
-motion.div {
-	width: 100%;
+// Background circles - same as in app
+// Positioned at end of DOM but visually appear near first block
+.circle1,
+.circle2 {
+	position: fixed;
+	background-color: var(--orange);
+	border-radius: 50%;
+	filter: blur(130px);
+	opacity: 0.5;
+	z-index: -1; // Negative z-index to be behind all content including images
+	pointer-events: none;
+	transform: scale(1); // Для плавного эффекта
 }
+
+// Когда пользователь на футере, круги показываются
+.circle1.circleVisible,
+.circle2.circleVisible {
+	// z-index: 100 !important; // Removed to keep circles behind content
+	opacity: 0.5; // Сохраняем видимость
+	transform: scale(1); // Сохраняем масштаб
+}
+
+// Когда пользователь прошёл Hero секцию, круги уходят на задний план
+.circle1.circleBehind,
+.circle2.circleBehind {
+	z-index: -1 !important; // Уходят за контент
+	opacity: 0.3; // Уменьшаем прозрачность для более незаметного перехода
+}
+
+.circle1 {
+	// Right corner under profile button
+	top: 5%;
+	right: 5%;
+	width: 350px;
+	height: 350px;
+
+	@media (max-width: 1024px) {
+		width: 300px;
+		height: 300px;
+	}
+
+	@media (max-width: 500px) {
+		width: 250px;
+		height: 250px;
+	}
+}
+
+.circle2 {
+	// Left side below "Попробовать бесплатно" button
+	top: 50%;
+	left: -5%;
+	width: 400px;
+	height: 400px;
+
+	@media (max-width: 1024px) {
+		width: 350px;
+		height: 350px;
+	}
+
+	@media (max-width: 500px) {
+		width: 300px;
+		height: 300px;
+	}
+}
+
+// Секции теперь обычные div без анимаций

@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
-	deleteDishFromFavorite,
-	fetchDishes
+	fetchDishes,
+	toggleFavoriteDish
 } from '@/feature/dishes/model/dishes-api'
 
 export const useFavoriteDishes = () => {
@@ -17,8 +17,11 @@ export const useFavoriteDishes = () => {
 	})
 
 	const { mutate: deleteDish } = useMutation({
-		mutationFn: deleteDishFromFavorite,
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['dishes'] })
+		mutationFn: toggleFavoriteDish, // Use toggle instead of delete to preserve dish
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['dishes'] })
+			queryClient.invalidateQueries({ queryKey: ['plans'] }) // Update meal plans
+		}
 	})
 
 	return {

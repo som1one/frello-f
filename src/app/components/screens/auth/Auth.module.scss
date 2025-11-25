@@ -9,6 +9,18 @@
 	padding: 20px;
 	color: white;
 	box-sizing: border-box;
+
+	/* Скролл только для мобильных устройств */
+	@media (max-width: 768px) {
+		height: auto;
+		min-height: 100svh;
+		overflow-y: auto;
+		overflow-x: hidden;
+		-webkit-overflow-scrolling: touch;
+		align-items: flex-start;
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
 }
 
 .wrapper {
@@ -23,8 +35,10 @@
 	padding: 40px 50px;
 	background: var(--white-01);
 	border-radius: 28px;
-	overflow: hidden; /* Чтобы элементы не выходили за пределы */
-	transition: height 0.3s ease; /* Плавное изменение высоты */
+	overflow: hidden;
+	/* Чтобы элементы не выходили за пределы */
+	transition: height 0.3s ease;
+	/* Плавное изменение высоты */
 
 	@media (max-width: 1050px) {
 		scale: 1.4;
@@ -45,7 +59,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 24px; /* Фиксированная высота кнопки */
+	height: 24px;
+	/* Фиксированная высота кнопки */
 
 	@media (max-width: 333px) {
 		margin-top: 12px;
@@ -53,13 +68,17 @@
 }
 
 .eyeIcon {
-	width: 24px; /* Фиксированная ширина иконки */
-	height: 24px; /* Фиксированная высота иконки */
-	transition: transform 0.5s ease; /* Плавное увеличение */
+	width: 24px;
+	/* Фиксированная ширина иконки */
+	height: 24px;
+	/* Фиксированная высота иконки */
+	transition: transform 0.5s ease;
+	/* Плавное увеличение */
 }
 
 .eyeButton:hover .eyeIcon {
-	transform: scale(1.1); /* Увеличение иконки */
+	transform: scale(1.1);
+	/* Увеличение иконки */
 }
 
 .form {
@@ -187,6 +206,7 @@
 		opacity: 0;
 		transform: scale(0.9);
 	}
+
 	to {
 		opacity: 1;
 		transform: scale(1);
@@ -198,6 +218,7 @@
 		opacity: 1;
 		transform: scale(1);
 	}
+
 	to {
 		opacity: 0;
 		transform: scale(0.9);
@@ -255,4 +276,17 @@
 	color: var(--text);
 	text-decoration: underline;
 	word-break: break-word;
+}
+
+.promoIndicator {
+	position: absolute;
+	right: 20px;
+	margin-top: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	pointer-events: none;
+
+	@media (max-width: 333px) {
+		margin-top: 12px;
+	}
 }

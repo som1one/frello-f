@@ -12,7 +12,7 @@ export const mealPlanKeywords =
 export const ingredientKeywords =
 	/(Ингредиенты|Инструкция приготовления|Инструкция\s*\n*\s*приготовления|Время приготовления):/gi
 export const nutritionKeywords =
-	/(Количество белков, жиров, углеводов|Количество килокалорий на 100 ?г(рамм)?):/gi
+	/(Количество\s+белков,\s+жиров,\s+углеводов|Количество\s+килокалорий\s+на\s+100\s*г(рамм)?):/gi
 
 // Слова для левой панели сообщений
 export const leftMessagePanelWords =
@@ -21,7 +21,16 @@ export const leftMessagePanelWords =
 export const dayKeywords = /(День \d+)/gi
 
 export const highlightText = (text: string): string => {
-	const highlightedText = text
+	// Сначала нормализуем текст: убираем переносы строк в заголовках и после них
+	let normalizedText = text
+		// Нормализуем "Инструкция приготовления:" - убираем переносы внутри строки заголовка
+		.replace(/Инструкция\s*\n+\s*приготовления:\s*/gi, 'Инструкция приготовления:\n')
+		// Убираем переносы строки сразу после "Количество белков, жиров, углеводов:" чтобы белки были в той же строке
+		.replace(/(Количество\s+белков,\s+жиров,\s+углеводов:\s*)\n+\s*/gi, '$1')
+		// Убираем переносы строки сразу после "Количество килокалорий на порцию:"
+		.replace(/(Количество\s+килокалорий\s+на\s+порцию:\s*)\n+\s*/gi, '$1 ')
+
+	const highlightedText = normalizedText
 		.replace(
 			mealKeywords,
 			match => `<span style="color: #F9881F; font-weight: 700;">${match}</span>`
@@ -36,14 +45,18 @@ export const highlightText = (text: string): string => {
 		)
 		.replace(
 			ingredientKeywords,
-			match => `<span style="color: #F9881F; font-weight: 700;">${match}</span>`
+			match => `<span style="color: #F9881F; font-weight: 700;">${match.replace(/\s+/g, ' ').trim()}</span>`
 		)
 		.replace(
-			/(Количество килокалорий на порцию:)/gi,
-			match => `<span style="color: #F9881F; font-weight: 700;">${match}</span>`
+			/(Количество\s+килокалорий\s+на\s+порцию:)/gi,
+			match => `<span style="color: #F9881F; font-weight: 700;">${match.replace(/\s+/g, ' ').trim()}</span>`
 		)
 		.replace(
 			nutritionKeywords,
+			match => `<span style="color: #F9881F; font-weight: 700;">${match.replace(/\s+/g, ' ').trim()}</span>`
+		)
+		.replace(
+			/(белки|жиры|углеводы):/gi,
 			match => `<span style="color: #F9881F; font-weight: 700;">${match}</span>`
 		)
 		.replace(

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import styles from './index.module.scss'
 import { UICheckbox } from '@/shared/ui'
@@ -10,6 +10,25 @@ interface PropTypes {
 
 export const DishInstructions = ({ instruction }: PropTypes) => {
 	const [checkedItems, setCheckedItems] = useState<boolean[]>([])
+	const storageKey = typeof window !== 'undefined' ? 'dishInstructionsChecked-' + (window.location.pathname || '') : '';
+
+	useEffect(() => {
+		if (!storageKey) return;
+		const saved = localStorage.getItem(storageKey)
+		if (saved) {
+			try {
+				const arr = JSON.parse(saved)
+				if (Array.isArray(arr)) setCheckedItems(arr)
+			} catch { }
+		}
+		// eslint-disable-next-line
+	}, [])
+
+	useEffect(() => {
+		if (storageKey) {
+			localStorage.setItem(storageKey, JSON.stringify(checkedItems))
+		}
+	}, [checkedItems, storageKey])
 
 	const handleCheckboxChange = (index: number) => {
 		setCheckedItems(prev => {

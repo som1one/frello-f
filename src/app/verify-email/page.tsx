@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { axiosClassic } from '@/api/interceptors'
 
@@ -12,6 +12,14 @@ export default function VerifyEmail() {
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState('')
 	const [codeSent, setCodeSent] = useState(false)
+
+	// Автоматически получаем email из localStorage при загрузке
+	useEffect(() => {
+		const savedEmail = localStorage.getItem('email')
+		if (savedEmail) {
+			setEmail(savedEmail)
+		}
+	}, [])
 
 	const handleResend = async () => {
 		if (!email) return setMessage('Введите email')
@@ -41,9 +49,11 @@ export default function VerifyEmail() {
 			setMessage('Email подтверждён! Перенаправление...')
 			// Сохраняем токены (если возвращаются)
 			localStorage.setItem('accessToken', res.data.accessToken)
+			// Удаляем email из localStorage после успешной верификации
+			localStorage.removeItem('email')
 			// Редирект через 1.5 сек
 			setTimeout(() => {
-				window.location.href = '/chat' // или куда нужно
+				window.location.href = '/chat'
 			}, 1500)
 		} catch (err: any) {
 			setMessage(err.response?.data?.message || 'Неверный код')

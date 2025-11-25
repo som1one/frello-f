@@ -5,7 +5,7 @@ import { AxiosError } from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -28,6 +28,10 @@ export function Register() {
 	const [showPassword, setShowPassword] = useState(false)
 	const [showRepeatPassword, setShowRepeatPassword] = useState(false)
 	const [serverError, setServerError] = useState<string | null>(null)
+	const [promoValidation, setPromoValidation] = useState<{
+		isValidating: boolean
+		isValid: boolean | null
+	}>({ isValidating: false, isValid: null })
 	const { push } = useRouter()
 
 	const {
@@ -69,6 +73,30 @@ export function Register() {
 			toast.error(errorMessage)
 		}
 	})
+
+	// Debounced promo code validation
+	const promoCode = watch('promoCode')
+	useEffect(() => {
+		if (!promoCode || promoCode.trim() === '') {
+			setPromoValidation({ isValidating: false, isValid: null })
+			return
+		}
+
+		setPromoValidation({ isValidating: true, isValid: null })
+		const timer = setTimeout(async () => {
+			try {
+				const response = await fetch(
+					`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/validate-promo/${promoCode.toUpperCase()}`
+				)
+				const data = await response.json()
+				setPromoValidation({ isValidating: false, isValid: data.valid })
+			} catch (error) {
+				setPromoValidation({ isValidating: false, isValid: false })
+			}
+		}, 500) // 500ms debounce
+
+		return () => clearTimeout(timer)
+	}, [promoCode])
 
 	const onSubmit = (data: IAuthForm) => {
 		if (data.password !== data.repeatPassword) {
@@ -239,13 +267,33 @@ export function Register() {
 												'Промокод может содержать только буквы, цифры, дефис или подчеркивание'
 										}
 									}}
-									render={({ field }) => (
-										<input
-											type='text'
-											placeholder='Промокод (не обязательно)'
-											className={styles.input}
-											{...field}
-										/>
+									render={({ field: { onChange, value, ...rest } }) => (
+										<div className={styles.passwordWrapper}>
+											<input
+												type='text'
+												placeholder='Промокод (не обязательно)'
+												className={styles.input}
+												value={value}
+												onChange={(e) => onChange(e.target.value.toUpperCase())}
+												style={{ textTransform: 'uppercase' }}
+												{...rest}
+											/>
+											{promoValidation.isValidating && (
+												<span className={styles.promoIndicator} style={{ color: '#888' }}>
+													⏳
+												</span>
+											)}
+											{!promoValidation.isValidating && promoValidation.isValid === true && (
+												<span className={styles.promoIndicator} style={{ color: '#4ade80' }}>
+													✓
+												</span>
+											)}
+											{!promoValidation.isValidating && promoValidation.isValid === false && value && (
+												<span className={styles.promoIndicator} style={{ color: '#f87171' }}>
+													✗
+												</span>
+											)}
+										</div>
 									)}
 								/>
 								{errors.promoCode && (

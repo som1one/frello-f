@@ -1,14 +1,9 @@
-/* eslint-env node */
-import path from 'path'
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	sassOptions: {
-		includePaths: [path.join(process.cwd(), 'styles')]
-	},
-	env: {
-		SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL
-	}
-}
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+};
 
-export default nextConfig
+export default nextConfig;

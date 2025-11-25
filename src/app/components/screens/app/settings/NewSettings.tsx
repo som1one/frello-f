@@ -2,11 +2,11 @@
 
 import clsx from 'clsx'
 import { FormProvider } from 'react-hook-form'
+import { useState } from 'react'
 
 import { useNavigationGuardWithPopstate } from '@/hooks/useNavigationGuardWithPopState'
 
 import styles from './NewSettings.module.scss'
-import { AdvancedSettings } from './components/AdvancedSettings/AdvancedSettings'
 import { BirthdateField } from './components/BirthdateField/BirthdateField'
 import { EmailAndPasswordSection } from './components/EmailAndPasswordSection/EmailAndPasswordSection'
 import { ExitSettingsModal } from './components/ExitSettingsModal/ExitSettingsModal'
@@ -15,9 +15,11 @@ import { Form } from './components/Form/Form'
 import { GenderTabs } from './components/GenderTabs/GenderTabs'
 import { InputWithUnit } from './components/InputWithUnit/InputWithUnit'
 import { FieldConfig, formFieldsConfig } from './model/formFieldsConfig'
-import { flexibleDayFrequencyOptions } from './model/options'
+import { flexibleDayFrequencyOptions, nutritionGoalOptions } from './model/options'
 import { useSettingsForm } from './model/useSettingsForm'
 import { Btn, ModalWithTransition } from '@/shared/ui'
+import { ThemeToggle } from '@/app/components/ThemeToggle/ThemeToggle'
+import { FlexibleDaysInfoModal } from './components/FlexibleDaysInfoModal/FlexibleDaysInfoModal'
 
 export default function NewSettings() {
 	const {
@@ -39,23 +41,17 @@ export default function NewSettings() {
 		handleSaveAndExit
 	} = useNavigationGuardWithPopstate(isDirty, reset, settings, onSubmit)
 
-	const additionTabs = [
-		'Витамины',
-		'Минералы',
-		'Холестерин и липиды',
-		'Сахар и углеводный обмен',
-		'Гормоны',
-		'Белок и аминокислоты',
-		'Воспаление и маркеры здоровья',
-		'Антиоксиданты и стресс'
-	]
+	const [isFlexibleDaysModalOpen, setIsFlexibleDaysModalOpen] = useState(false)
+
+
 
 	const multiSelectFields = formFieldsConfig.filter(
 		(field): field is FieldConfig =>
 			'type' in field &&
 			field.type === 'multiSelect' &&
 			field.name !== 'flexibleDayType' &&
-			field.name !== 'flexibleDays'
+			field.name !== 'flexibleDays' &&
+			field.name !== 'nutritionGoal' // Exclude nutritionGoal - it's rendered separately
 	)
 	const numberFields = formFieldsConfig.filter(
 		(field): field is FieldConfig =>
@@ -83,43 +79,60 @@ export default function NewSettings() {
 							>
 								Сохранить
 							</button>
+							<div className="md:hidden mt-3 flex justify-center">
+								<ThemeToggle />
+							</div>
 						</div>
 					</div>
 
 					<div className='flex flex-col md:flex-row gap-2 w-full'>
 						<div className={styles.section}>
-							<EmailAndPasswordSection />
-							<div className={styles.section_wrapper}>
-								<GenderTabs
-									name='gender'
-									label='Пол'
-								/>
-								<BirthdateField
-									name='birthdate'
-									label='Дата рождения'
-									placeholder='ДД.ММ.ГГГГ'
-								/>
-							</div>
-							<div className='flex flex-col justify-between max-[1400px]:w-full gap-4'>
-								{numberFields.map(field => {
-									if (
-										field.type === 'number' &&
-										field.placeholder &&
-										field.unit
-									) {
-										return (
-											<InputWithUnit
-												key={field.name}
-												label={field.label}
-												id={field.name}
-												name={field.name}
-												unit={field.unit}
-												placeholder={field.placeholder}
-											/>
-										)
-									}
-									return null
-								})}
+							<div className={styles.personalInfoGrid}>
+								{/* Left Column - Personal Data */}
+								<div className={styles.leftColumn}>
+									<EmailAndPasswordSection />
+									<GenderTabs
+										name='gender'
+										label='Пол'
+									/>
+									<BirthdateField
+										name='birthdate'
+										label='Дата рождения'
+										placeholder='ДД.ММ.ГГГГ'
+									/>
+								</div>
+								{/* Right Column - Physical Parameters */}
+								<div className={styles.rightColumn}>
+									{numberFields.map(field => {
+										if (
+											field.type === 'number' &&
+											field.placeholder &&
+											field.unit
+										) {
+											return (
+												<InputWithUnit
+													key={field.name}
+													label={field.label}
+													id={field.name}
+													name={field.name}
+													unit={field.unit}
+													placeholder={field.placeholder}
+													min={field.min}
+													max={field.max}
+													maxLength={field.maxLength}
+												/>
+											)
+										}
+										return null
+									})}
+									<Field
+										name='nutritionGoal'
+										label='Цель в питании'
+										options={nutritionGoalOptions}
+										placeholder='Выберите цель в питании'
+										type='multiSelect'
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -134,7 +147,9 @@ export default function NewSettings() {
 									name={mealFrequencyField.name}
 									unit={mealFrequencyField.unit}
 									placeholder={mealFrequencyField.placeholder}
-									max={6}
+									min={mealFrequencyField.min}
+									max={mealFrequencyField.max}
+									maxLength={mealFrequencyField.maxLength}
 								/>
 							)}
 					</div>
@@ -153,6 +168,7 @@ export default function NewSettings() {
 							options={flexibleDayFrequencyOptions}
 							placeholder='Выберите частоту гибких дней'
 							type='singleSelect'
+							onInfoClick={() => setIsFlexibleDaysModalOpen(true)}
 						/>
 						{flexibleDayFrequency !== 'Без гибких дней' &&
 							['flexibleDayType', 'flexibleDays'].map(fieldName => {
@@ -167,26 +183,48 @@ export default function NewSettings() {
 										options={field.options || []}
 										placeholder={field.placeholder || ''}
 										type={field.type as 'singleSelect' | 'multiSelect'}
+										onInfoClick={() => setIsFlexibleDaysModalOpen(true)}
 									/>
 								) : null
 							})}
 					</div>
 
-					<div className='grid max-[900px]:w-full max-[900px]:grid-cols-1 max-[1450px]:grid-cols-2 min-[1450px]:grid-cols-3 gap-4'>
-						{multiSelectFields.map(field => (
-							<Field
-								key={field.name}
-								name={field.name}
-								label={field.label}
-								options={field.options || []}
-								placeholder={field.placeholder || ''}
-							/>
-						))}
-					</div>
+					<div className={styles.multiSelectGrid}>
+						{multiSelectFields.map(field => {
+							let label = field.label
+							if (field.name === 'nutritionPreferences') {
+								label = (
+									<>
+										<span className='hidden sm:inline'>
+											Предпочтения по калорийности и макронутриентам
+										</span>
+										<span className='sm:hidden'>Предпочтения по КБЖУ</span>
+									</>
+								) as any
+							} else if (field.name === 'seasonalPreferences') {
+								label = (
+									<>
+										<span className='hidden sm:inline'>
+											Сезонные и экологические предпочтения
+										</span>
+										<span className='sm:hidden'>Сезонные предпочтения</span>
+									</>
+								) as any
+							}
 
-					<AdvancedSettings additionTabs={additionTabs} />
+							return (
+								<Field
+									key={field.name}
+									name={field.name}
+									label={label}
+									options={field.options || []}
+									placeholder={field.placeholder || ''}
+								/>
+							)
+						})}
+					</div>
 				</Form>
-			</FormProvider>
+			</FormProvider >
 			<ExitSettingsModal
 				isOpen={isModalOpen}
 				onClose={handleExitWithoutSaving}
@@ -214,6 +252,10 @@ export default function NewSettings() {
 					<Btn onClick={() => setIsValidationModalOpen(false)}>Закрыть</Btn>
 				</div>
 			</ModalWithTransition>
+			<FlexibleDaysInfoModal
+				isOpen={isFlexibleDaysModalOpen}
+				onClose={() => setIsFlexibleDaysModalOpen(false)}
+			/>
 		</>
 	)
 }

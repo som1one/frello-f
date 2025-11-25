@@ -28,7 +28,7 @@ export function ButtonUnpainted() {
 	)
 }
 
-export function StartButton() {
+export function StartButton({ text = 'Начать' }: { text?: string }) {
 	const [token, setToken] = useState<string | null>(null)
 	useEffect(() => {
 		setToken(getAccessToken() || null)
@@ -41,14 +41,14 @@ export function StartButton() {
 					href='/chat'
 					className={styles.startButton}
 				>
-					Начать
+					{text}
 				</Link>
 			) : (
 				<Link
 					href='/login'
 					className={styles.startButton}
 				>
-					Начать
+					{text}
 				</Link>
 			)}
 		</>

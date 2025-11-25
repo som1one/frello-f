@@ -1,0 +1,271 @@
+@import '../../../styles/mixins';
+
+.reviews {
+    padding: 100px 0;
+    background: transparent;
+    /* Blend with landing background */
+    position: relative;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+        padding: 60px 0;
+    }
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-size: 58px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    @include platinum-gradient-text;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.carouselWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        gap: 0;
+        padding: 0 10px;
+        /* Add some padding to wrapper so card doesn't touch screen edges */
+    }
+}
+
+.carousel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    overflow: hidden;
+    flex: 1;
+    /* Take available space */
+    min-width: 0;
+    /* Allow shrinking below content size */
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.arrow {
+    background: var(--main-gradient);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 10;
+
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 20px rgba(249, 136, 31, 0.4);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    @media (max-width: 768px) {
+        position: absolute;
+        top: 125px;
+        /* Center of image height (250px / 2) */
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        z-index: 20;
+
+        &:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        &:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+    }
+}
+
+.arrowLeft {
+    @media (max-width: 768px) {
+        left: 10px;
+    }
+}
+
+.arrowRight {
+    @media (max-width: 768px) {
+        right: 10px;
+    }
+}
+
+.card {
+    background: var(--white-02);
+    border-radius: 30px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 0.3s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 768px) {
+        padding: 16px;
+        gap: 12px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        min-width: unset;
+        max-width: none;
+        margin: 0;
+    }
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+        height: 250px;
+        border-radius: 16px;
+        width: 100%;
+    }
+}
+
+.image {
+    object-fit: cover;
+    transition: transform 0.5s ease;
+
+    .card:hover & {
+        transform: scale(1.05);
+    }
+}
+
+// Specific positioning for images where faces are cut off
+.imagePositionTop {
+    object-position: center 20%; // Move image down to show face
+}
+
+.imagePositionCenter {
+    object-position: center 18%; // Show top part of image (faces) - lower value
+}
+
+.imagePositionLower {
+    object-position: center 15%; // Show even more of top (face area)
+}
+
+.imageZoomOut {
+    object-fit: cover; // Keep cover but adjust position
+    object-position: center 15%; // Show top part with face - lower value
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 12px;
+}
+
+.stars {
+    display: flex;
+    gap: 4px;
+}
+
+.star {
+    color: #FFD700; // Gold color for stars
+    font-size: 18px;
+}
+
+.text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    flex-grow: 1;
+    font-style: italic;
+    opacity: 0.9;
+
+    @media (max-width: 768px) {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+.author {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+}
+
+.role {
+    font-size: 14px;
+    color: var(--orange);
+    font-weight: 500;
+}
+
+@media (max-width: 500px) {
+    .reviews {
+        padding: 60px 0;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .card {
+        min-width: unset;
+        width: 100%;
+    }
+}

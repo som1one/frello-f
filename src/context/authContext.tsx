@@ -32,7 +32,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		'/login',
 		'/reset-password',
 		'/forgot-password',
-		'/register'
+		'/register',
+		'/' // добавить лендинг
+	]
+
+	const protectedRoutes = [
+		'/chat',
+		'/mealPlans',
+		'/favoriteDishes',
+		'/settings',
+		'/progress',
+		'/shoppingList'
 	]
 
 	useEffect(() => {
@@ -41,7 +51,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 		setIsAuthenticated(!!token)
 
-		if (!token && !publicRoutes.includes(pathname)) {
+		// Редирект только если путь защищён
+		if (!token && protectedRoutes.some((route: string) => pathname.startsWith(route))) {
 			router.push('/login')
 		}
 	}, [router])
@@ -54,6 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const logout = () => {
 		localStorage.removeItem('accessToken')
+		localStorage.removeItem('refreshToken')
 		document.cookie = 'accessToken=; path=/; max-age=0'
 		setIsAuthenticated(false)
 		router.push('/login')

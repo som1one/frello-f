@@ -160,3 +160,39 @@
 		background-color: transparent;
 	}
 }
+
+.closeButton {
+	position: absolute;
+	left: 24px;
+	top: 24px;
+	z-index: 3;
+	width: 36px;
+	height: 36px;
+	background: var(--btn-bg);
+	color: var(--text);
+	border: none;
+	border-radius: 50%;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, .08);
+	cursor: pointer;
+	font-size: 28px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	transition: background 0.2s;
+
+	&:hover,
+	&:focus {
+		background: var(--tab-bg-hover);
+		color: var(--orange);
+	}
+
+	@media (max-width: 460px) {
+		width: 28px;
+		height: 28px;
+		left: 10px;
+		top: 10px;
+		font-size: 22px;
+	}
+}

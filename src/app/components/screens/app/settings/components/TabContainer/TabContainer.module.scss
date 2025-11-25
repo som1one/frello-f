@@ -1,6 +1,6 @@
 .tabContainer {
 	display: flex;
-	overflow-x: auto;
+	overflow-x: hidden; // Убираем горизонтальный скролл
 	white-space: nowrap;
 	gap: 10px;
 	width: 100%;

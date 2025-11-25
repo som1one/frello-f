@@ -1,0 +1,134 @@
+.modalWrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.45);
+	z-index: 1000;
+}
+
+.modalContent {
+	position: relative;
+	background: var(--white-02);
+	/* Glass background only */
+	padding: 40px 32px;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-radius: 50px;
+
+	box-shadow:
+		0 8px 30px rgba(249, 136, 31, 0.1),
+		0 12px 48px rgba(249, 136, 31, 0.05);
+
+	width: 100%;
+	max-width: 500px;
+	box-sizing: border-box;
+
+	margin: 0 auto;
+	animation: modalFadeIn 0.3s ease-in-out forwards;
+	z-index: 2;
+	overflow: visible;
+	border: none;
+	/* No default border */
+}
+
+.closeButton {
+	width: 100%;
+	padding: 14px 24px;
+	margin-top: 24px;
+	background: var(--main-gradient);
+	border: none;
+	border-radius: 50px;
+	color: white;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 12px rgba(249, 136, 31, 0.3);
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 16px rgba(249, 136, 31, 0.4);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100px;
+	text-align: center;
+	position: relative;
+	width: 100%;
+}
+
+.text {
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--text);
+	margin: 0;
+	padding: 32px 20px 0 20px;
+	position: relative;
+	word-break: break-word;
+	text-align: center;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 16px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 60px;
+		height: 4px;
+		background: var(--main-gradient);
+		border-radius: 2px;
+	}
+}
+
+@keyframes modalFadeIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@media (max-width: 768px) {
+	.modalContent {
+		padding: 30px 20px;
+		border-radius: 30px;
+		/* Max width 90vw as requested */
+		max-width: 90vw;
+	}
+
+	.text {
+		font-size: 14px;
+		padding: 0 10px;
+	}
+}
+
+@media (max-width: 540px) {
+	.modalContent {
+		padding: 24px 18px;
+		border-radius: 26px;
+	}
+
+	.text {
+		font-size: 14px;
+		padding: 28px 12px 0;
+	}
+}

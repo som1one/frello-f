@@ -44,6 +44,7 @@
 
 .tabContainer {
 	display: flex;
+	position: relative; // Важно для позиционирования movingBg внутри
 	overflow-x: auto;
 	white-space: nowrap;
 	gap: 10px;
@@ -66,12 +67,16 @@
 
 .movingBg {
 	position: absolute;
-	transform: translateY(50%);
+	top: 17px; // Точно совпадает с padding-top контейнера
 	left: 0;
 	background: var(--main-gradient);
 	border-radius: 35px;
 	transition: 0.5s;
 	z-index: 0;
+
+	@media (max-width: 1300px) {
+		top: 12px; // Точно совпадает с padding-top на мобильном
+	}
 }
 
 .tab {

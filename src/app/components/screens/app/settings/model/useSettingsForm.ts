@@ -72,12 +72,11 @@ export const useSettingsForm = () => {
 					birthdate: data.birthdate ? null : 'Дата рождения',
 					mealFrequency:
 						data.mealFrequency != null ? null : 'Частота приёмов пищи',
-						nutritionGoal: data.nutritionGoal !== null ? null : 'Цель по питанию'
+					nutritionGoal: data.nutritionGoal !== null ? null : 'Цель по питанию'
 				}
 				if (data.weight && 'weight' in changedFields) {
 					await addToWeightHistory(data.weight as number)
 					queryClient.invalidateQueries({ queryKey: ['weight-history'] })
-					toast('Вес обновлен')
 				}
 				const missing = Object.values(requiredFields).filter(
 					Boolean
@@ -94,16 +93,17 @@ export const useSettingsForm = () => {
 						data.height != null &&
 						data.weight != null &&
 						data.birthdate &&
-						data.mealFrequency != null && 
+						data.mealFrequency != null &&
 						data.nutritionGoal !== null
 					if (areRequiredFieldsFilled) {
 						await updateSettingsFilledMutation.mutateAsync(true)
 					}
 					refreshSettings()
 					reset(data, { keepValues: true })
+					toast.success('Настройки успешно сохранены', { duration: 3000 })
 					console.log('Отправлены изменённые поля:', changedFields)
 				} else {
-					toast('Нет изменений для сохранения')
+					toast.success('Настройки успешно сохранены', { duration: 3000 })
 					console.log('Нет изменений для сохранения')
 				}
 			} catch (error) {

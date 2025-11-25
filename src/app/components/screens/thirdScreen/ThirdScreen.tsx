@@ -11,36 +11,41 @@ interface IFeature {
 	alt: string
 	title: string
 	description: string
+	buttonText: string
 }
 
 const features: IFeature[] = [
 	{
-		image: '/images/secondScreenImages/firstphone.png',
+		image: '/images/secondScreenImages/firstphone.jpg',
 		alt: '',
 		title: 'Всё для результата в одном месте',
 		description:
-			'Frello автоматически создаёт персональные планы, подбирает меню под ваши цели, формирует списки покупок и отслеживает прогресс на графиках, чтобы вы могли сосредоточиться на жизни — и при этом достигать результат'
+			'Frello автоматически создаёт персональные планы, подбирает меню под ваши цели, формирует списки покупок и отслеживает прогресс на графиках, чтобы вы могли сосредоточиться на жизни — и при этом достигать результат',
+		buttonText: 'Начать преобразование'
 	},
 	{
-		image: '/images/secondScreenImages/firstpc.png',
+		image: '/images/secondScreenImages/firstpc.jpg',
 		alt: '',
 		title: 'Достижение цели без стресса и срывов',
 		description:
-			'Вы достигаете формы мечты, не отказываясь от того, что любите. Frello позволяет быть собой — и при этом становиться лучше'
+			'Вы достигаете формы мечты, не отказываясь от того, что любите. Frello позволяет быть собой — и при этом становиться лучше',
+		buttonText: 'Начать без стресса'
 	},
 	{
-		image: '/images/secondScreenImages/secondphone.png',
+		image: '/images/secondScreenImages/secondphone.jpg',
 		alt: '',
 		title: 'Экономите время — не теряете результат',
 		description:
-			'Frello позволяет экономить время на готовке и планировании, при этом вы получаете вкусное, сбалансированное питание и стабильный прогресс.'
+			'Frello позволяет экономить время на готовке и планировании, при этом вы получаете вкусное, сбалансированное питание и стабильный прогресс.',
+		buttonText: 'Экономить время'
 	},
 	{
-		image: '/images/secondScreenImages/secondpc.png',
+		image: '/images/secondScreenImages/secondpc.jpg',
 		alt: '',
 		title: 'Поддержка, которая всегда рядом',
 		description:
-			'Frello поддерживает, когда хочется сорваться, корректирует план и отслеживает прогресс — чтобы вы уверенно шли к цели без давления и жёстких правил'
+			'Frello поддерживает, когда хочется сорваться, корректирует план и отслеживает прогресс — чтобы вы уверенно шли к цели без давления и жёстких правил',
+		buttonText: 'Чувствовать поддержку'
 	}
 ]
 
@@ -49,7 +54,7 @@ export function ThirdScreen() {
 		<div>
 			<section
 				className={styles.featuresSection}
-				id='advantages'
+				id='why-frello'
 			>
 				<TitleWithLine title='Почему именно Frello?' />
 				<div
@@ -75,7 +80,7 @@ export function ThirdScreen() {
 							<h3>{feature.title}</h3>
 							<p>{feature.description}</p>
 							<div className={styles.button}>
-								<StartButton />
+								<StartButton text={feature.buttonText} />
 							</div>
 						</div>
 					))}

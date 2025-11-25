@@ -12,6 +12,7 @@ import {
 import { format } from 'date-fns'
 import { Bar } from 'react-chartjs-2'
 
+import styles from './UserProgress.module.scss'
 import { useTheme } from '@/context/ThemeContext'
 import {
 	useCaloriesHistory,
@@ -64,9 +65,29 @@ export const UserProgress = () => {
 	}
 	if (!caloriesData || !weightHistory) return <div>Нет данных</div>
 
-	// Данные для графика калорий
-	const calorieLabels = caloriesData.map((item, index) => `День ${index + 1}`)
-	const calories = caloriesData.map(item => item.calories)
+	// Данные для графика калорий - ограничиваем до последних 14 записей
+	// Если записей > 14, берем последние 14, иначе показываем все
+	const limitedCaloriesData = caloriesData.length > 14
+		? caloriesData.slice(-14)
+		: caloriesData;
+	// Используем реальные даты из API вместо генерации по индексу
+	// Используем реальные даты из API
+	const calorieLabels = limitedCaloriesData.map((item, index) => {
+		if (item.date) {
+			const dateObj = new Date(item.date)
+			// Проверяем валидность даты
+			if (!isNaN(dateObj.getTime())) {
+				return format(dateObj, 'dd.MM.yy')
+			}
+		}
+		// Fallback на генерацию даты, если date отсутствует или невалидна
+		const today = new Date()
+		const daysAgo = limitedCaloriesData.length - 1 - index
+		const date = new Date(today)
+		date.setDate(date.getDate() - daysAgo)
+		return format(date, 'dd.MM.yy')
+	})
+	const calories = limitedCaloriesData.map(item => item.calories)
 	const cTicks = niceTicks(Math.min(...calories), Math.max(...calories), 8)
 
 	const calorieChartData = {
@@ -82,11 +103,15 @@ export const UserProgress = () => {
 		]
 	}
 
-	// Данные для графика веса
-	const weightLabels = weightHistory.map(item =>
+	// Данные для графика веса - ограничиваем до последних 14 записей
+	// Если записей > 14, берем последние 14, иначе показываем все
+	const limitedWeightHistory = weightHistory.length > 14
+		? weightHistory.slice(-14)
+		: weightHistory;
+	const weightLabels = limitedWeightHistory.map(item =>
 		format(new Date(item.date), 'dd.MM.yy')
 	)
-	const weights = weightHistory.map(item => item.weight)
+	const weights = limitedWeightHistory.map(item => item.weight)
 	const wTicks = niceTicks(Math.min(...weights), Math.max(...weights), 8)
 
 	const weightChartData = {
@@ -104,7 +129,9 @@ export const UserProgress = () => {
 
 	const gridColor = isDarkMode
 		? 'rgba(255, 255, 255, 0.1)'
-		: 'rgba(0, 0, 0, 0.1)'
+		: 'rgba(0, 0, 0, 0.15)'
+
+	const textColor = isDarkMode ? '#ffffff' : '#1a1a1a'
 
 	// Опции для графика калорий
 	const calorieChartOptions = {
@@ -116,36 +143,42 @@ export const UserProgress = () => {
 				display: true,
 				text: 'История потребления килокалорий',
 				font: { size: 18, weight: 'bold' as const },
-				padding: { top: 10, bottom: 20 }
+				padding: { top: 10, bottom: 20 },
+				color: textColor
 			}
 		},
 		scales: {
 			y: {
-				min: cTicks.min,
-				max: cTicks.max,
+				beginAtZero: true,
 				ticks: {
-					stepSize: cTicks.step,
+					stepSize: 100, // Деления через 100 калорий
 					callback: (tickValue: string | number): string | number => {
 						const val =
 							typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue
 						return val >= 1000 ? `${(val / 1000).toFixed(1)}k` : val.toFixed(0)
 					},
-					font: { size: 14 }
+					font: { size: 14 },
+					color: textColor
 				},
 				title: {
 					display: true,
 					text: 'Килокалории',
-					font: { size: 16, weight: 'bold' as const }
+					font: { size: 16, weight: 'bold' as const },
+					color: textColor
 				},
 				grid: { color: gridColor }
 			},
 			x: {
 				title: {
 					display: true,
-					text: 'Дни',
-					font: { size: 16, weight: 'bold' as const }
+					text: 'Дата',
+					font: { size: 16, weight: 'bold' as const },
+					color: textColor
 				},
-				ticks: { font: { size: 14 } },
+				ticks: {
+					font: { size: 14 },
+					color: textColor
+				},
 				grid: { color: gridColor }
 			}
 		}
@@ -161,21 +194,23 @@ export const UserProgress = () => {
 				display: true,
 				text: 'История изменения веса',
 				font: { size: 18, weight: 'bold' as const },
-				padding: { top: 10, bottom: 20 }
+				padding: { top: 10, bottom: 20 },
+				color: textColor
 			}
 		},
 		scales: {
 			y: {
-				min: wTicks.min,
-				max: wTicks.max,
+				beginAtZero: true,
 				ticks: {
-					stepSize: wTicks.step,
-					font: { size: 14 }
+					stepSize: 10, // Деления через 10 кг
+					font: { size: 14 },
+					color: textColor
 				},
 				title: {
 					display: true,
 					text: 'Вес (кг)',
-					font: { size: 16, weight: 'bold' as const }
+					font: { size: 16, weight: 'bold' as const },
+					color: textColor
 				},
 				grid: { color: gridColor }
 			},
@@ -183,23 +218,27 @@ export const UserProgress = () => {
 				title: {
 					display: true,
 					text: 'Дата',
-					font: { size: 16, weight: 'bold' as const }
+					font: { size: 16, weight: 'bold' as const },
+					color: textColor
 				},
-				ticks: { font: { size: 14 } },
+				ticks: {
+					font: { size: 14 },
+					color: textColor
+				},
 				grid: { color: gridColor }
 			}
 		}
 	}
 
 	return (
-		<div style={{ display: 'flex', gap: '40px', padding: '40px' }}>
+		<div className={styles.progressContainer}>
 			{calorieChartData.labels.length === 0 &&
 				weightChartData.labels.length === 0 && (
-					<div style={{ width: '500px', height: '350px' }}>
+					<div className={styles.emptyDataContainer}>
 						<p>Нет данных для отображения</p>
 					</div>
 				)}
-			<div style={{ width: '500px', height: '350px' }}>
+			<div className={styles.chartContainer}>
 				{calorieChartData && (
 					<Bar
 						data={calorieChartData}
@@ -209,7 +248,7 @@ export const UserProgress = () => {
 				)}
 			</div>
 			{weightChartData.labels.length > 0 ? (
-				<div style={{ width: '500px', height: '350px' }}>
+				<div className={styles.chartContainer}>
 					<Bar
 						data={weightChartData}
 						options={weightChartOptions}
@@ -217,8 +256,8 @@ export const UserProgress = () => {
 					/>
 				</div>
 			) : (
-				<div>
-					<p className='text-center font-bold'>Нет данных о весе для отображения</p>
+				<div className={styles.emptyWeightContainer}>
+					<p>Нет данных о весе для отображения</p>
 				</div>
 			)}
 		</div>

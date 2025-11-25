@@ -33,9 +33,12 @@ export const ChatItem = ({
 
 	const iconsRef = useRef<HTMLDivElement | null>(null)
 
-	const handleRename = (newChatTitle: string) => {
-		renameChat(chat.id, newChatTitle)
-		setIsRenaming(false)
+	const handleRename = async (newChatTitle: string) => {
+		await renameChat(chat.id, newChatTitle)
+		// Задержка перед закрытием модалки, чтобы избежать закрытия из-за всплытия событий
+		setTimeout(() => {
+			setIsRenaming(false)
+		}, 100)
 	}
 
 	const handleCancelRename = () => {
@@ -78,7 +81,10 @@ export const ChatItem = ({
 						className={styles.chatItemIcon}
 						width={40}
 						height={40}
-						onClick={() => setIsRenaming(true)}
+						onClick={(e) => {
+							e.stopPropagation()
+							setIsRenaming(true)
+						}}
 					/>
 					<Image
 						src={

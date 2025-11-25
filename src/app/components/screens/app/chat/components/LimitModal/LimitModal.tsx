@@ -51,7 +51,16 @@ export const LimitModal = ({
 					!isNameModalClosing && styles.closing
 				)}
 				onClick={e => e.stopPropagation()}
+				style={{ position: 'relative' }}
 			>
+				<button
+					className={styles.closeButton}
+					onClick={closeModal}
+					aria-label='Закрыть'
+					type='button'
+				>
+					×
+				</button>
 				<h2 className={styles.changePasswordTitle}>
 					{isDaily
 						? 'Лимит на сегодня исчерпан'

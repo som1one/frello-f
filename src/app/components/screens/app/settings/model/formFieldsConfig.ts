@@ -1,4 +1,3 @@
-import { advancedFieldsConfig } from './advancedFieldsConfig'
 import {
 	activityLevelOptions,
 	allergiesOptions,
@@ -12,11 +11,9 @@ import {
 	flexibleDayTypeOptions,
 	flexibleDaysOptions,
 	mealTimePreferencesOptions,
-	medicalRestrictionsOptions,
 	nutritionGoalOptions,
 	nutritionPreferencesOptions,
 	personalRestrictionsOptions,
-	religiousRestrictionsOptions,
 	seasonalPreferencesOptions
 } from './options'
 import { Option } from '@/app/components/ui/MultiSelectDropdown/MultiSelectDropdown'
@@ -30,6 +27,8 @@ export interface FieldConfig {
 	unit?: string
 	tab?: string
 	max?: number
+	min?: number
+	maxLength?: number
 }
 
 export interface TabConfig {
@@ -57,27 +56,30 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 	},
 	{
 		name: 'height',
-		label: 'Рост',
-		placeholder: 'Введите рост (см)',
+		label: 'Рост (см)',
+		placeholder: 'Введите ваш рост',
 		type: 'number',
+		maxLength: 3,
 		unit: 'см',
-		max: 250
+		min: 1
 	},
 	{
 		name: 'weight',
-		label: 'Вес',
-		placeholder: 'Введите вес (кг)',
+		label: 'Вес (кг, регулярно обновляйте)',
+		placeholder: 'Введите ваш вес',
 		type: 'number',
+		maxLength: 3,
 		unit: 'кг',
-		max: 200
+		min: 1
 	},
 	{
 		name: 'mealFrequency',
 		label: 'Количество приемов пищи в день',
-		placeholder: 'Сколько раз в день вы хотели бы питаться?',
+		placeholder: 'Выберите количество приемов пищи',
 		type: 'number',
+		maxLength: 2,
 		unit: ' ',
-		max: 10
+		min: 1
 	},
 	{
 		name: 'favoriteFoods',
@@ -85,13 +87,6 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		placeholder: 'Выберите любимые продукты',
 		type: 'multiSelect',
 		options: favoriteFoodsOptions
-	},
-	{
-		name: 'medicalRestrictions',
-		label: 'Медицинские ограничения',
-		placeholder: 'Выберите медицинские ограничения',
-		type: 'multiSelect',
-		options: medicalRestrictionsOptions
 	},
 	{
 		name: 'cookingPreferences',
@@ -157,16 +152,9 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		options: mealTimePreferencesOptions
 	},
 	{
-		name: 'religiousRestrictions',
-		label: 'Религиозные ограничения',
-		placeholder: 'Выберите религиозные ограничения',
-		type: 'multiSelect',
-		options: religiousRestrictionsOptions
-	},
-	{
 		name: 'nutritionPreferences',
 		label: 'Предпочтения по калорийности и макронутриентам',
-		placeholder: 'Выберите предпочтения по калорийности и макронутриентам',
+		placeholder: 'Выберите предпочтения по КБЖУ',
 		type: 'multiSelect',
 		options: nutritionPreferencesOptions
 	},
@@ -204,6 +192,5 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		placeholder: 'Выберите уровень активности',
 		type: 'multiSelect',
 		options: activityLevelOptions
-	},
-	...advancedFieldsConfig
+	}
 ]

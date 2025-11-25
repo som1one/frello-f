@@ -5,19 +5,12 @@ import { toast } from 'sonner'
 
 import styles from './FifthScreen.module.scss'
 import { TitleWithLine } from '@/app/components/TitleWithLine/TitleWithLine'
-import { purchaseRequest } from '@/feature/subscriptions/model/subscriptions.service'
+import { createPayment } from '@/feature/payment/model/payment.service'
 import { getAccessToken } from '@/services/auth-token.service'
-import { ModalWithTransition } from '@/shared/ui'
 
 export function FifthScreen() {
 	const token = getAccessToken()
 	const [currentSlide, setCurrentSlide] = useState(0)
-	const [selectedPlan, setSelectedPlan] = useState<{
-		title: string
-		price: number
-		titleSlug: string
-	} | null>(null)
-	const [isModalOpen, setIsModalOpen] = useState(false)
 	const router = useRouter()
 
 	// Планы с добавлением старой и новой цены и иконок
@@ -26,7 +19,7 @@ export function FifthScreen() {
 			id: 1,
 			title: '1 месяц',
 			titleSlug: '1 month',
-			oldPrice: 0,
+			oldPrice: 1799,
 			price: 999,
 			icon: '/icons/forFifthScreen/1.svg'
 		},
@@ -34,7 +27,7 @@ export function FifthScreen() {
 			id: 2,
 			title: '6 месяцев',
 			titleSlug: '6 month',
-			oldPrice: 0,
+			oldPrice: 5999,
 			price: 3999,
 			icon: '/icons/forFifthScreen/3.svg'
 		},
@@ -42,46 +35,30 @@ export function FifthScreen() {
 			id: 4,
 			title: '12 месяцев',
 			titleSlug: '12 month',
-			oldPrice: 0,
+			oldPrice: 11999,
 			price: 6999,
 			icon: '/icons/forFifthScreen/4.svg'
 		}
 	]
 
-	const handlePurchase = async (titleSlug: string) => {
+	const handlePurchase = async (planId: number) => {
 		if (!token) {
 			await router.push('/login')
 			return
 		}
 
-		const plan = plans.find(p => p.titleSlug === titleSlug)
-		if (plan) {
-			setSelectedPlan(plan)
-			setIsModalOpen(true)
-		}
-	}
-
-	const confirmPurchase = async () => {
-		if (!selectedPlan) return
 		try {
-			await purchaseRequest(selectedPlan.titleSlug)
-			toast.success('Подписка успешно оформлена!')
-			setIsModalOpen(false)
-			await router.push('/chat')
+			const { redirectUrl } = await createPayment(planId)
+			// Мгновенный редирект на страницу оплаты ЮKassa
+			window.location.href = redirectUrl
 		} catch (error: any) {
-			console.error('Error purchasing subscription:', error.message)
-			toast.error(error.message || 'Ошибка при оформлении подписки')
+			console.error('Error creating payment:', error.message)
+			toast.error(error.message || 'Ошибка при создании платежа')
 		}
-	}
-
-	const cancelPurchase = () => {
-		setIsModalOpen(false)
-		setTimeout(() => {
-			setSelectedPlan(null)
-		}, 300)
 	}
 
 	const calculateDiscount = (oldPrice: number, price: number) => {
+		if (oldPrice === 0 || oldPrice <= price) return 0
 		const discount = ((oldPrice - price) / oldPrice) * 100
 		return Math.round(discount)
 	}
@@ -128,13 +105,17 @@ export function FifthScreen() {
 										</div>
 										<div className={styles.priceContainer}>
 											<h3 className={styles.price}>{plan.price} руб</h3>
-											<p className={styles.oldPrice}>{plan.oldPrice} руб</p>
-											<p className={styles.discount}>
-												Скидка: {calculateDiscount(plan.oldPrice, plan.price)}%
-											</p>
+											{plan.oldPrice > 0 && (
+												<p className={styles.oldPrice}>{plan.oldPrice} руб</p>
+											)}
+											{plan.oldPrice > 0 && (
+												<p className={styles.discount}>
+													Скидка: {calculateDiscount(plan.oldPrice, plan.price)}%
+												</p>
+											)}
 										</div>
 										<button
-											onClick={() => handlePurchase(plan.titleSlug)}
+											onClick={() => handlePurchase(plan.id)}
 											className={styles.planButton}
 										>
 											Начать
@@ -180,49 +161,6 @@ export function FifthScreen() {
 					</div>
 				</section>
 			</div>
-			<ModalWithTransition
-				isOpen={isModalOpen}
-				className={styles.modalWrapper}
-			>
-				<div className={styles.modalContent}>
-					<h2 className={styles.modalTitle}>Подтверждение покупки</h2>
-					{selectedPlan && (
-						<div className={styles.modalBody}>
-							<p>
-								Вы выбрали план: <strong>{selectedPlan.title}</strong>
-							</p>
-							<p>
-								Стоимость: <strong>{selectedPlan.price} руб</strong>
-							</p>
-							<p>
-								Скидка:{' '}
-								<strong>
-									{calculateDiscount(
-										plans.find(p => p.titleSlug === selectedPlan.titleSlug)!
-											.oldPrice,
-										selectedPlan.price
-									)}
-									%
-								</strong>
-							</p>
-						</div>
-					)}
-					<div className={styles.modalActions}>
-						<button
-							onClick={confirmPurchase}
-							className={styles.confirmButton}
-						>
-							Подтвердить
-						</button>
-						<button
-							onClick={cancelPurchase}
-							className={styles.cancelButton}
-						>
-							Отмена
-						</button>
-					</div>
-				</div>
-			</ModalWithTransition>
 		</>
 	)
 }

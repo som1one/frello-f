@@ -59,7 +59,7 @@ export default function ForgotPassword() {
 						render={({ field }) => (
 							<UIField
 								type='email'
-								placeholder='Ваш email'
+								placeholder='Ваша почта'
 								{...field}
 							/>
 						)}

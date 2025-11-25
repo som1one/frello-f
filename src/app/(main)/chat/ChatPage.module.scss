@@ -3,4 +3,8 @@
   align-items: center;
   justify-content: center;
   margin-top: 36px;
+
+  @media (max-width: 900px) {
+    margin-top: 15px;
+  }
 }

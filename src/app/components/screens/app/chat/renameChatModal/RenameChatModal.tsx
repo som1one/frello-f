@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import ConfirmationDialogStyles from '@/app/components/screens/app/chat/confirmationDialog/ConfirmationDialog.module.scss'
 
@@ -60,10 +61,17 @@ const RenameChatModal: FC<RenameChatModalProps> = ({
 	if (!isVisible) return null // Do not render if the modal is not visible
 	const { isDarkMode } = useTheme()
 
-	return (
-		<div className={confirmationDialog.overlay}>
+	const modalContent = (
+		<div 
+			className={confirmationDialog.overlay} 
+			onClick={(e) => {
+				e.stopPropagation()
+				onCancel()
+			}}
+		>
 			<div
 				className={`${styles.dialog}  ${!isDarkMode ? ConfirmationDialogStyles.lightDialog : ''}`}
+				onClick={(e) => e.stopPropagation()}
 			>
 				<h2 className={styles.title}>Переименовать чат</h2>
 				<input
@@ -71,18 +79,35 @@ const RenameChatModal: FC<RenameChatModalProps> = ({
 					value={newChatName}
 					autoFocus
 					onChange={handleInputChange}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							e.preventDefault()
+							e.stopPropagation()
+							onRename(newChatName)
+						}
+					}}
+					onClick={(e) => e.stopPropagation()}
 					className={styles.input}
 					maxLength={40}
 				/>
 				<div className={styles.buttonContainer}>
 					<button
-						onClick={() => onRename(newChatName)}
+						type="button"
+						onClick={(e) => {
+							e.stopPropagation()
+							e.preventDefault()
+							onRename(newChatName)
+						}}
 						className={styles.renameButton}
 					>
 						Переименовать
 					</button>
 					<button
-						onClick={onCancel}
+						type="button"
+						onClick={(e) => {
+							e.stopPropagation()
+							onCancel()
+						}}
 						className={styles.cancelButton}
 					>
 						Отмена
@@ -91,6 +116,8 @@ const RenameChatModal: FC<RenameChatModalProps> = ({
 			</div>
 		</div>
 	)
+
+	return createPortal(modalContent, document.body)
 }
 
 export default RenameChatModal

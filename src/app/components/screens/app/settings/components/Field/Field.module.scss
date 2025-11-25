@@ -4,8 +4,16 @@
 	align-items: flex-start;
 	justify-content: flex-end;
 	width: 100%;
+	min-width: 100%;
+	/* Prevent shrinking below 100% of grid cell */
 	color: var(--text);
-	flex: 1 1 0;
+	flex: 1;
+	/* Allow growing but prevent shrinking */
+	margin-bottom: 0;
+
+	@media (max-width: 600px) {
+		margin-bottom: 18px;
+	}
 
 	select {
 		background: var(--dark-20-bg);
@@ -24,20 +32,189 @@
 			color: white;
 		}
 	}
-}
 
-@media (max-width: 1024px) {
-	.field select {
-		font-size: 14px;
-		padding: 18px;
-		border-radius: 20px;
+	@media (max-width: 1024px) {
+		select {
+			font-size: 14px;
+			padding: 18px;
+			border-radius: 20px;
+		}
 	}
-}
 
-@media (max-width: 900px) {
-	.field {
+	@media (max-width: 900px) {
 		max-width: 100%;
 		min-width: 100%;
 		width: 100%;
+	}
+}
+
+.labelWrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	width: 100%;
+	margin-bottom: 8px;
+	position: relative;
+}
+
+.infoButton {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+	margin-top: 4px;
+	flex-shrink: 0;
+	align-self: flex-start;
+	transition: transform 0.2s ease, opacity 0.2s ease;
+
+	&:hover {
+		transform: scale(1.1);
+		opacity: 0.8;
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+}
+
+.questionMark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 1.5px solid var(--orange);
+	color: var(--orange);
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	transition: opacity 0.2s ease;
+
+	.infoButton:hover & {
+		opacity: 0.8;
+	}
+}
+
+@media (max-width: 768px) {
+	.infoButton {
+		width: 18px;
+		height: 18px;
+		min-width: 18px;
+		min-height: 18px;
+	}
+
+	.infoIcon {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+@media (max-width: 640px) {
+	.labelWrapper {
+		align-items: center;
+		gap: 6px;
+	}
+
+	.infoButton {
+		margin-top: 0;
+	}
+
+	.questionMark {
+		width: 20px;
+		height: 20px;
+		font-size: 12px;
+	}
+}
+
+
+.errorMsg {
+	margin-top: 6px;
+	font-size: 14px;
+	color: red;
+	max-width: 100%;
+	word-break: break-word;
+	position: relative;
+	z-index: 1;
+}
+
+.dropdownWrapper {
+	width: 100%;
+	flex-shrink: 0 !important;
+	/* Prevent wrapper from shrinking */
+	min-width: 0;
+	/* Allow children to handle overflow */
+}
+
+.selectButton {
+	padding: 22px;
+	border-radius: 25px;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 16px;
+	font-weight: 500;
+	width: 100%;
+	transition: 0.3s ease;
+	cursor: pointer;
+	text-align: left;
+	position: relative;
+
+	// Явно задаем цвета для светлой и темной темы
+	// Светлая тема: фон белый (#ffffff), текст серый (#747781)
+	// Темная тема: фон темный (#0d0e10), текст серый (#747781)
+	background: var(--bg-secondary);
+	color: var(--second-text);
+
+	:global(body.light-theme) &,
+	:global(html.light) &,
+	:global(.light-theme) & {
+		background: #ffffff !important;
+		color: #747781 !important;
+	}
+
+	:global(.dark) &,
+	:global(body.dark-theme) & {
+		background: #0d0e10 !important;
+		color: #747781 !important;
+	}
+
+	&::after {
+		content: '▼';
+		font-size: 12px;
+		margin-left: 12px;
+		opacity: 0.6;
+	}
+
+	&:hover,
+	&:focus {
+		:global(body.light-theme) &,
+		:global(html.light) &,
+		:global(.light-theme) & {
+			color: #747781 !important;
+			background: #f5f5f5 !important;
+		}
+
+		:global(.dark) &,
+		:global(body.dark-theme) & {
+			color: #747781 !important;
+			background: rgba(255, 255, 255, 0.08) !important;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		font-size: 14px;
+		padding: 18px;
+		border-radius: 20px;
 	}
 }

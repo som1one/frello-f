@@ -7,6 +7,9 @@
 	border-radius: 40px;
 	background-color: var(--white-01);
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	max-width: 100%;
 }
 
 .header {
@@ -36,6 +39,9 @@
 	position: absolute;
 	right: 0;
 	width: max-content;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .startButton {
@@ -82,11 +88,82 @@
 
 @media (max-width: 500px) {
 	.header {
-		padding-bottom: 65px;
+		flex-direction: column;
+		gap: 16px;
+		margin-bottom: 20px;
 	}
 
 	.topButtonWrapper {
-		bottom: 0;
-		right: auto;
+		position: static;
+		width: 100%;
+	}
+
+	.startButton {
+		width: 100%;
+	}
+}
+
+.personalInfoGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	width: 100%;
+
+	@media (max-width: 600px) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.leftColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.rightColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.heightWeightContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+
+	>* {
+		width: 100%;
+		max-width: 400px;
+	}
+}
+
+.multiSelectGrid {
+	/* Override Tailwind grid to prevent shrinking */
+	display: grid !important;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+	gap: 1rem;
+	width: 100%;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	max-width: 100%;
+	box-sizing: border-box;
+
+	@media (max-width: 640px) {
+		grid-template-columns: 1fr !important;
+	}
+
+	@media (min-width: 641px) and (max-width: 1023px) {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
+
+	@media (min-width: 1024px) {
+		grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+	}
+
+	>* {
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
 	}
 }

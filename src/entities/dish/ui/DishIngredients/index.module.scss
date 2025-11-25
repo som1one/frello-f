@@ -5,17 +5,25 @@
 	background: var(--white-02);
 	border-radius: 50px;
 
-	  @media (max-width: 600px) {
-		background: none;
-		padding: 0;
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
 	}
 }
 
 .title {
-	font-size: 18px;
+	font-size: 22px;
 	font-weight: bold;
-	margin-bottom: 12px;
-	color: var(--text);
+	margin-bottom: 20px;
+	color: var(--orange);
+	text-align: center;
+	line-height: 1.2;
+	letter-spacing: 0.5px;
+
+	@media (max-width: 500px) {
+		font-size: 20px;
+	}
 }
 
 .ul {
@@ -34,7 +42,7 @@
 	transition: color 0.2s;
 }
 
-.listItem > :first-child {
+.listItem> :first-child {
 	flex-shrink: 0;
 }
 

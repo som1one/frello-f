@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -24,7 +25,10 @@ interface DayData {
 const PLANS_COUNT = 14
 const DAY_DISH_COUNT = 5
 
+const LOCAL_KEY = 'mealPlanCheckboxesV1'
+
 export const NewMealPlans = () => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [isRightSectionVisible, setIsRightSectionVisible] = useState(false)
 	const [activeDay, setActiveDayTab] = useState<number>(0)
@@ -57,6 +61,10 @@ export const NewMealPlans = () => {
 		removeCaloriesError
 	} = useMealPlans()
 
+	const handleCreateMealPlan = () => {
+		router.push('/chat?message=план питания на неделю')
+	}
+
 	const queryClient = useQueryClient()
 
 	const proteinMealPlan = selectedRecipe?.proteins || 0
@@ -71,17 +79,6 @@ export const NewMealPlans = () => {
 	const maxCalories = 1000
 	const percentage = (mealPlanTotalCalories / maxCalories) * 100
 
-	useEffect(() => {
-		if (caloriesError || updateCaloriesError || removeCaloriesError) {
-			toast.error('Ошибка при работе с данными о блюдах')
-			console.error('Errors:', {
-				caloriesError,
-				updateCaloriesError,
-				removeCaloriesError
-			})
-		}
-	}, [caloriesError, updateCaloriesError, removeCaloriesError])
-
 	const newDayData = useMemo(() => {
 		if (!caloriesHistory || !plans) {
 			return Array(7)
@@ -93,30 +90,32 @@ export const NewMealPlans = () => {
 				}))
 		}
 
-		return plans.map(plan => {
-			const dayHistory = caloriesHistory.find(
-				history => history.planId === plan.id
-			) || {
-				calories: 0,
-				mealIds: [] as number[] // Явно указываем number[]
-			}
-			const checkboxes = Array(5).fill(false)
-			const totalCalories = dayHistory.calories || 0
+		// Собираем все ID съеденных блюд за все время для чекбоксов
+		const allConsumedMealIds = new Set(
+			caloriesHistory.flatMap(history => history.mealIds || [])
+		)
+
+		return plans.map((plan, index) => {
+			// Считаем калории только для отмеченных блюд текущего плана
+			const totalCalories = plan.meals.reduce((sum, meal) => {
+				if (allConsumedMealIds.has(meal.id)) {
+					return sum + (meal.calories || 0)
+				}
+				return sum
+			}, 0)
+
 			const totalCaloriesForDay =
 				plan.meals.reduce((sum, meal) => sum + (meal.calories || 0), 0) || 1
+
 			const filledHeight = Math.min(
 				(totalCalories / totalCaloriesForDay) * 100,
 				100
 			)
 
-			if (dayHistory.mealIds && plan.meals) {
-				// Убираем Set, используем filter для уникальности
-				const uniqueMealIds = dayHistory.mealIds.filter(
-					(mealId, index) => dayHistory.mealIds.indexOf(mealId) === index
-				)
-				uniqueMealIds.forEach((mealId: number) => {
-					const mealIndex = plan.meals.findIndex(meal => meal.id === mealId)
-					if (mealIndex !== -1 && mealIndex < checkboxes.length) {
+			const checkboxes = Array(5).fill(false)
+			if (plan.meals) {
+				plan.meals.forEach((meal, mealIndex) => {
+					if (mealIndex < checkboxes.length && allConsumedMealIds.has(meal.id)) {
 						checkboxes[mealIndex] = true
 					}
 				})
@@ -124,7 +123,7 @@ export const NewMealPlans = () => {
 
 			return { totalCalories, filledHeight, checkboxes }
 		})
-	}, [caloriesHistory, plans])
+	}, [caloriesHistory, plans, new Date().toDateString()])
 
 	useEffect(() => {
 		if (newDayData.length > 0) {
@@ -136,6 +135,26 @@ export const NewMealPlans = () => {
 			})
 		}
 	}, [newDayData])
+
+	// при маунте смотрим localStorage
+	useEffect(() => {
+		const saved = localStorage.getItem(LOCAL_KEY)
+		if (saved) {
+			try {
+				const checks: boolean[][] = JSON.parse(saved)
+				if (Array.isArray(checks) && checks.length === dayData.length) {
+					setDayData(prev => prev.map((v, i) => ({ ...v, checkboxes: checks[i] })))
+				}
+			} catch (e) { }
+		}
+		// eslint-disable-next-line
+	}, [])
+	// при каждом изменении чекбоксов (dayData)
+	useEffect(() => {
+		const arr = dayData.map(d => d.checkboxes)
+		localStorage.setItem(LOCAL_KEY, JSON.stringify(arr))
+	}, [dayData])
+
 
 	const handleBackButtonClick = async (meal?: Meal) => {
 		if (!meal) {
@@ -186,7 +205,14 @@ export const NewMealPlans = () => {
 	const handleCheckboxChange = async (dayIndex: number, mealIndex: number) => {
 		if (isCaloriesUpdating || isCaloriesRemoving) return
 		const meal = plans[dayIndex].meals[mealIndex]
-		const planId = plans[dayIndex].id
+
+		// Используем ID плана, к которому принадлежит блюдо
+		const planId = plans[dayIndex]?.id
+
+		if (!planId) {
+			console.error('No plan found')
+			return
+		}
 
 		try {
 			if (dayData[dayIndex].checkboxes[mealIndex]) {
@@ -220,22 +246,21 @@ export const NewMealPlans = () => {
 					<h1 className={styles.title}>
 						У вас еще нет сохраненного плана питания
 					</h1>
-					<Link href='/chat'>
-						<button
-							className={`${styles.regenerateButton} ${styles.regenerateMealPlanButton}`}
-						>
-							<Image
-								src='/icons/forMealPlans/add.png'
-								alt=''
-								width={40}
-								height={40}
-								className={styles.regenerateMealPlanImage}
-							/>
-							<h1 className={styles.regenerateMealPlanButtonTitle}>
-								Создать план питания
-							</h1>
-						</button>
-					</Link>
+					<button
+						onClick={handleCreateMealPlan}
+						className={`${styles.regenerateButton} ${styles.regenerateMealPlanButton}`}
+					>
+						<Image
+							src='/icons/forMealPlans/add.png'
+							alt=''
+							width={40}
+							height={40}
+							className={styles.regenerateMealPlanImage}
+						/>
+						<h1 className={styles.regenerateMealPlanButtonTitle}>
+							Создать план питания
+						</h1>
+					</button>
 				</div>
 			</div>
 		)
@@ -257,14 +282,14 @@ export const NewMealPlans = () => {
 					)}
 				>
 					<div>
-						<h2>План питания на неделю</h2>
+						<h2>План питания</h2>
 						<p className={styles.description}>
 							Правильное питание — ключ к здоровью и энергии каждый день!
 						</p>
 					</div>
 					<div>
-						<Link
-							href='/chat'
+						<button
+							onClick={handleCreateMealPlan}
 							className={`${styles.regenerateButton} ${styles.regenerateMealPlanButton}`}
 						>
 							<Image
@@ -277,7 +302,7 @@ export const NewMealPlans = () => {
 							<h1 className={styles.regenerateMealPlanButtonTitle}>
 								Новый план питания
 							</h1>
-						</Link>
+						</button>
 					</div>
 				</div>
 

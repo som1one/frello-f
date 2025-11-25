@@ -4,7 +4,7 @@ import './globals.scss'
 import { Landing } from '@/app/(landing)/Landing'
 
 export const metadata: Metadata = {
-	title: 'Frello | AI помощник в сфере питания',
+	title: 'Frello | Получите тело, о котором мечтаете',
 	description:
 		'Наслаждайтесь вкусными и полезными блюдами, легко достигая желаемого результата.'
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import cn from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -50,6 +50,7 @@ export function NavBar() {
 		if (pathname !== '/') {
 			setScrollToSection(sectionId)
 			router.push('/')
+			toggleMenu() // Закрываем меню при переходе на другую страницу
 		} else {
 			scroller.scrollTo(sectionId, {
 				duration: 500,
@@ -82,10 +83,13 @@ export function NavBar() {
 	}
 
 	// Handle logout (token logic removed)
+	const queryClient = useQueryClient()
 	const { mutate: logout } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
 		onSuccess() {
+			// Очищаем кэш React Query для настроек и других данных при выходе
+			queryClient.clear()
 			toast.success('Вы успешно вышли из системы!')
 			setIsAuthenticated(false)
 		}
@@ -122,9 +126,15 @@ export function NavBar() {
 					</div>
 					<div
 						className={styles.navLink}
-						onClick={() => handleNavLinkClick('advantages')}
+						onClick={() => handleNavLinkClick('why-frello')}
 					>
 						Почему Frello?
+					</div>
+					<div
+						className={styles.navLink}
+						onClick={() => handleNavLinkClick('reviews')}
+					>
+						Отзывы
 					</div>
 					<div
 						className={styles.navLink}
@@ -256,8 +266,7 @@ export function NavBar() {
 									className={cn(
 										styles.mobileNavLink,
 										buttonsStyles.buttonShaded,
-										buttonsStyles.navButton,
-										'p-4'
+										buttonsStyles.navButton
 									)}
 								>
 									Вход
@@ -267,14 +276,58 @@ export function NavBar() {
 									className={cn(
 										styles.mobileNavLink,
 										buttonsStyles.buttonShaded,
-										buttonsStyles.navButton,
-										'p-4'
+										buttonsStyles.navButton
 									)}
 								>
 									Регистрация
 								</Link>
 							</>
 						)}
+						{/* Общие кнопки для всех пользователей */}
+						<button
+							onClick={() => {
+								handleScrollToSection('why-frello')
+							}}
+							className={cn(
+								styles.mobileNavLink,
+								styles.mobileNavLinkPlain
+							)}
+						>
+							Почему Frello?
+						</button>
+						<button
+							onClick={() => {
+								handleScrollToSection('reviews')
+							}}
+							className={cn(
+								styles.mobileNavLink,
+								styles.mobileNavLinkPlain
+							)}
+						>
+							Отзывы
+						</button>
+						<button
+							onClick={() => {
+								handleScrollToSection('features')
+							}}
+							className={cn(
+								styles.mobileNavLink,
+								styles.mobileNavLinkPlain
+							)}
+						>
+							Возможности
+						</button>
+						<button
+							onClick={() => {
+								handleScrollToSection('pricing')
+							}}
+							className={cn(
+								styles.mobileNavLink,
+								styles.mobileNavLinkPlain
+							)}
+						>
+							Тариф
+						</button>
 					</div>
 				)}
 			</div>

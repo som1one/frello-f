@@ -26,6 +26,7 @@
 	margin: 36px auto 100px;
 	animation: settingsAnimation 0.7s ease;
 	transform: translateX(125px);
+	overflow-x: hidden; // Убираем горизонтальный скролл
 
 	@media (max-width: 1660px) {
 		width: 82%;
@@ -52,6 +53,9 @@
 
 .contentWrapper {
 	width: 100%;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .header {

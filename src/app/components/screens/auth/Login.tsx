@@ -34,17 +34,38 @@ export function Login() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) => authService.main('login', data),
-		onSuccess() {
-			toast.success('Успешно!')
-			push('/chat')
+		onSuccess(response) {
+			const { user } = response.data;
+
+			localStorage.setItem('email', user.email);
+
+			if (!user.isActivated) {
+				toast.info('Подтвердите email');
+				push('/verify-email');
+				return;
+			}
+
+			toast.success('Успешно!');
+			push('/chat');
 		},
 		onError(error: AxiosError<{ message: string }>) {
 			console.error('Ошибка запроса:', error.response)
-			setServerError(error.response?.data?.message || 'Произошла ошибка')
+			const errorMessage = error.response?.data?.message || 'Произошла ошибка'
+
+			if (errorMessage.includes('Email не подтверждён') || errorMessage.includes('не подтвержден')) {
+				toast.info('Пожалуйста, подтвердите ваш email')
+				push('/register/confirm-email')
+				return
+			}
+
+			setServerError(errorMessage)
 		}
 	})
 
+
 	const onSubmit = (data: IAuthForm) => {
+		// Сохраняем email в localStorage перед отправкой
+		localStorage.setItem('email', data.email)
 		mutate(data)
 	}
 

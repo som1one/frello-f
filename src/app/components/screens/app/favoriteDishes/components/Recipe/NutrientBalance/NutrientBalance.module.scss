@@ -5,6 +5,12 @@
 	background: var(--input-bg);
 	padding: 20px;
 	border-radius: 50px;
+
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+	}
 }
 
 .calorieTitle {

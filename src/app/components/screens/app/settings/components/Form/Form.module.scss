@@ -1,11 +1,27 @@
 .form {
+	padding-bottom: 300px;
+
+	@media (max-width: 1024px) {
+		padding-bottom: 250px;
+	}
+
+	@media (max-width: 640px) {
+		padding-bottom: 200px;
+	}
+
 	flex: 1;
 	width: 100%;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .container {
 	display: flex;
 	flex-direction: column;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .mainFields,
@@ -28,7 +44,7 @@
 
 .compactFields {
 	gap: 20px;
-	width: 100%;
+	width: auto;
 }
 
 .lightCompactFields {
@@ -39,7 +55,7 @@
 .wideFields {
 	display: flex;
 	gap: 20px;
-	width: 100%;
+	width: auto;
 	flex-wrap: wrap;
 }
 

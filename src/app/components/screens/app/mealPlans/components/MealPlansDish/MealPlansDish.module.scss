@@ -16,18 +16,26 @@
 		z-index: 1;
 		position: relative;
 
+		// В светлой теме используем тот же цвет фона, что и у кнопок "день" (#e8e8e8)
+		:global(body.light-theme) &,
+		:global(html.light) &,
+		:global(.light-theme) & {
+			background: #e8e8e8 !important;
+			/* Тот же цвет фона, что и у кнопок "день" */
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+		}
+
 		// background: var(--main-bg) !important;
 
 		.mealNumberCircle {
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
-			background-color: rgba(
-				255,
-				255,
-				255,
-				0.05
-			); /* Белый с прозрачностью 5% */
+			background-color: rgba(255,
+					255,
+					255,
+					0.05);
+			/* Белый с прозрачностью 5% */
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -98,7 +106,7 @@
 			height: 0;
 		}
 
-		.checkbox + label {
+		.checkbox+label {
 			display: inline-block;
 			width: 30px;
 			height: 30px;
@@ -111,7 +119,7 @@
 				transform 0.2s ease; // Add transform transition
 		}
 
-		.checkbox + label:after {
+		.checkbox+label:after {
 			content: '';
 			position: absolute;
 			left: 8px;
@@ -127,25 +135,23 @@
 				transform 0.3s ease; // Increased transition time for smoother effect
 		}
 
-		.checkbox:checked + label {
-			background: linear-gradient(
-				to bottom right,
-				var(--orange),
-				var(--lightOrange)
-			);
+		.checkbox:checked+label {
+			background: linear-gradient(to bottom right,
+					var(--orange),
+					var(--lightOrange));
 			border: none;
 			transform: scale(1.1); // Scale effect on check
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Add shadow on check
 		}
 
-		.checkbox:checked + label:after {
+		.checkbox:checked+label:after {
 			opacity: 1;
 			transform: rotate(45deg) translateY(-3px); // Rotate to 45 degrees on check
 		}
 	}
 }
 
-.checkbox:disabled + label {
+.checkbox:disabled+label {
 	background: var(--gray-03); // Серый фон для отключённого состояния
 	border-color: var(--gray-02); // Менее яркая обводка
 	cursor: not-allowed; // Курсор для отключённого состояния
@@ -173,7 +179,7 @@
 	border-color: var(--gray-02);
 	opacity: 0.8;
 	width: 30px; // Фиксируем размеры label
-  height: 30px;
+	height: 30px;
 	animation: pulse 1.5s ease-in-out infinite;
 	position: relative; // Для позиционирования лоадера
 	overflow: hidden;
@@ -183,9 +189,11 @@
 	0% {
 		opacity: 0.8;
 	}
+
 	50% {
 		opacity: 0.4;
 	}
+
 	100% {
 		opacity: 0.8;
 	}
@@ -195,6 +203,7 @@
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}

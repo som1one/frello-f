@@ -2,14 +2,36 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 100svh;
-	overflow: hidden;
+	width: 100%;
+	min-height: 100svh; // Возвращаем высоту для центрирования (Progress page fix)
 }
 
 .shoppingTitle {
 	display: flex;
 	justify-content: center;
-    align-items: center;
+	align-items: center;
 	font-weight: 700;
 	font-size: 20px;
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+	.container {
+		min-height: 100svh;
+		overflow: visible;
+		/* Глобальный скролл страницы */
+	}
+
+	.shoppingTitle {
+		text-align: center;
+		/* Центрирование текста на мобильных */
+	}
+}
+
+@media (max-width: 480px) {
+	.container {
+		min-height: 100svh;
+		overflow: visible;
+		/* Глобальный скролл страницы */
+	}
 }

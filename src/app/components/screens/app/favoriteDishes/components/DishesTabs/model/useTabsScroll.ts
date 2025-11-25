@@ -33,13 +33,12 @@ export const useTabsScroll = (
 
 	useEffect(() => {
 		const el = tabRefs.current[activeTab]
-		const container = containerRef.current
-		if (!el || !container) return
+		if (!el) return
 
 		setBg({
 			width: el.offsetWidth,
 			height: el.offsetHeight,
-			offsetLeft: el.offsetLeft - container.scrollLeft
+			offsetLeft: el.offsetLeft // Не вычитаем scrollLeft, так как фон внутри скролл-контейнера
 		})
 	}, [activeTab])
 
@@ -51,55 +50,25 @@ export const useTabsScroll = (
 			const targetEl = tabRefs.current[index]
 			if (!targetEl) return
 
-			// 1. МЕНЯЕМ activeTab и bg СРАЗУ (фон прыгает мгновенно)
 			setActiveTab(index)
+			// Устанавливаем фон сразу на новую вкладку
 			setBg({
 				width: targetEl.offsetWidth,
 				height: targetEl.offsetHeight,
-				offsetLeft: targetEl.offsetLeft - container.scrollLeft // по текущему scrollLeft
+				offsetLeft: targetEl.offsetLeft
 			})
 
-			// 2. Запускаем скролл асинхронно
-			requestAnimationFrame(() => {
-				const rect = targetEl.getBoundingClientRect()
-				const cRect = container.getBoundingClientRect()
-				const targetScroll =
-					rect.left -
-					cRect.left +
-					container.scrollLeft -
-					container.clientWidth / 2 +
-					rect.width / 2
+			// Скроллим контейнер, чтобы вкладка была по центру
+			const rect = targetEl.getBoundingClientRect()
+			const cRect = container.getBoundingClientRect()
+			const targetScroll =
+				rect.left -
+				cRect.left +
+				container.scrollLeft -
+				container.clientWidth / 2 +
+				rect.width / 2
 
-				container.scrollTo({ left: targetScroll, behavior: 'smooth' })
-
-				// 3. После скролла — корректируем bg (на случай, если scrollLeft изменился)
-				let raf: number
-				const check = () => {
-					const diff = Math.abs(container.scrollLeft - targetScroll)
-					if (diff < 1) {
-						setBg(prev => ({
-							...prev,
-							offsetLeft: targetEl.offsetLeft - container.scrollLeft
-						}))
-					} else {
-						raf = requestAnimationFrame(check)
-					}
-				}
-				raf = requestAnimationFrame(check)
-
-				const timeout = setTimeout(() => {
-					cancelAnimationFrame(raf)
-					setBg(prev => ({
-						...prev,
-						offsetLeft: targetEl.offsetLeft - container.scrollLeft
-					}))
-				}, 400)
-
-				return () => {
-					clearTimeout(timeout)
-					cancelAnimationFrame(raf)
-				}
-			})
+			container.scrollTo({ left: targetScroll, behavior: 'smooth' })
 		},
 		[activeTab, setActiveTab]
 	)

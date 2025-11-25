@@ -8,12 +8,33 @@
 	animation: favoriteDishesAnimation 0.7s ease;
 	padding-bottom: 100px;
 	margin-top: 120px;
+	overflow: visible; /* Глобальный скролл страницы */
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+	.container {
+		margin-top: 80px;
+		padding-bottom: 80px;
+		overflow: visible; /* Глобальный скролл страницы */
+		border-radius: 30px;
+	}
+}
+
+@media (max-width: 480px) {
+	.container {
+		margin-top: 60px;
+		padding-bottom: 60px;
+		overflow: visible; /* Глобальный скролл страницы */
+		border-radius: 20px;
+		gap: 15px;
+	}
 }
 
 .noDishesContainer {
 	background: none;
 	width: 100%;
-	min-height: 100svh;
+	height: auto; // Убираем min-height, чтобы не было скроллбара
 }
 
 @keyframes favoriteDishesAnimation {

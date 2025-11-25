@@ -8,9 +8,11 @@
 	flex-direction: column;
 	min-height: 100svh;
 	height: auto;
-	overflow: hidden;
+	overflow-x: hidden; // Блокируем горизонтальный скролл
+	overflow-y: visible; // Разрешаем вертикальный скролл для всех страниц
 	background: var(--main-dark-bg);
-	transition: 0.7s ease;
+	-webkit-overflow-scrolling: touch; // Плавный скролл на iOS
+	touch-action: pan-y; // Разрешаем вертикальный скролл на touch устройствах
 }
 
 .childContainer {
@@ -19,7 +21,10 @@
 	min-height: 100svh;
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
-	transition: transform 0.5s ease-in-out;
+	overflow-x: hidden; // Убираем горизонтальный скролл
+	overflow-y: visible; // Разрешаем вертикальный скролл контента
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .circle1,
@@ -32,7 +37,6 @@
 	border-radius: 50%;
 	filter: blur(130px);
 	opacity: 0.5;
-	transition: 0.7s;
 
 	@media (max-width: 1600px) {
 		width: 250px;

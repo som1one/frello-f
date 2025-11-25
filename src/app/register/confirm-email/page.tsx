@@ -39,11 +39,29 @@ export default function ConfirmEmail() {
 		mutationKey: ['verify-email'],
 		mutationFn: (data: IVerifyEmailForm) =>
 			authService.verifyEmail(data.code, email),
-		onSuccess({ message, accessToken }) {
+		async onSuccess({ message, accessToken }) {
 			toast.success('Email успешно подтверждён!')
 			localStorage.setItem('accessToken', accessToken)
 			setIsVerified(true)
 			console.log('message', message)
+			
+			// Auto-create first chat for new user
+			try {
+				const response = await fetch('/api/chats/create', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${accessToken}`
+					},
+					body: JSON.stringify({ title: 'Новый чат' })
+				})
+				if (response.ok) {
+					console.log('First chat created successfully')
+				}
+			} catch (error) {
+				console.error('Failed to create first chat:', error)
+			}
+			
 			push('/chat')
 			localStorage.removeItem('email')
 		},

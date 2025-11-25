@@ -106,21 +106,23 @@
 /* NavigationMenu.module.scss */
 .navItem {
 	position: relative;
-	transform: translateX(0); /* Default state */
+	transform: translateX(0);
+	/* Default state */
 	transition:
 		transform 0.3s ease-in-out,
 		background-color 0.3s ease-in-out;
 
 	/* Ensure inactive items are visible */
 	&.inactive {
-		opacity: 1; /* Remove opacity changes to keep items visible */
+		opacity: 1;
+		/* Remove opacity changes to keep items visible */
 	}
 
 	&.active {
-		transform: translateX(10px); /* Slide-in effect when active */
-		background-color: var(
-			--highlight
-		); /* Add a background color for active items */
+		transform: translateX(10px);
+		/* Slide-in effect when active */
+		background-color: var(--highlight);
+		/* Add a background color for active items */
 
 		@media (max-width: 1200px) {
 			transform: none;
@@ -162,7 +164,8 @@
 	.linkWrapper {
 		display: flex;
 		align-items: center;
-		opacity: 1; /* Keep it fully visible */
+		opacity: 1;
+		/* Keep it fully visible */
 		transition: transform 0.3s ease-in-out;
 	}
 }
@@ -181,7 +184,7 @@
 
 	.navItem {
 		border-radius: 50%;
-		padding: 15px;
+		padding: 12px;
 		margin-bottom: 0;
 	}
 
@@ -217,7 +220,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		padding: 0 10px;
+		padding: 0 8px;
 		height: 100%;
 		position: relative;
 		border-radius: 50px 50px 0 0;
@@ -225,7 +228,7 @@
 
 	.navList {
 		flex-direction: row;
-		gap: 16px;
+		gap: 8px;
 	}
 
 	.themeToggle {
@@ -244,9 +247,11 @@
 	0% {
 		transform: scale(1);
 	}
+
 	50% {
 		transform: scale(1.15);
 	}
+
 	100% {
 		transform: scale(1);
 	}

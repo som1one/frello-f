@@ -1,8 +1,10 @@
 // components/screens/firstScreen/FirstScreen.module.scss
 @import '../../../../app/styles/mixins';
 
+$first-screen-radius: 20px;
+
 .container {
-	background: var(--main-dark-bg);
+	// background: var(--main-dark-bg); // Removed to allow background circles to show through
 	color: white;
 	position: relative;
 	min-height: 100vh;
@@ -25,22 +27,216 @@
 .imageWrapper {
 	position: absolute;
 	top: 0;
-	left: 50%; // Центрируем по горизонтали
-	transform: translateX(-50%); // Смещаем влево на половину ширины
+	left: 50%;
+	transform: translateX(-50%);
 	width: 100%;
-	max-width: 1200px; // Ограничиваем ширину картинки
+	max-width: 1200px;
 	height: 100%;
-	z-index: 0; // Картинка на заднем плане
+	z-index: 0;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end; // Align to bottom
+	padding-bottom: 50px; // Add some space from bottom
+}
+
+.transformationContainer {
+	display: flex;
+	align-items: center; // Align items vertically center
+	justify-content: center;
+	gap: 30px;
+	width: 100%;
+	max-width: 1200px;
+	margin: 20px auto 60px;
+	position: relative;
+	z-index: 1;
+}
+
+.leftSideWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 42%;
+	gap: 15px;
+	flex-shrink: 0;
+}
+
+.rightSideWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 46%;
+	gap: 20px;
+	flex-shrink: 0;
+}
+
+.rightBlock {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 100%;
+}
+
+.imageLabel {
+	text-align: center;
+	color: var(--text);
+	font-size: 24px;
+	font-weight: 900;
+	margin: 8px 0 12px;
+}
+
+.womanWrapper {
+	position: relative;
+	width: 100%;
+	height: 580px;
+	margin-top: 20px;
+	margin-bottom: 20px; // Space below woman
+	z-index: 3;
+}
+
+.leftSideWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 42%;
+	gap: 15px;
+	flex-shrink: 0;
+}
+
+.leftColumn {
+	position: relative;
+	width: 100%;
+	height: 600px;
+	border-radius: 40px;
+	overflow: hidden;
+
+	img {
+		object-fit: cover !important;
+		object-position: center !important;
+		border-radius: 40px !important;
+	}
+}
+
+.rightSideWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 46%;
+	gap: 20px;
+	flex-shrink: 0;
+}
+
+.rightBlock {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 100%;
+}
+
+.rightImageTop {
+	position: relative;
+	width: 100%;
+	height: 290px;
+	border-radius: 40px;
+	overflow: hidden;
+
+	img {
+		object-fit: cover !important;
+		object-position: center !important;
+		border-radius: 40px !important;
+	}
+}
+
+.rightImageBottom {
+	position: relative;
+	width: 100%;
+	height: 290px;
+	border-radius: 40px;
+	overflow: hidden;
+
+	img {
+		object-fit: cover !important;
+		object-position: center !important;
+		border-radius: 40px !important;
+	}
+}
+
+.arrowWrapper {
+	display: flex;
+	justify-content: center;
+	z-index: 2;
+	flex-shrink: 0; // Prevent arrow from being squashed
+	width: 80px; // Explicit width reservation
+}
+
+.drawnArrow {
+	width: 80px; // Adjusted size for image
+	height: auto;
+	object-fit: contain;
+	transform: rotate(0deg);
+}
+
+.rightSideWrapper {
+	margin-top: 30px;
+}
+
+.rightBlock .imageLabel {
+	margin-top: 10px;
+}
+
+// ... existing content styles ...
+
+@media (max-width: 500px) {
+
+	// ... existing mobile styles ...
+	.transformationContainer {
+		margin-top: 40px;
+		height: auto;
+		flex-direction: column;
+		align-items: center;
+		gap: 20px;
+		max-width: 100%;
+	}
+
+	.leftColumn {
+		width: 90%;
+		height: auto;
+		min-height: 360px;
+		border-radius: $first-screen-radius;
+		aspect-ratio: 3 / 4;
+
+		img {
+			border-radius: inherit;
+		}
+	}
+
+	.rightSideWrapper {
+		width: 90%;
+		gap: 16px;
+		margin-top: 0;
+	}
+
+	.rightBlock {
+		gap: 8px;
+	}
+
+	.drawnArrow {
+		width: 50px;
+		transform: rotate(0deg);
+	}
+
+	.arrowWrapper {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		order: 0;
+		transform: none;
+	}
 }
 
 .content {
 	position: relative;
-	z-index: 1; // Контент поверх картинки
+	z-index: 4; // Ensure content is above woman and photos
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
-	margin-top: -240px;
+	width: 100%;
+	padding-top: 180px; // Increased top padding as requested
 }
 
 .title {
@@ -70,12 +266,26 @@
 }
 
 .customButton {
-	@include size(auto, 57px);
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 16px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 18px 40px;
+	min-height: 56px;
+	white-space: nowrap;
+
+	@media (max-width: 768px) {
+		font-size: 15px;
+		padding: 16px 32px;
+		min-height: 52px;
+	}
+
+	@media (max-width: 500px) {
+		font-size: 14px;
+		padding: 14px 28px;
+		min-height: 48px;
+	}
 }
 
 .arrow {
@@ -95,41 +305,157 @@
 	.title {
 		font-size: 60px;
 	}
+
 	.continuation {
 		font-size: 50px;
 	}
+
 	.text {
 		font-size: 17px;
 	}
+
 	.imageWrapper {
-		max-width: 85%; // Еще чуть уменьшаем для планшетов
+		max-width: 85%;
 		height: 75%;
+	}
+
+	.transformationContainer {
+		gap: 20px;
+		max-width: 95%;
+	}
+
+	.leftSideWrapper {
+		width: 45%;
+	}
+
+	.leftColumn {
+		height: 500px;
+	}
+
+	.rightSideWrapper {
+		width: 48%;
+		margin-top: 0;
+	}
+
+	.rightColumn {
+		// Removed as it's no longer used
 	}
 }
 
 @media (max-width: 500px) {
+	.content {
+		padding-top: 100px;
+	}
+
+	.womanWrapper {
+		margin-top: 20px; // Same spacing as desktop
+		margin-bottom: 20px;
+		height: 400px; // Smaller on mobile
+	}
+
 	.title {
 		font-size: 44px;
+		// padding-top: 80px; // Removed extra padding
 	}
+
 	.continuation {
 		font-size: 36px;
 	}
+
 	.text {
 		font-size: 15px;
 	}
+
 	.customButton {
-		@include size(240px, 48px);
-		font-size: 16px;
+		font-size: 14px;
+		padding: 14px 28px;
+		min-height: 48px;
 	}
+
 	.arrow {
 		@include size(50px, 14px);
 	}
+
 	.wrapper {
 		padding: 10px;
 	}
+
 	.imageWrapper {
-		max-width: 90%; // На мобильных чуть больше, но не от края до края
-		height: 70%;
+		max-width: 95%;
+		height: 60%;
+		padding-bottom: 20px;
+	}
+
+	.transformationContainer {
+		margin-top: 40px;
+		height: auto;
+		flex-direction: column;
+		align-items: center;
+		gap: 20px;
+		max-width: 100%;
+	}
+
+	.leftSideWrapper {
+		width: 90%;
+		gap: 12px;
+	}
+
+	.arrowWrapper {
+		transform: rotate(90deg); // Adjusted to 90deg for Down
+		margin: 10px 0;
+	}
+
+	.leftColumn {
+		width: 100%;
+		height: 400px !important;
+		border-radius: 40px !important;
+		margin-bottom: 0;
+
+		img {
+			object-fit: cover !important;
+			object-position: center !important;
+			border-radius: 40px !important;
+		}
+	}
+
+	.rightSideWrapper {
+		width: 90%;
+		gap: 16px;
+		margin-top: 0;
+	}
+
+	.rightBlock {
+		gap: 6px;
+	}
+
+	.rightImageTop {
+		width: 100%;
+		height: auto !important;
+		border-radius: 40px !important;
+		overflow: hidden;
+
+		img {
+			position: static !important;
+			width: 100% !important;
+			height: auto !important;
+			object-fit: cover !important;
+			border-radius: 40px !important;
+		}
+	}
+
+	.rightImageBottom {
+		width: 100%;
+		height: auto !important;
+		border-radius: 40px !important;
+		overflow: hidden;
+
+		img {
+			position: static !important;
+			width: 100% !important;
+			height: auto !important;
+			object-fit: cover !important;
+			border-radius: 40px !important;
+		}
 	}
 }
 

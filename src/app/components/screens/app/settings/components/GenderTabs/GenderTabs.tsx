@@ -12,7 +12,7 @@ interface PropTypes {
 }
 
 export const GenderTabs = memo(
-	({ name, label, defaultValue = 'male' }: PropTypes) => {
+	({ name, label, defaultValue = 'female' }: PropTypes) => {
 		const { control } = useFormContext()
 		const tabs = ['Мужской', 'Женский', 'Другой']
 		const [activeTab, setActiveTab] = useState(
@@ -22,10 +22,17 @@ export const GenderTabs = memo(
 		const [bgStyle, setBgStyle] = useState({ left: 0, width: 0 })
 
 		useLayoutEffect(() => {
-			const el = tabRefs.current[activeTab]
-			if (el) {
-				setBgStyle({ left: el.offsetLeft, width: el.offsetWidth })
+			const updateBgStyle = () => {
+				const el = tabRefs.current[activeTab]
+				if (el) {
+					setBgStyle({ left: el.offsetLeft, width: el.offsetWidth })
+				}
 			}
+
+			updateBgStyle()
+			window.addEventListener('resize', updateBgStyle)
+
+			return () => window.removeEventListener('resize', updateBgStyle)
 		}, [activeTab])
 
 		const handleTabClick = (

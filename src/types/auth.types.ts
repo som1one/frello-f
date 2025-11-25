@@ -13,10 +13,13 @@ export interface IUser {
 	name?: string
 	email: string
 
+	isActivated: boolean
+
 	workInterval?: number
 	breakInterval?: number
 	intervalsCount?: number
 }
+
 
 export interface IAuthResponse {
 	accessToken: string

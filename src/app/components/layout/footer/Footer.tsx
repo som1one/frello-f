@@ -8,7 +8,11 @@ import { scroller } from 'react-scroll'
 import styles from './Footer.module.scss'
 import { StartButton } from '@/app/components/ui/buttons/Buttons'
 
-export function Footer() {
+interface FooterProps {
+	heroSectionRef?: React.RefObject<HTMLElement>
+}
+
+export function Footer({ heroSectionRef }: FooterProps) {
 	const pathname = usePathname()
 	const router = useRouter()
 
@@ -42,27 +46,20 @@ export function Footer() {
 
 	return (
 		<div className={styles.container}>
-			<section className={styles.heroSection}>
+			<section ref={heroSectionRef} className={styles.heroSection}>
 				<div className={styles.heroContent}>
 					<div className={styles.textContent}>
 						<h1 className={styles.title}>Frello — Получите тело, о котором мечтаете</h1>
 						<p className={styles.subtitle}>
-							Без срывов, без стресса и без отказа от жизни, которую любите.<br/>
+							Без срывов, без стресса и без отказа от жизни, которую любите.<br />
 							Достигайте формы мечты, продолжая жить своей жизнью — чувствуя себя легче, сильнее и увереннее каждый день.
 						</p>
 					</div>
 					<div className={styles.buttonContent}>
-						<StartButton />
+						<StartButton text="Попробовать бесплатно" />
 					</div>
 				</div>
-				<div className={styles.heroImageWrapper}>
-					<Image
-						src='/images/footerImage/footerImage.svg'
-						alt='Hero Background'
-						width={800}
-						height={295}
-					/>
-				</div>
+				{/* Hero Background image removed as requested */}
 			</section>
 			<div className={styles.logoSection}>
 				<div className={styles.logoContainer}>
@@ -90,6 +87,12 @@ export function Footer() {
 								onClick={() => handleNavLinkClick('advantages')}
 							>
 								Почему Frello?
+							</li>
+							<li
+								className='hover:text-text transition-colors duration-200 cursor-pointer'
+								onClick={() => handleNavLinkClick('reviews')}
+							>
+								Отзывы
 							</li>
 							<li
 								className='hover:text-text transition-colors duration-200 cursor-pointer'

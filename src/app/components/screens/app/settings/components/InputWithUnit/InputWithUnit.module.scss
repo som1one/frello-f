@@ -1,7 +1,7 @@
-
 .inputWrapper {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	align-items: flex-start;
 	position: relative;
 	width: 100%;
 }
@@ -14,9 +14,21 @@
 .unitLabel {
 	position: absolute;
 	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
 	font-size: 15px;
 	color: #666666;
 	pointer-events: none;
 	transition: 0.3s;
 	font-weight: 500;
+}
+
+.errorMessage {
+	margin-top: 6px;
+	font-size: 14px;
+	color: red;
+	max-width: 100%;
+	word-break: break-word;
+	position: relative;
+	z-index: 1;
 }

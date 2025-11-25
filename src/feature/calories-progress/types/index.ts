@@ -3,4 +3,5 @@ export interface CaloriesHistoryItem {
 	planId: number
 	calories: number
 	mealIds: number[]
+	date: string
 }

@@ -64,7 +64,7 @@ export const ChatMessages = ({
 			>
 				{activeChatId !== null && chatMessages.length === 0 ? (
 					<div className={styles.emptyChatMessage}>
-						<p>В этом чате еще нет сообщений</p>
+						<p>В этом чате нет сообщений, задайте любой вопрос</p>
 					</div>
 				) : (
 					activeChatId !== null &&
@@ -96,6 +96,7 @@ export const ChatMessages = ({
 						)}
 					</div>
 				)}
+				<div className={styles.mobileSpacer} />
 				<div ref={messagesEndRef} />
 			</div>
 

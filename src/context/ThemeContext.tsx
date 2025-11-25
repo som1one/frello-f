@@ -14,26 +14,38 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 	children
 }) => {
 	const pathname = usePathname()
-	const allowedRoutes = ['/chat', '/mealPlans', '/favoriteDishes', '/settings', '/progress', '/shopping-list']
+	const allowedRoutes = ['/chat', '/mealPlans', '/favoriteDishes', '/settings', '/progress', '/shoppingList']
+	const isAllowedRoute = allowedRoutes.includes(pathname)
 	const isHomePage = pathname === '/'
 
 	// Состояние для темы
-	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
-			const savedTheme = !isHomePage && allowedRoutes.includes(pathname)
-				? localStorage.getItem('theme')
-				: window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-			setIsDarkMode(savedTheme === 'dark');
+			if (isAllowedRoute) {
+				// На разрешённых маршрутах (внутри app) используем сохранённую тему
+				// По умолчанию - тёмная тема (до выбора пользователя)
+				const savedTheme = localStorage.getItem('theme')
+				if (savedTheme) {
+					setIsDarkMode(savedTheme === 'dark')
+				} else {
+					// По умолчанию тёмная тема для app
+					setIsDarkMode(true)
+				}
+			} else {
+				// На всех остальных страницах (лендинг, публичные) принудительно тёмная тема
+				setIsDarkMode(true)
+			}
 		}
-	}, [isHomePage, pathname]);
+	}, [isAllowedRoute, pathname])
 
 	const toggleTheme = () => {
-		if (!isHomePage) {
+		// Переключение темы работает только на разрешённых маршрутах
+		if (isAllowedRoute) {
 			setIsDarkMode(prevMode => {
 				const newMode = !prevMode
-				if (allowedRoutes.includes(pathname) && typeof window !== 'undefined') {
+				if (typeof window !== 'undefined') {
 					localStorage.setItem('theme', newMode ? 'dark' : 'light')
 				}
 				return newMode
@@ -46,7 +58,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 			const html = document.documentElement
 			const body = document.body
 
-			if (isHomePage || isDarkMode) {
+			if (isDarkMode) {
 				html.classList.add('dark')
 				body.classList.add('dark-theme')
 				html.classList.remove('light')
@@ -58,7 +70,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 				body.classList.remove('dark-theme')
 			}
 		}
-	}, [isDarkMode, isHomePage])
+	}, [isDarkMode])
 
 	return (
 		<ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>

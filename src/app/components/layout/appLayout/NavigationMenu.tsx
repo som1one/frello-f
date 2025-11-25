@@ -51,7 +51,7 @@ const navList: INavItem[] = [
 		text: 'Ваш прогресс'
 	},
 	{
-		link: '/shopping-list',
+		link: '/shoppingList',
 		icon: '/icons/forMenu/default2/shopping.png',
 		darkIcon: '/icons/forMenu/default2/activeShopping.png',
 		text: 'Списки покупок'

@@ -1,26 +1,15 @@
 import { Option } from '@/app/components/ui/MultiSelectDropdown/MultiSelectDropdown'
 
 export const favoriteFoodsOptions: Option[] = [
-	{ label: 'Фрукты (яблоки, бананы, ягоды и т. д.)' },
-	{ label: 'Овощи (брокколи, морковь, томаты и т. д.)' },
-	{ label: 'Мясо (курица, говядина, свинина и т. д.)' },
-	{ label: 'Рыба и морепродукты' },
-	{ label: 'Молочные продукты (сыр, молоко, йогурт)' },
-	{ label: 'Злаки и крупы (овсянка, киноа, гречка)' },
-	{ label: 'Выпечка и десерты' },
-	{ label: 'Кофе / Чай / Смузи / Соки' },
-		{ label: 'Нет' },
-	{ label: 'Другое (Введите)', isCustom: true }
-]
-
-export const medicalRestrictionsOptions = [
-	{ label: 'Диабет' },
-	{ label: 'Гипертония' },
-	{ label: 'Болезни ЖКТ (гастрит, язва)' },
-	{ label: 'Заболевания почек' },
-	{ label: 'Проблемы с печенью' },
-	{ label: 'Болезни сердца', isCustom: true },
-		{ label: 'Нет' },
+	{ label: 'Фрукты (яблоки, бананы, ягоды и т. д.)', withInput: true },
+	{ label: 'Овощи (брокколи, морковь, томаты и т. д.)', withInput: true },
+	{ label: 'Мясо (курица, говядина, свинина и т. д.)', withInput: true },
+	{ label: 'Рыба и морепродукты', withInput: true },
+	{ label: 'Молочные продукты (сыр, молоко, йогурт)', withInput: true },
+	{ label: 'Злаки и крупы (овсянка, киноа, гречка)', withInput: true },
+	{ label: 'Выпечка и десерты', withInput: true },
+	{ label: 'Кофе / Чай / Смузи / Соки', withInput: true },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -32,11 +21,7 @@ export const cookingOptions = [
 		label:
 			'Опытный кулинар – Готовлю сложные блюда, умею работать с разными техниками'
 	},
-	{
-		label:
-			'Профессионал – Имею кулинарное образование или работаю в сфере питания'
-	},
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -67,12 +52,12 @@ export const dietTypeOptions = [
 export const cookingPreferencesOptions = [
 	{ label: 'Минимальная термообработка (больше сырых продуктов)' },
 	{ label: 'Простые рецепты (до 15 мин)' },
-	{ label: 'Сложные рецепты (готов к готовке 1+ часа)' },
+	{ label: 'Сложные рецепты (готовка 1+ часа)' },
 	{ label: 'Использование специй и приправ' },
 	{ label: 'Без жарки / Только варка и тушение' },
 	{ label: 'Только домашняя еда' },
 	{ label: 'Готовые продукты и полуфабрикаты' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -82,28 +67,18 @@ export const personalRestrictionsOptions = [
 	{ label: 'Не люблю горький / кислый вкус' },
 	{ label: 'Избегаю сладкого' },
 	{ label: 'Не люблю супы' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
 export const mealTimePreferencesOptions = [
-	{ label: 'Любимый Завтрак' },
-	{ label: 'Любимый Второй завтрак / Утренний перекус' },
-	{ label: 'Любимый Обед' },
-	{ label: 'Любимый Полдник / Дневной перекус' },
-	{ label: 'Любимый Ужин' },
-	{ label: 'Любимый Поздний ужин / Ночной перекус' },
-		{ label: 'Нет' },
-	{ label: 'Другое (Введите)', isCustom: true }
-]
-
-export const religiousRestrictionsOptions = [
-	{ label: 'Халяль' },
-	{ label: 'Кошерное питание' },
-	{ label: 'Постные блюда (в определенные дни)' },
-	{ label: 'Без свинины' },
-	{ label: 'Без алкоголя' },
-		{ label: 'Нет' },
+	{ label: 'Любимый Завтрак', withInput: true },
+	{ label: 'Любимый Второй завтрак / Утренний перекус', withInput: true },
+	{ label: 'Любимый Обед', withInput: true },
+	{ label: 'Любимый Полдник / Дневной перекус', withInput: true },
+	{ label: 'Любимый Ужин', withInput: true },
+	{ label: 'Любимый Поздний ужин / Ночной перекус', withInput: true },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -114,7 +89,7 @@ export const nutritionPreferencesOptions = [
 	{ label: 'Баланс БЖУ' },
 	{ label: 'Низкокалорийное питание' },
 	{ label: 'Высококалорийное питание' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -124,7 +99,7 @@ export const seasonalPreferencesOptions = [
 	{ label: 'Органические продукты' },
 	{ label: 'Минимум пластиковой упаковки' },
 	{ label: 'Только фермерские продукты' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -133,7 +108,7 @@ export const budgetPreferencesOptions = [
 	{ label: 'Средний бюджет (сбалансированное соотношение цены и качества)' },
 	{ label: 'Премиум-продукты (высококачественные ингредиенты)' },
 	{ label: 'Без ограничений' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -144,7 +119,7 @@ export const nutritionGoalOptions = [
 	{ label: 'Улучшение самочувствия и здоровья' },
 	{ label: 'Повышение энергии и работоспособности' },
 	{ label: 'Спортивные достижения' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -154,7 +129,7 @@ export const activityLevelOptions = [
 	{ label: 'Средний – регулярная умеренная активность.' },
 	{ label: 'Высокий – интенсивные нагрузки большую часть недели.' },
 	{ label: 'Очень высокий – ежедневные тренировки.' },
-		{ label: 'Нет' },
+	{ label: 'Нет' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 
@@ -183,7 +158,7 @@ export const cookingTimeConstraintsOptions: Option[] = [
 		label:
 			'Люблю готовить, но времени ограниченно, поэтому ищу баланс между скоростью и вкусом.'
 	},
-		{ label: 'Нет Опыта' },
+	{ label: 'Нет Опыта' },
 	{ label: 'Другое (Введите)', isCustom: true }
 ]
 

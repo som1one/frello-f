@@ -75,6 +75,12 @@
 	&::-webkit-scrollbar {
 		display: none;
 	}
+
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+	}
 }
 
 .wrapper {
@@ -105,6 +111,11 @@
 	&:active {
 		transform: scale(0.95);
 		box-shadow: none;
+	}
+
+	:global(.light-theme) & {
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 	}
 }
 
@@ -184,12 +195,24 @@
 	width: 260px;
 	height: 260px;
 	padding: 20px 50px 50px;
+
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+	}
 }
 
 .timeWrapper {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+
+	:global(.light-theme) & {
+		background: #e8e8e8 !important;
+		/* Lighter gray background */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+	}
 }
 
 .timeText {

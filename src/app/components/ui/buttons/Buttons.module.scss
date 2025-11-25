@@ -7,12 +7,27 @@
   position: relative;
   cursor: pointer;
   text-decoration: none;
-  font-size: inherit;
-  padding: 12px 50px;
+  font-size: 16px;
+  padding: 18px 40px;
+  min-height: 56px;
   justify-content: center;
+  align-items: center;
   font-weight: 700;
   background: var(--orange);
   transition: background-color 0.4s, transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 16px 32px;
+    min-height: 52px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 14px 28px;
+    min-height: 48px;
+  }
 
   &::before {
     @include gradient-border-button;
@@ -31,22 +46,39 @@
 }
 
 .buttonUnpainted {
-  text-decoration: none;
-  font-size: inherit;
-  padding: 12px 50px;
-  font-weight: 700;
-  background: transparent;
-  justify-content: center;
+  display: flex;
+  gap: 40px;
+  border-radius: 18px;
   position: relative;
   cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 18px 40px;
+  min-height: 56px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  background: transparent;
   transition: background-color 0.4s, transform 0.2s, box-shadow 0.2s;
-  border-radius: 18px;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 16px 32px;
+    min-height: 52px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 14px 28px;
+    min-height: 48px;
+  }
 
   &::before {
     @include gradient-border-button;
   }
 
-  @media (min-width: 1000px) {
+  @media (min-width: 1200px) {
     &:hover {
       background: var(--orange);
     }
@@ -101,7 +133,6 @@
 
 
 .startButton {
-  @include size(200px,60px);
   display: flex;
   text-align: center;
   justify-content: center;
@@ -112,8 +143,23 @@
   border-radius: 18px;
   font-weight: 700;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
+  padding: 18px 40px;
+  min-height: 56px;
   transition: 0.7s ease;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 16px 32px;
+    min-height: 52px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 14px 28px;
+    min-height: 48px;
+  }
 
   &:hover {
     background: transparent;

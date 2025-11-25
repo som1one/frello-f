@@ -1,7 +1,9 @@
 .customSelect {
 	position: relative;
-	min-width: unset;
-	width: 100%;
+	width: 100% !important;
+	box-sizing: border-box;
+	flex-shrink: 0 !important;
+	/* Absolutely prevent flex shrinking */
 }
 
 .selectDisplay {
@@ -11,13 +13,16 @@
 	background: var(--bg-secondary);
 	cursor: pointer;
 	font-size: 16px;
-	height: 68px;
+	height: 68px !important;
+	/* Fixed height */
+	min-height: 68px !important;
+	/* Enforce min height */
+	max-height: 68px !important;
+	/* Enforce max height */
 	display: flex;
 	align-items: center;
 	font-family: inherit;
-	max-width: 100%;
-	min-width: unset;
-	width: 100%;
+	width: 100% !important;
 	transition:
 		border 0.2s,
 		outline 0.2s,
@@ -25,12 +30,14 @@
 		color 0.3s;
 	color: var(--second-text);
 	box-shadow: none;
+	box-sizing: border-box;
+	/* Ensure no overflow */
 }
 
 .selectDisplay:focus-within,
 .selectDisplay:focus,
 .selectDisplay:hover {
-	color: #fff;
+	color: var(--second-text);
 	transition:
 		background 0.25s,
 		color 0.25s;
@@ -39,6 +46,7 @@
 .selectValue {
 	flex: 1;
 	min-width: 0;
+	/* Needed for text-overflow: ellipsis to work */
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -70,6 +78,11 @@
 	top: 110%;
 	left: 0;
 	right: 0;
+	right: 0;
+	width: 100% !important;
+	min-width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box;
 	background: var(--dark-100-bg);
 	border-radius: 40px;
 	z-index: 1000;
@@ -86,6 +99,13 @@
 	max-height: 300px;
 	overflow-y: auto;
 	scrollbar-width: none;
+}
+
+.selectDropdownTop {
+	top: auto;
+	bottom: 110%;
+	margin-top: 0;
+	margin-bottom: 2px;
 }
 
 .customInput {
@@ -122,8 +142,9 @@
 
 .dropdownOption {
 	display: flex;
-	align-items: center;
-	justify-content: flex-start;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
 	padding: 12px 22px;
 	border-radius: 18px;
 	cursor: pointer;
@@ -133,7 +154,14 @@
 
 	&:hover {
 		background: var(--dark-30-bg);
+		color: var(--second-text);
 	}
+}
+
+.optionHeader {
+	display: flex;
+	align-items: center;
+	width: 100%;
 }
 
 .checkbox {
@@ -148,27 +176,80 @@
 .optionLabel {
 	margin: 0;
 	text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	white-space: normal;
+	/* Allow text wrapping */
+	word-wrap: break-word;
+	/* Break long words if needed */
+	overflow-wrap: break-word;
+	line-height: 1.4;
+	/* Improve readability for multi-line text */
+	flex: 1;
+	/* Allow label to take available space */
+	min-width: 0;
+	/* Allow shrinking */
 }
 
 .optionInput {
-	margin-left: 8px;
+	margin-left: 0;
+	margin-top: 10px;
 	border-radius: 8px;
 	border: 1px solid #444;
 	background: #181818;
 	color: #fff;
-	padding: 4px 8px;
-	min-width: 80px;
+	padding: 8px 12px;
+	width: 100%;
+	font-size: 14px;
+	box-sizing: border-box;
+	overflow: visible;
+	white-space: nowrap;
 }
 
 @media (max-width: 1024px) {
+	.optionInput {
+		min-width: 100px;
+		max-width: 100%;
+		width: 100%;
+		margin-left: 0;
+		margin-top: 8px;
+		flex: none;
+		white-space: normal;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	.dropdownOption {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.customSelect {
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
 	.selectDisplay {
 		font-size: 14px;
 		border-radius: 20px;
 		padding: 18px 0;
 		height: auto;
+		max-width: 100%;
+	}
+
+	.selectDropdown {
+		max-width: 100%;
+		box-sizing: border-box;
 	}
 
 	.dropdownOption {
 		font-size: 14px;
+		white-space: normal;
+	}
+
+	.optionLabel {
+		white-space: normal;
+		word-wrap: break-word;
 	}
 }

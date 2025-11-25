@@ -5,15 +5,29 @@
 	align-items: center;
 	border-radius: 40px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-	background: var(--white-02);
 	width: 150px;
 	padding: 13px 30px;
 	justify-content: center;
+	transition: 0.3s;
+
+	// Явно задаем цвета для светлой и темной темы
+	// Светлая тема: фон белый (#ffffff), текст серый (#747781)
+	// Темная тема: фон темный (#0d0e10), текст серый (#747781)
+	:global(body.light-theme) &,
+	:global(html.light) &,
+	:global(.light-theme) & {
+		background: #ffffff !important;
+	}
+
+	:global(.dark) &,
+	:global(body.dark-theme) & {
+		background: #0d0e10 !important;
+	}
 }
 
 .light {
 	transition: 0.3s;
-	background: var(--main-bg);
+	background: #ffffff !important;
 }
 
 .avatar_label {
@@ -83,6 +97,18 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	color: var(--second-text);
+
+	// Явно задаем цвет текста для светлой и темной темы
+	// Светлая тема: текст серый (#747781)
+	// Темная тема: текст серый (#747781)
+	:global(body.light-theme) &,
+	:global(html.light) &,
+	:global(.light-theme) &,
+	:global(.dark) &,
+	:global(body.dark-theme) & {
+		color: #747781 !important;
+	}
 }
 
 .nameField {
