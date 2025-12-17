@@ -14,7 +14,9 @@ import { MealPlansDishInfo } from './components/MealPlansDishInfo'
 import { MealPlansTabs } from './components/MealPlansTabs/MealPlansTabs'
 import { getOrGenerateDish } from '@/feature/meal-plans/model/meal-plans.api'
 import { Meal, Recipe } from '@/feature/meal-plans/model/types'
+
 import { useMealPlans } from '@/feature/meal-plans/model/useMealPlans'
+
 
 interface DayData {
 	totalCalories: number
@@ -76,7 +78,7 @@ export const NewMealPlans = () => {
 	const carbsPercentageMealPlan = (carbsMealPlan / 100) * 100
 
 	const mealPlanTotalCalories = selectedRecipe?.calories || 0
-	const maxCalories = 1000
+	const maxCalories = 2000 // Standard daily intake reference
 	const percentage = (mealPlanTotalCalories / maxCalories) * 100
 
 	const newDayData = useMemo(() => {
@@ -334,6 +336,7 @@ export const NewMealPlans = () => {
 						{dayData[activeDay].totalCalories} ккал
 					</p>
 				</div>
+
 			</div>
 
 			{isLoading && (

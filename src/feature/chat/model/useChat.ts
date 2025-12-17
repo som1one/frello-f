@@ -1,5 +1,6 @@
 // hooks/useChat.ts
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 import { logger } from '@/utils/logger'
@@ -18,6 +19,7 @@ import { useMessages } from './useMessages'
 
 export const useChat = (): ChatContextType => {
 	const queryClient = useQueryClient()
+	const router = useRouter()
 	// Загрузка чатов
 	const {
 		data: chats = [],
@@ -78,6 +80,8 @@ export const useChat = (): ChatContextType => {
 			])
 			setActiveChatId(newChat.id)
 			queryClient.setQueryData(['messages', newChat.id], [])
+			// Navigate to chat page
+			router.push('/chat')
 		},
 		onError: (error: Error) => {
 			console.error('Failed to create chat:', error.message)

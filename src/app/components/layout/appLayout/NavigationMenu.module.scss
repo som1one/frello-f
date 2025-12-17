@@ -172,11 +172,12 @@
 
 @media (max-width: 1200px) {
 	.menuContainer {
-		justify-content: space-around;
+		justify-content: center;
+		gap: 15px;
 		background: var(--white-02);
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
-		padding: 0;
+		padding: 0 20px;
 		border-radius: 50px;
 		box-shadow: none;
 		overflow: visible;
@@ -198,7 +199,8 @@
 
 	.nav {
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: center;
+		gap: 15px;
 		width: auto;
 	}
 }
@@ -224,11 +226,14 @@
 		height: 100%;
 		position: relative;
 		border-radius: 50px 50px 0 0;
+		gap: 15px;
+		/* Add explicit gap */
 	}
 
 	.navList {
 		flex-direction: row;
 		gap: 8px;
+		/* Reduced gap significantly as per user request */
 	}
 
 	.themeToggle {

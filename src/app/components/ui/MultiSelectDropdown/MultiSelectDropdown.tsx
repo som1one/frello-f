@@ -91,10 +91,33 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 	}, [isOpen])
 
 	const handleToggle = (option: string, isCustom?: boolean) => {
+		// Filter out "ghost" values (values that are not in the current options list)
+		// This ensures that clicking an option cleans up any invalid data
+		const validValues = value.filter(v => options.some(o => o.label === v))
+
+		if (option === 'Нет') {
+			if (validValues.includes('Нет')) {
+				onChange([])
+			} else {
+				onChange(['Нет'])
+				// Clear all custom inputs when selecting 'Нет'
+				if (customInputsField) {
+					setValue(customInputsField, {}, { shouldDirty: true })
+				}
+			}
+			return
+		}
+
+		// If selecting any other option, remove 'Нет'
+		let currentValue = [...validValues]
+		if (currentValue.includes('Нет')) {
+			currentValue = currentValue.filter(v => v !== 'Нет')
+		}
+
 		if (isCustom) {
 			// If already selected, deselect
-			if (value.includes(option)) {
-				onChange(value.filter(v => v !== option))
+			if (currentValue.includes(option)) {
+				onChange(currentValue.filter(v => v !== option))
 				// Clear custom input for this option
 				if (customInputsField) {
 					const newCustomInputs = { ...customInputs }
@@ -103,18 +126,18 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 				}
 			} else {
 				// Select and prepare for custom input
-				onChange([...value, option])
+				onChange([...currentValue, option])
 			}
 		} else {
 			if (isSingleSelect) {
 				// Для singleSelect заменяем значение
-				onChange(value.includes(option) ? [] : [option])
+				onChange(currentValue.includes(option) ? [] : [option])
 			} else {
 				// Для multiSelect добавляем/удаляем
-				if (value.includes(option)) {
-					onChange(value.filter(v => v !== option))
+				if (currentValue.includes(option)) {
+					onChange(currentValue.filter(v => v !== option))
 				} else {
-					onChange([...value, option])
+					onChange([...currentValue, option])
 				}
 			}
 		}
@@ -134,6 +157,9 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 		})
 	}
 
+	// Calculate valid values for display to avoid showing count of hidden/ghost items
+	const displayValues = value.filter(v => options.some(o => o.label === v))
+
 	return (
 		<div
 			ref={wrapperRef}
@@ -147,8 +173,8 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
 				onClick={() => setIsOpen(prev => !prev)}
 			>
 				<div className={styles.selectValue}>
-					{value.length > 0
-						? `Выбрано: ${value.length}`
+					{displayValues.length > 0
+						? (displayValues.length === 1 && displayValues[0] === 'Нет' ? 'Нет' : `Выбрано: ${displayValues.length}`)
 						: placeholder}
 				</div>
 				<span className={styles.selectIcon}>

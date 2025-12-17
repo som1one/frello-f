@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	justify-content: flex-end;
+	justify-content: flex-start;
 	width: 100%;
 	min-width: 100%;
 	/* Prevent shrinking below 100% of grid cell */
@@ -52,8 +52,8 @@
 	display: flex;
 	align-items: flex-start;
 	gap: 8px;
+	gap: 8px;
 	width: 100%;
-	margin-bottom: 8px;
 	position: relative;
 }
 
@@ -198,6 +198,7 @@
 
 	&:hover,
 	&:focus {
+
 		:global(body.light-theme) &,
 		:global(html.light) &,
 		:global(.light-theme) & {

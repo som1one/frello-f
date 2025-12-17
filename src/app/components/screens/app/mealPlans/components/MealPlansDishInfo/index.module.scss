@@ -72,6 +72,9 @@
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: thin;
 	scrollbar-color: var(--orange) transparent;
+	
+	/* Add safe area padding for mobile browsers */
+	padding-bottom: max(40px, env(safe-area-inset-bottom));
 
 	&::-webkit-scrollbar {
 		width: 8px;
@@ -491,7 +494,9 @@
 	}
 
 	.modalBody {
-		padding: 50px 15px 20px;
+		padding: 50px 15px 80px;
+		/* Increased bottom padding for mobile to account for browser UI */
+		padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 60px));
 	}
 
 	.title {

@@ -15,6 +15,7 @@ interface ModalSelectProps {
     title: string
     isSingleSelect?: boolean
     customInputsField?: string
+    maxSelections?: number
 }
 
 export const ModalSelect: FC<ModalSelectProps> = ({
@@ -25,7 +26,8 @@ export const ModalSelect: FC<ModalSelectProps> = ({
     onChange,
     title,
     isSingleSelect = false,
-    customInputsField
+    customInputsField,
+    maxSelections
 }) => {
     const [selectedValues, setSelectedValues] = useState<string[]>(value)
     const [customInputs, setCustomInputs] = useState<Record<string, string>>({})
@@ -49,13 +51,13 @@ export const ModalSelect: FC<ModalSelectProps> = ({
     useEffect(() => {
         if (isOpen) {
             setSelectedValues(value)
-            // Prevent body scroll when modal is open
             document.body.style.overflow = 'hidden'
         } else {
-            document.body.style.overflow = 'unset'
+            document.body.style.overflow = ''
         }
+
         return () => {
-            document.body.style.overflow = 'unset'
+            document.body.style.overflow = ''
         }
     }, [isOpen, value])
 
@@ -79,7 +81,11 @@ export const ModalSelect: FC<ModalSelectProps> = ({
                     setValue(customInputsField, newCustomInputs, { shouldDirty: true })
                 }
             } else {
-                // Select
+                // Select - check maxSelections limit
+                if (maxSelections && selectedValues.length >= maxSelections) {
+                    // Already at limit, don't allow more selections
+                    return
+                }
                 setSelectedValues(prev => [...prev, optionLabel])
             }
         }

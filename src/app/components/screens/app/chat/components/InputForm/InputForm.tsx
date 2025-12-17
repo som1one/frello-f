@@ -1,8 +1,10 @@
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import styles from './InputForm.module.scss'
 import { SendMessageFunc } from '@/feature/chat/model/chat.types'
+
+import useIsMobile from '@/hooks/useIsMobile'
 
 interface PropTypes {
 	sendMessage: SendMessageFunc
@@ -10,11 +12,17 @@ interface PropTypes {
 
 const quickQueries = [
 	'План питания на неделю',
-	'Как приготовить ',
+	'Рецепт',
 	'Ужин за 30 мин'
 ]
 
 export const InputForm = ({ sendMessage }: PropTypes) => {
+	const isMobile = useIsMobile(1045)
+	const [isExpanded, setIsExpanded] = useState(isMobile)
+
+	useEffect(() => {
+		setIsExpanded(isMobile)
+	}, [isMobile])
 	const [inputValue, setInputValue] = useState('')
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -48,9 +56,15 @@ export const InputForm = ({ sendMessage }: PropTypes) => {
 		textareaRef.current?.focus()
 	}
 
+	const toggleExpanded = () => {
+		setIsExpanded(!isExpanded)
+	}
+
 	return (
-		<div>
-			<div className={styles.quickQueries}>
+		<div className={styles.container}>
+			<div
+				className={`${styles.quickQueries} ${isExpanded ? styles.expanded : ''}`}
+			>
 				{quickQueries.map((query, index) => (
 					<button
 						key={index}
@@ -61,6 +75,30 @@ export const InputForm = ({ sendMessage }: PropTypes) => {
 					</button>
 				))}
 			</div>
+
+			<button
+				className={styles.toggleButton}
+				onClick={toggleExpanded}
+				aria-label={isExpanded ? "Свернуть подсказки" : "Показать подсказки"}
+			>
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					className={isExpanded ? styles.arrowDown : styles.arrowUp}
+				>
+					<path
+						d="M18 15L12 9L6 15"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</button>
+
 			<div
 				className={styles.inputForm}
 				onClick={() => textareaRef.current?.focus()}

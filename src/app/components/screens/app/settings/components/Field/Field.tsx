@@ -15,6 +15,7 @@ interface PropTypes {
 	className?: string
 	type?: 'multiSelect' | 'singleSelect'
 	onInfoClick?: () => void
+	maxSelections?: number
 }
 
 export const Field = memo(
@@ -25,7 +26,8 @@ export const Field = memo(
 		placeholder,
 		className,
 		type = 'multiSelect',
-		onInfoClick
+		onInfoClick,
+		maxSelections
 	}: PropTypes) => {
 		const { control, formState: { errors } } = useFormContext();
 		const isRequired = name === 'nutritionGoal';
@@ -71,6 +73,7 @@ export const Field = memo(
 								title={placeholder}
 								isSingleSelect={type === 'singleSelect'}
 								customInputsField={`${name}.customInputs`}
+								maxSelections={maxSelections}
 							/>
 
 							{/* Error message */}

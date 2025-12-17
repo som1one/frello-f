@@ -64,6 +64,13 @@ export const NewChat = () => {
 		}
 	}
 
+	const handleAddNewChat = async () => {
+		await addNewChat()
+		if (isMobile) {
+			setIsChatsControlOpen(false)
+		}
+	}
+
 	useEffect(() => {
 		setIsSettingsModalOpen(!isSettingsFilled)
 	}, [isSettingsFilled])
@@ -96,7 +103,7 @@ export const NewChat = () => {
 					<ChatsControl
 						isDarkMode={isDarkMode}
 						chatList={chatList}
-						addNewChat={addNewChat}
+						addNewChat={handleAddNewChat}
 						isCollapsed={false}
 						toggleChatList={toggleChatList}
 						deleteChat={deleteChat}
@@ -110,7 +117,7 @@ export const NewChat = () => {
 				<ChatsControl
 					isDarkMode={isDarkMode}
 					chatList={chatList}
-					addNewChat={addNewChat}
+					addNewChat={handleAddNewChat}
 					isCollapsed={isCollapsed}
 					toggleChatList={toggleChatList}
 					deleteChat={deleteChat}
@@ -130,7 +137,7 @@ export const NewChat = () => {
 					<p>Начните общение с ассистентом</p>
 					<button
 						className={clsx(isCollapsed ? styles.hidden : styles.plusButton)}
-						onClick={addNewChat}
+						onClick={handleAddNewChat}
 					>
 						<Image
 							src={

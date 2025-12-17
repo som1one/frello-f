@@ -23,6 +23,7 @@ type MultiSelectFieldKeys = keyof Pick<
 	| 'flexibleDays'
 	| 'flexibleDayFrequency'
 	| 'flexibleDayType'
+	| 'hasOven'
 >
 
 const multiSelectFields: MultiSelectFieldKeys[] = [
@@ -41,7 +42,8 @@ const multiSelectFields: MultiSelectFieldKeys[] = [
 	'activityLevel',
 	'flexibleDays',
 	'flexibleDayFrequency',
-	'flexibleDayType'
+	'flexibleDayType',
+	'hasOven'
 ] as const
 
 
@@ -55,7 +57,8 @@ export const mapSettingsFormToUserSettings = (
 		birthdate: form.birthdate,
 		height: form.height ?? undefined,
 		weight: form.weight ?? undefined,
-		mealFrequency: form.mealFrequency ?? undefined
+		mealFrequency: form.mealFrequency ?? undefined,
+		currentProducts: form.currentProducts ?? undefined
 	}
 
 	// Маппинг MultiSelectFields с customInputs
@@ -100,7 +103,9 @@ export const mapUserSettingsToSettingsForm = (
 		activityLevel: defaultMultiSelect,
 		flexibleDayFrequency: defaultMultiSelect,
 		flexibleDayType: defaultMultiSelect,
-		flexibleDays: defaultMultiSelect
+		flexibleDays: defaultMultiSelect,
+		hasOven: defaultMultiSelect,
+		currentProducts: settings?.currentProducts || ''
 	}
 
 	// Заполнение MultiSelectFields с customInputs
@@ -158,21 +163,28 @@ export const getChangedFields = (
 		const formValues = formSettings[key] as string[] | undefined
 		const originalValues = original[key] || []
 		const valuesChanged = JSON.stringify(formValues) !== JSON.stringify(originalValues)
-		
+
 		// Проверяем customInputs
 		const customInputsKey = `${key}CustomInputs` as keyof UserSettings
 		const formCustomInputs = formSettings[customInputsKey] as Record<string, string> | undefined
 		const originalCustomInputs = (original[customInputsKey] as Record<string, string> | undefined) || {}
 		const customInputsChanged = JSON.stringify(formCustomInputs) !== JSON.stringify(originalCustomInputs)
-		
+
 		if (valuesChanged) {
 			changed[key] = formValues
 		}
-		
+
 		if (customInputsChanged && formCustomInputs) {
 			changed[customInputsKey] = formCustomInputs as any
 		}
 	})
+
+	// Проверяем currentProducts
+	const formCurrentProducts = form.currentProducts
+	const originalCurrentProducts = original.currentProducts || ''
+	if (formCurrentProducts !== originalCurrentProducts) {
+		changed.currentProducts = formCurrentProducts
+	}
 
 	return changed
 }

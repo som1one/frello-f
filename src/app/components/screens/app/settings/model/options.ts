@@ -1,12 +1,12 @@
 import { Option } from '@/app/components/ui/MultiSelectDropdown/MultiSelectDropdown'
 
 export const favoriteFoodsOptions: Option[] = [
-	{ label: 'Фрукты (яблоки, бананы, ягоды и т. д.)', withInput: true },
-	{ label: 'Овощи (брокколи, морковь, томаты и т. д.)', withInput: true },
-	{ label: 'Мясо (курица, говядина, свинина и т. д.)', withInput: true },
+	{ label: 'Фрукты', withInput: true },
+	{ label: 'Овощи', withInput: true },
+	{ label: 'Мясо', withInput: true },
 	{ label: 'Рыба и морепродукты', withInput: true },
-	{ label: 'Молочные продукты (сыр, молоко, йогурт)', withInput: true },
-	{ label: 'Злаки и крупы (овсянка, киноа, гречка)', withInput: true },
+	{ label: 'Молочные продукты', withInput: true },
+	{ label: 'Злаки и крупы', withInput: true },
 	{ label: 'Выпечка и десерты', withInput: true },
 	{ label: 'Кофе / Чай / Смузи / Соки', withInput: true },
 	{ label: 'Нет' },
@@ -119,8 +119,7 @@ export const nutritionGoalOptions = [
 	{ label: 'Улучшение самочувствия и здоровья' },
 	{ label: 'Повышение энергии и работоспособности' },
 	{ label: 'Спортивные достижения' },
-	{ label: 'Нет' },
-	{ label: 'Другое (Введите)', isCustom: true }
+	{ label: 'Нет' }
 ]
 
 export const activityLevelOptions = [
@@ -164,14 +163,12 @@ export const cookingTimeConstraintsOptions: Option[] = [
 
 export const flexibleDayFrequencyOptions: Option[] = [
 	{ label: 'Еженедельно (1–2 дня)' },
-	{ label: 'Раз в 10–14 дней' },
-	{ label: 'Раз в месяц' },
 	{ label: 'Без гибких дней' }
 ]
 
 export const flexibleDayTypeOptions: Option[] = [
-	{ label: 'Лёгкий (+10–20% калорий)' },
-	{ label: 'Средний (+30–50% калорий)' },
+	{ label: 'Лёгкий (+-10–20% калорий)' },
+	{ label: 'Средний (+-30–50% калорий)' },
 	{ label: 'Полный (без строгого лимита)' }
 ]
 
@@ -184,4 +181,9 @@ export const flexibleDaysOptions: Option[] = [
 	{ label: 'Суббота' },
 	{ label: 'Воскресенье' },
 	{ label: 'Не важно' }
+]
+
+export const hasOvenOptions: Option[] = [
+	{ label: 'Да' },
+	{ label: 'Нет' }
 ]

@@ -23,7 +23,7 @@ export const Recipe = ({ title, currentDish, onDelete }: PropTypes) => {
 
 	const { isDarkMode } = useTheme()
 	const calories = currentDish ? currentDish.calories : 0
-	const maxCalories = 1000
+	const maxCalories = 2000 // Standard daily intake reference
 	const percentage = (calories / maxCalories) * 100
 
 	const protein = currentDish ? currentDish.proteins : 0

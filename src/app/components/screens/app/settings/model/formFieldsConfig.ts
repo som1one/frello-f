@@ -14,7 +14,8 @@ import {
 	nutritionGoalOptions,
 	nutritionPreferencesOptions,
 	personalRestrictionsOptions,
-	seasonalPreferencesOptions
+	seasonalPreferencesOptions,
+	hasOvenOptions
 } from './options'
 import { Option } from '@/app/components/ui/MultiSelectDropdown/MultiSelectDropdown'
 
@@ -29,6 +30,7 @@ export interface FieldConfig {
 	max?: number
 	min?: number
 	maxLength?: number
+	maxSelections?: number
 }
 
 export interface TabConfig {
@@ -77,9 +79,17 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		label: 'Количество приемов пищи в день',
 		placeholder: 'Выберите количество приемов пищи',
 		type: 'number',
-		maxLength: 2,
+		maxLength: 1,
 		unit: ' ',
-		min: 1
+		min: 3,
+		max: 6
+	},
+	{
+		name: 'hasOven',
+		label: 'Есть ли у вас доступ к духовке?',
+		placeholder: 'Выберите вариант',
+		type: 'singleSelect',
+		options: hasOvenOptions
 	},
 	{
 		name: 'favoriteFoods',
@@ -87,6 +97,12 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		placeholder: 'Выберите любимые продукты',
 		type: 'multiSelect',
 		options: favoriteFoodsOptions
+	},
+	{
+		name: 'currentProducts',
+		label: 'Какие продукты у вас сейчас есть',
+		placeholder: 'Введите, какие продукты у вас сейчас есть',
+		type: 'text'
 	},
 	{
 		name: 'cookingPreferences',
@@ -117,11 +133,11 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		options: flexibleDayTypeOptions
 	},
 	{
-		name: 'flexibleDays',
-		label: 'Конкретные гибкие дни',
-		placeholder: 'Выберите конкретные гибкие дни',
-		type: 'multiSelect',
-		options: flexibleDaysOptions
+		name: 'activityLevel',
+		label: 'Уровень активности',
+		placeholder: 'Выберите уровень активности',
+		type: 'singleSelect',
+		options: activityLevelOptions
 	},
 	{
 		name: 'allergies',
@@ -185,12 +201,5 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		placeholder: 'Выберите цель по питанию',
 		type: 'multiSelect',
 		options: nutritionGoalOptions
-	},
-	{
-		name: 'activityLevel',
-		label: 'Уровень активности',
-		placeholder: 'Выберите уровень активности',
-		type: 'multiSelect',
-		options: activityLevelOptions
 	}
 ]

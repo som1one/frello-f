@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import { FormProvider } from 'react-hook-form'
 import { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 
 import { useNavigationGuardWithPopstate } from '@/hooks/useNavigationGuardWithPopState'
 
@@ -20,8 +21,13 @@ import { useSettingsForm } from './model/useSettingsForm'
 import { Btn, ModalWithTransition } from '@/shared/ui'
 import { ThemeToggle } from '@/app/components/ThemeToggle/ThemeToggle'
 import { FlexibleDaysInfoModal } from './components/FlexibleDaysInfoModal/FlexibleDaysInfoModal'
+import { SettingsSuccessModal } from './components/SettingsSuccessModal/SettingsSuccessModal'
+import { TextFieldWithModal } from './components/TextFieldWithModal/TextFieldWithModal'
+
 
 export default function NewSettings() {
+	const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+
 	const {
 		methods,
 		isDirty,
@@ -33,7 +39,7 @@ export default function NewSettings() {
 		setIsValidationModalOpen,
 		missingFields,
 		flexibleDayFrequency
-	} = useSettingsForm()
+	} = useSettingsForm({ onSuccess: () => setIsSuccessModalOpen(true) })
 	const {
 		isModalOpen,
 		handleDiscardChanges,
@@ -50,8 +56,10 @@ export default function NewSettings() {
 			'type' in field &&
 			field.type === 'multiSelect' &&
 			field.name !== 'flexibleDayType' &&
+			field.name !== 'flexibleDayType' &&
 			field.name !== 'flexibleDays' &&
-			field.name !== 'nutritionGoal' // Exclude nutritionGoal - it's rendered separately
+			field.name !== 'nutritionGoal' && // Exclude nutritionGoal - it's rendered separately
+			field.name !== 'hasOven' // Exclude hasOven - it's rendered next to mealFrequency
 	)
 	const numberFields = formFieldsConfig.filter(
 		(field): field is FieldConfig =>
@@ -64,6 +72,16 @@ export default function NewSettings() {
 			'type' in field &&
 			field.type === 'number' &&
 			field.name === 'mealFrequency'
+	)
+	const hasOvenField = formFieldsConfig.find(
+		(field): field is FieldConfig =>
+			'type' in field &&
+			field.name === 'hasOven'
+	)
+	const activityLevelField = formFieldsConfig.find(
+		(field): field is FieldConfig =>
+			'type' in field &&
+			field.name === 'activityLevel'
 	)
 
 	return (
@@ -137,28 +155,41 @@ export default function NewSettings() {
 						</div>
 					</div>
 
-					<div className='w-full'>
-						{mealFrequencyField &&
-							mealFrequencyField.unit &&
-							mealFrequencyField.placeholder && (
-								<InputWithUnit
-									label={mealFrequencyField.label}
-									id={mealFrequencyField.name}
-									name={mealFrequencyField.name}
-									unit={mealFrequencyField.unit}
-									placeholder={mealFrequencyField.placeholder}
-									min={mealFrequencyField.min}
-									max={mealFrequencyField.max}
-									maxLength={mealFrequencyField.maxLength}
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-2 w-full'>
+						<div className='w-full'>
+							{mealFrequencyField &&
+								mealFrequencyField.unit &&
+								mealFrequencyField.placeholder && (
+									<InputWithUnit
+										label={mealFrequencyField.label}
+										id={mealFrequencyField.name}
+										name={mealFrequencyField.name}
+										unit={mealFrequencyField.unit}
+										placeholder={mealFrequencyField.placeholder}
+										min={mealFrequencyField.min}
+										max={mealFrequencyField.max}
+										maxLength={mealFrequencyField.maxLength}
+									/>
+								)}
+						</div>
+						<div className='w-full'>
+							{hasOvenField && (
+								<Field
+									name='hasOven'
+									label={hasOvenField.label}
+									options={hasOvenField.options || []}
+									placeholder={hasOvenField.placeholder || ''}
+									type='singleSelect'
 								/>
 							)}
+						</div>
 					</div>
 
 					<div
 						className={clsx(
 							'grid gap-6 shadow-sm w-full',
 							flexibleDayFrequency === 'Без гибких дней'
-								? 'grid-cols-1'
+								? 'grid-cols-1 md:grid-cols-2'
 								: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
 						)}
 					>
@@ -170,27 +201,43 @@ export default function NewSettings() {
 							type='singleSelect'
 							onInfoClick={() => setIsFlexibleDaysModalOpen(true)}
 						/>
-						{flexibleDayFrequency !== 'Без гибких дней' &&
-							['flexibleDayType', 'flexibleDays'].map(fieldName => {
-								const field = formFieldsConfig.find(
-									f => 'name' in f && f.name === fieldName
-								) as FieldConfig
-								return field ? (
-									<Field
-										key={field.name}
-										name={field.name}
-										label={field.label}
-										options={field.options || []}
-										placeholder={field.placeholder || ''}
-										type={field.type as 'singleSelect' | 'multiSelect'}
-										onInfoClick={() => setIsFlexibleDaysModalOpen(true)}
-									/>
-								) : null
-							})}
+						{activityLevelField && (
+							<Field
+								name='activityLevel'
+								label={activityLevelField.label}
+								options={activityLevelField.options || []}
+								placeholder={activityLevelField.placeholder || ''}
+								type='singleSelect'
+							/>
+						)}
 					</div>
 
 					<div className={styles.multiSelectGrid}>
 						{multiSelectFields.map(field => {
+							// Показываем поле currentProducts после favoriteFoods
+							if (field.name === 'favoriteFoods') {
+								return (
+									<>
+										<Field
+											key={field.name}
+											name={field.name}
+											label={field.label}
+											options={field.options || []}
+											placeholder={field.placeholder || ''}
+											type={field.type as 'singleSelect' | 'multiSelect'}
+										/>
+										<TextFieldWithModal
+											key="currentProducts"
+											name="currentProducts"
+											label="Какие продукты у вас сейчас есть"
+											placeholder="Введите, какие продукты у вас сейчас есть"
+											modalTitle="Введите, какие продукты у вас сейчас есть"
+											modalPlaceholder="Например: курица, рис, помидоры, оливковое масло..."
+										/>
+									</>
+								)
+							}
+
 							let label = field.label
 							if (field.name === 'nutritionPreferences') {
 								label = (
@@ -219,6 +266,7 @@ export default function NewSettings() {
 									label={label}
 									options={field.options || []}
 									placeholder={field.placeholder || ''}
+									type={field.type as 'singleSelect' | 'multiSelect'}
 								/>
 							)
 						})}
@@ -256,6 +304,11 @@ export default function NewSettings() {
 				isOpen={isFlexibleDaysModalOpen}
 				onClose={() => setIsFlexibleDaysModalOpen(false)}
 			/>
+			{isSuccessModalOpen && (
+				<SettingsSuccessModal
+					closeModal={() => setIsSuccessModalOpen(false)}
+				/>
+			)}
 		</>
 	)
 }

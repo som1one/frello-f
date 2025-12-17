@@ -4,6 +4,7 @@
     /* Use inset for better mobile support */
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,6 +17,7 @@
 .modal {
     background: var(--white-02);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 30px;
     padding: 40px;
     max-width: 600px;
@@ -71,7 +73,7 @@
 
 .optionsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: 1fr;
     gap: 12px;
     margin-bottom: 30px;
 

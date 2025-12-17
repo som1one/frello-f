@@ -102,7 +102,7 @@ export function FirstScreen({ firstScreenRef }: FirstScreenProps) {
 							</div>
 						</div>
 						<div className={styles.rightBlock}>
-							<p className={styles.imageLabel}>Достигаете цели</p>
+							<p className={styles.imageLabel}>Достигаете цель</p>
 							<div className={styles.rightImageBottom}>
 								<Image
 									src='/images/firstScreenImages/1.jpg'

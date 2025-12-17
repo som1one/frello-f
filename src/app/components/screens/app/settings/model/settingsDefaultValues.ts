@@ -23,6 +23,14 @@ export const settingsDefaultValues: SettingsForm = {
 	nutritionGoal: { values: [], customInputs: {} },
 	flexibleDayFrequency: { values: [], customInputs: {} },
 	flexibleDayType: { values: [], customInputs: {} },
-	flexibleDays: { values: [], customInputs: {} },
-	activityLevel: { values: [], customInputs: {} }
+	flexibleDays: {
+		values: [],
+		customInputs: {}
+	},
+	hasOven: {
+		values: [],
+		customInputs: {}
+	},
+	activityLevel: { values: [], customInputs: {} },
+	currentProducts: ''
 }

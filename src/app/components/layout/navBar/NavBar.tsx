@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { scroller } from 'react-scroll'
+
 import { toast } from 'sonner'
 
 import useMenuToggleNavBar from '@/hooks/useMenuToggle'
@@ -34,48 +34,78 @@ export function NavBar() {
 		setIsAuthenticated(!!token)
 	}, [])
 
+	const scrollToElement = (elementId: string) => {
+		// Force unlock scroll immediately before scrolling
+		document.body.classList.remove('no-scroll')
+		document.documentElement.classList.remove('no-scroll')
+
+		const element = document.getElementById(elementId)
+		console.log(`[NavBar] Attempting to scroll to: ${elementId}`, {
+			elementFound: !!element,
+			currentScrollY: window.scrollY
+		})
+
+		if (element) {
+			console.log(`[NavBar] Using scrollIntoView for: ${elementId}`)
+
+			// Use scrollIntoView which is more reliable across browsers
+			element.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			})
+
+			// Adjust for fixed header after scroll starts
+			setTimeout(() => {
+				const headerOffset = 80
+				const elementPosition = element.getBoundingClientRect().top
+				const currentScroll = window.scrollY
+				const targetScroll = currentScroll + elementPosition - headerOffset
+
+				window.scrollTo({
+					top: targetScroll,
+					behavior: 'smooth'
+				})
+			}, 100)
+		} else {
+			console.warn(`[NavBar] Element with id '${elementId}' not found`)
+		}
+	}
+
 	useEffect(() => {
 		if (scrollToSection && pathname === '/') {
-			scroller.scrollTo(scrollToSection, {
-				duration: 500,
-				smooth: true,
-				offset: -80
-			})
-			toggleMenu()
+			console.log(`[NavBar] Delayed scroll to: ${scrollToSection}`)
+			if (menuOpen) toggleMenu()
+
+			// Wait for menu close animation to complete before scrolling
+			setTimeout(() => {
+				scrollToElement(scrollToSection)
+			}, 500)
 			setScrollToSection(null)
 		}
-	}, [pathname, scrollToSection, toggleMenu])
+	}, [pathname, scrollToSection, toggleMenu, menuOpen])
 
 	const handleScrollToSection = (sectionId: string) => {
+		console.log(`[NavBar] Clicked section: ${sectionId}, pathname: ${pathname}, menuOpen: ${menuOpen}`)
+
 		if (pathname !== '/') {
 			setScrollToSection(sectionId)
 			router.push('/')
-			toggleMenu() // Закрываем меню при переходе на другую страницу
+			if (menuOpen) toggleMenu()
 		} else {
-			scroller.scrollTo(sectionId, {
-				duration: 500,
-				smooth: true,
-				offset: -80 // Adjust offset as needed based on your layout
-			})
-			toggleMenu()
+			if (menuOpen) {
+				toggleMenu()
+				// Wait for menu close animation to complete before scrolling
+				setTimeout(() => {
+					scrollToElement(sectionId)
+				}, 500)
+			} else {
+				scrollToElement(sectionId)
+			}
 		}
 	}
 
 	const handleNavLinkClick = (sectionId: string) => {
-		if (window.innerWidth <= 1024) {
-			handleScrollToSection(sectionId)
-		} else {
-			if (pathname === '/') {
-				scroller.scrollTo(sectionId, {
-					duration: 500,
-					smooth: true,
-					offset: -80 // Adjust offset as needed based on your layout
-				})
-			} else {
-				setScrollToSection(sectionId)
-				router.push('/')
-			}
-		}
+		handleScrollToSection(sectionId)
 	}
 
 	const handleProfileClick = () => {

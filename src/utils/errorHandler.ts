@@ -6,6 +6,14 @@ export const handleError = (
 	setIsLimitModalOpen: (value: boolean) => void,
 	setLimitType?: (type: 'daily' | 'trial') => void
 ): string | null => {
+	// Log full error for debugging
+	logger.error('Error details:', {
+		message: error?.message,
+		status: error?.response?.status || error?.status,
+		data: error?.response?.data,
+		stack: error?.stack
+	})
+
 	const isRateLimitError =
 		error?.response?.status === 429 ||
 		error?.status === 429 ||

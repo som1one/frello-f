@@ -93,6 +93,7 @@
 		transform 0.18s;
 	overflow: hidden;
 	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-shadow: none;

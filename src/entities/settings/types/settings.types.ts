@@ -16,13 +16,17 @@ export interface UserSettings {
 	dietType?: string[]
 	personalRestrictions?: string[]
 	mealTimePreferences?: string[]
-	religiousRestrictions?: string[]
 	nutritionPreferences?: string[]
 	seasonalPreferences?: string[]
 	budgetPreferences?: string[]
 	cookingExperience?: string[]
 	nutritionGoal?: string[]
 	activityLevel?: string[]
+	hasOven?: string[]
+	flexibleDays?: string[]
+	flexibleDayFrequency?: string[]
+	flexibleDayType?: string[]
+	currentProducts?: string
 	advancedSettings?: {
 		vitaminD3?: number
 		ferritin?: number

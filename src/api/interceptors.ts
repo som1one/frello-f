@@ -4,7 +4,7 @@ import { getAccessToken } from '@/services/auth-token.service';
 import { authService } from '@/services/auth.service';
 
 const options: CreateAxiosDefaults = {
-	baseURL: 'https://frello.ru/api',
+	baseURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001/api',
 	headers: {
 		'Content-Type': 'application/json',
 	},

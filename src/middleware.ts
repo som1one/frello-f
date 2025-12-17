@@ -5,6 +5,11 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get('accessToken')?.value
 
+	// Redirect /mealPlans to /chat
+	if (request.nextUrl.pathname.startsWith('/mealPlans')) {
+		return NextResponse.redirect(new URL('/chat', request.url))
+	}
+
 	// Защищённые маршруты
 	const protectedPaths = ['/settings', '/chat', '/favoriteDishes', '/mealPlans']
 

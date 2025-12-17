@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { memo, useLayoutEffect, useRef, useState } from 'react'
+import { memo, useLayoutEffect, useRef, useState, useEffect } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import styles from './GenderTabs.module.scss'
@@ -61,26 +61,36 @@ export const GenderTabs = memo(
 							name={name}
 							control={control}
 							defaultValue={defaultValue}
-							render={({ field }) => (
-								<>
-									{tabs.map((tab, index) => (
-										<button
-											type='button'
-											key={index}
-											ref={el => {
-												tabRefs.current[index] = el
-											}}
-											className={cn(
-												styles.tab,
-												activeTab === index && styles.activeTab
-											)}
-											onClick={() => handleTabClick(index, field.onChange)}
-										>
-											{tab}
-										</button>
-									))}
-								</>
-							)}
+							render={({ field }) => {
+								// Sync activeTab with field.value
+								useEffect(() => {
+									const valueToIndex = field.value === 'male' ? 0 : field.value === 'female' ? 1 : 2
+									if (valueToIndex !== activeTab) {
+										setActiveTab(valueToIndex)
+									}
+								}, [field.value])
+
+								return (
+									<>
+										{tabs.map((tab, index) => (
+											<button
+												type='button'
+												key={index}
+												ref={el => {
+													tabRefs.current[index] = el
+												}}
+												className={cn(
+													styles.tab,
+													activeTab === index && styles.activeTab
+												)}
+												onClick={() => handleTabClick(index, field.onChange)}
+											>
+												{tab}
+											</button>
+										))}
+									</>
+								)
+							}}
 						/>
 					</div>
 				</div>

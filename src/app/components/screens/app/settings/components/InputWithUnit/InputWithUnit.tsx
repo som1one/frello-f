@@ -138,10 +138,10 @@ export const InputWithUnit = ({
 					id={id}
 					{...register(name, {
 						valueAsNumber: true,
-						min,
 						required: isRequired ? 'Это поле обязательно' : false,
 						validate: value => {
 							if (typeof min === 'number' && value < min) return `Минимум ${min}`
+							if (typeof max === 'number' && value > max) return `Максимум ${max}`
 							return true
 						}
 					})}

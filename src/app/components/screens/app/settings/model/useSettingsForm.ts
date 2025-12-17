@@ -14,7 +14,7 @@ import {
 } from '@/feature/chat/model/settingsMapper'
 import { useSettings } from '@/feature/chat/model/useSettings'
 
-export const useSettingsForm = () => {
+export const useSettingsForm = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
 	const { settings, saveSettings, refreshSettings } = useSettings()
 	const queryClient = useQueryClient()
 	const methods = useForm<SettingsForm>({
@@ -72,7 +72,8 @@ export const useSettingsForm = () => {
 					birthdate: data.birthdate ? null : 'Дата рождения',
 					mealFrequency:
 						data.mealFrequency != null ? null : 'Частота приёмов пищи',
-					nutritionGoal: data.nutritionGoal !== null ? null : 'Цель по питанию'
+					nutritionGoal: data.nutritionGoal !== null ? null : 'Цель по питанию',
+					activityLevel: data.activityLevel?.values?.[0] ? null : 'Уровень активности'
 				}
 				if (data.weight && 'weight' in changedFields) {
 					await addToWeightHistory(data.weight as number)
@@ -94,23 +95,26 @@ export const useSettingsForm = () => {
 						data.weight != null &&
 						data.birthdate &&
 						data.mealFrequency != null &&
-						data.nutritionGoal !== null
+						data.nutritionGoal !== null &&
+						data.activityLevel?.values?.[0]
 					if (areRequiredFieldsFilled) {
 						await updateSettingsFilledMutation.mutateAsync(true)
 					}
 					refreshSettings()
 					reset(data, { keepValues: true })
 					toast.success('Настройки успешно сохранены', { duration: 3000 })
+					if (onSuccess) onSuccess()
 					console.log('Отправлены изменённые поля:', changedFields)
 				} else {
 					toast.success('Настройки успешно сохранены', { duration: 3000 })
+					if (onSuccess) onSuccess()
 					console.log('Нет изменений для сохранения')
 				}
 			} catch (error) {
 				console.error('Ошибка при сохранении настроек:', error)
 			}
 		},
-		[settings, saveSettings, refreshSettings, reset]
+		[settings, saveSettings, refreshSettings, reset, onSuccess]
 	)
 
 	return {
