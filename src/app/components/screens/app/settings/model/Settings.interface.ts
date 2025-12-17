@@ -35,5 +35,5 @@ export interface SettingsForm {
 	flexibleDayType: MultiSelectField
 	flexibleDays: MultiSelectField
 	hasOven: MultiSelectField
-	currentProducts?: string
+	currentProducts: string | null
 }

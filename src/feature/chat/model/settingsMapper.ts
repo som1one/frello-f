@@ -180,10 +180,10 @@ export const getChangedFields = (
 	})
 
 	// Проверяем currentProducts
-	const formCurrentProducts = form.currentProducts
+	const formCurrentProducts = form.currentProducts ?? ''
 	const originalCurrentProducts = original.currentProducts || ''
 	if (formCurrentProducts !== originalCurrentProducts) {
-		changed.currentProducts = formCurrentProducts
+		changed.currentProducts = formCurrentProducts || undefined
 	}
 
 	return changed
