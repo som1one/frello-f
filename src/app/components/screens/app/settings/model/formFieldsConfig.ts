@@ -23,7 +23,7 @@ export interface FieldConfig {
 	name: string
 	label: string
 	placeholder?: string
-	type: 'number' | 'multiSelect' | 'string' | 'avatar' | 'singleSelect'
+	type: 'number' | 'multiSelect' | 'string' | 'avatar' | 'singleSelect' | 'text'
 	options?: Option[]
 	unit?: string
 	tab?: string
