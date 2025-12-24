@@ -82,11 +82,13 @@
 	}
 
 	.chatMessages {
-		padding-bottom: 0px; // Убираем padding - InputForm сам создаст нужный отступ
+		// На мобиле InputForm + быстрые кнопки перекрывают низ списка сообщений.
+		// Делаем большой нижний отступ, чтобы панель "Сохранить" была видна.
+		padding-bottom: 220px;
 	}
 
 	.mobileSpacer {
-		min-height: 20px; // Минимальный спейсер
+		min-height: 0px; // Больше не нужен из-за padding-bottom
 		width: 100%;
 		flex-shrink: 0;
 	}

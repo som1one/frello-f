@@ -78,14 +78,6 @@ export const MessageItem = ({
 			AiResponseType.REGENERATION_MEAL_PLAN,
 			AiResponseType.RECIPE
 		].includes(message.aiResponseType)
-	
-	// DEBUG: убрать после отладки
-	console.log('MessageItem debug:', { 
-		messageId: message.id, 
-		aiResponseType: message.aiResponseType, 
-		isFavorable,
-		isUser: message.isUser 
-	})
 
 	const getMessageClass = (message: Message) => {
 		return cn(styles.message, {
