@@ -81,7 +81,7 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		type: 'number',
 		maxLength: 1,
 		unit: ' ',
-		min: 3,
+		min: 4,
 		max: 6
 	},
 	{
