@@ -11,6 +11,7 @@ import {
 	AiResponseType,
 	Message,
 	handleRegenerateMessageFunc,
+	savePlanOrRecipeFunc,
 	toggleFavoriteFunc
 } from '@/feature/chat/model/chat.types'
 
@@ -24,6 +25,7 @@ interface PropTypes {
 	isSendMessageLoading: boolean
 	isRegenerating: boolean
 	toggleFavorite: toggleFavoriteFunc
+	savePlanOrRecipe: savePlanOrRecipeFunc
 	lastUserMessageId: number
 }
 
@@ -37,6 +39,7 @@ export const MessageItem = ({
 	isRegenerating,
 	isSendMessageLoading,
 	toggleFavorite,
+	savePlanOrRecipe,
 	lastUserMessageId
 }: PropTypes) => {
 	const [isLiked, setIsLiked] = useState(message.isLiked)
@@ -49,14 +52,27 @@ export const MessageItem = ({
 	const handleAddToFavorites = async () => {
 		try {
 			console.log('Save button clicked:', { chatId: activeChatId, messageId: message.id, isLiked })
+			
+			// Сначала сохраняем план/рецепт в базу данных
+			const saveResult = await savePlanOrRecipe(message.id)
+			console.log('savePlanOrRecipe result:', saveResult)
+			
+			if (saveResult.alreadySaved) {
+				toast.success('План питания или рецепт уже сохранён', {
+					duration: 3000
+				})
+			} else if (saveResult.success) {
+				toast.success('План питания или рецепт успешно сохранён', {
+					duration: 3000
+				})
+			}
+			
+			// Затем добавляем в избранное (лайк)
 			await toggleFavorite({ chatId: activeChatId, messageId: message.id })
 			console.log('toggleFavorite completed successfully')
-			toast.success('Успешно добавлено в избранное', {
-				duration: 3000
-			})
 			setIsLiked(true)
 		} catch (e) {
-			console.error('Error saving to favorites:', e)
+			console.error('Error saving:', e)
 			toast.error('Произошла ошибка, попробуйте позже', {
 				duration: 10000
 			})

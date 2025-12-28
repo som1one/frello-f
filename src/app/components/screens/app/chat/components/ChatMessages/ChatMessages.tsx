@@ -9,6 +9,7 @@ import {
 	Message,
 	SendMessageFunc,
 	handleRegenerateMessageFunc,
+	savePlanOrRecipeFunc,
 	toggleFavoriteFunc
 } from '@/feature/chat/model/chat.types'
 
@@ -22,6 +23,7 @@ interface PropTypes {
 	isSendMessageLoading: boolean
 	isRegenerating: boolean
 	toggleFavorite: toggleFavoriteFunc
+	savePlanOrRecipe: savePlanOrRecipeFunc
 	error: string | null
 	retryLastMessage: () => Promise<void>
 }
@@ -36,6 +38,7 @@ export const ChatMessages = ({
 	isSendMessageLoading,
 	isRegenerating,
 	toggleFavorite,
+	savePlanOrRecipe,
 	error,
 	retryLastMessage
 }: PropTypes) => {
@@ -80,6 +83,7 @@ export const ChatMessages = ({
 							isSendMessageLoading={isSendMessageLoading}
 							isRegenerating={isRegenerating}
 							toggleFavorite={toggleFavorite}
+							savePlanOrRecipe={savePlanOrRecipe}
 							lastUserMessageId={lastUserMessageId}
 						/>
 					))

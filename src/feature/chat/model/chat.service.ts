@@ -45,6 +45,13 @@ export const toggleFavorite = async (
 	// }
 }
 
+export const savePlanOrRecipe = async (
+	messageId: number
+): Promise<{ success: boolean; planId?: number | null; dishId?: number | null; alreadySaved?: boolean }> => {
+	const response = await axiosWithAuth.post(`/plan/save-from-message/${messageId}`)
+	return response.data
+}
+
 export const regenerateMessage = async (
 	chatId: number,
 	messageId: number

@@ -12,9 +12,10 @@ import {
 	deleteChat,
 	fetchChats,
 	renameChat,
+	savePlanOrRecipe,
 	toggleFavorite
 } from './chat.service'
-import { Chat, ChatContextType } from './chat.types'
+import { Chat, ChatContextType, savePlanOrRecipeFunc } from './chat.types'
 import { useMessages } from './useMessages'
 
 export const useChat = (): ChatContextType => {
@@ -139,6 +140,20 @@ export const useChat = (): ChatContextType => {
 		}
 	})
 
+	// Сохранение плана или рецепта
+	const savePlanOrRecipeMutation = useMutation({
+		mutationFn: (messageId: number) => savePlanOrRecipe(messageId),
+		onSuccess: () => {
+			// Обновляем сообщения после сохранения
+			if (activeChatId) {
+				queryClient.invalidateQueries({ queryKey: ['messages', activeChatId] })
+			}
+		},
+		onError: (error: Error) => {
+			logger.error('Failed to save plan or recipe:', error.message)
+		}
+	})
+
 	const renameChatMutation = useMutation({
 		mutationFn: ({
 			chatId,
@@ -190,6 +205,7 @@ export const useChat = (): ChatContextType => {
 		deleteChat: deleteChatMutation.mutateAsync,
 		deleteAllChats: deleteAllChatsMutation.mutateAsync,
 		toggleFavorite: toggleFavoriteMutation.mutateAsync,
+		savePlanOrRecipe: savePlanOrRecipeMutation.mutateAsync as savePlanOrRecipeFunc,
 		renameChat: renameChatCallback,
 		isChatListLoading,
 		sendMessage,

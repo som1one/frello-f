@@ -35,6 +35,7 @@ export const NewChat = () => {
 		isSendMessageLoading,
 		isRegenerating,
 		toggleFavorite,
+		savePlanOrRecipe,
 		isLimitModalOpen,
 		setIsLimitModalOpen,
 		isSettingsFilled,
@@ -162,6 +163,7 @@ export const NewChat = () => {
 				isSendMessageLoading={isSendMessageLoading}
 				isRegenerating={isRegenerating}
 				toggleFavorite={toggleFavorite}
+				savePlanOrRecipe={savePlanOrRecipe}
 				retryLastMessage={retryLastMessage}
 				error={error}
 			/>

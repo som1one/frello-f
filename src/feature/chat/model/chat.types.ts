@@ -57,6 +57,7 @@ export interface ChatContextType {
 	deleteChat: (chatId: number) => Promise<void>
 	deleteAllChats: () => Promise<void>
 	toggleFavorite: toggleFavoriteFunc
+	savePlanOrRecipe: savePlanOrRecipeFunc
 	renameChat: (chatId: number, newChatTitle: string) => void
 	isChatListLoading: boolean
 	sendMessage: SendMessageFunc
@@ -100,3 +101,5 @@ export type toggleFavoriteFunc = ({
 	chatId: number
 	messageId: number
 }) => Promise<void>
+
+export type savePlanOrRecipeFunc = (messageId: number) => Promise<{ success: boolean; planId?: number | null; dishId?: number | null; alreadySaved?: boolean }>
