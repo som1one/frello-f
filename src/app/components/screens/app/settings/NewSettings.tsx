@@ -214,29 +214,29 @@ export default function NewSettings() {
 
 					<div className={styles.multiSelectGrid}>
 						{multiSelectFields.map(field => {
-							// Показываем поле currentProducts после favoriteFoods
-							if (field.name === 'favoriteFoods') {
-								return (
-									<>
-										<Field
-											key={field.name}
-											name={field.name}
-											label={field.label}
-											options={field.options || []}
-											placeholder={field.placeholder || ''}
-											type={field.type as 'singleSelect' | 'multiSelect'}
-										/>
-										<TextFieldWithModal
-											key="currentProducts"
-											name="currentProducts"
-											label="Какие продукты у вас сейчас есть"
-											placeholder="Введите, какие продукты у вас сейчас есть"
-											modalTitle="Введите, какие продукты у вас сейчас есть"
-											modalPlaceholder="Например: курица, рис, помидоры, оливковое масло..."
-										/>
-									</>
-								)
-							}
+							// Поле currentProducts убрано - не используется
+							// if (field.name === 'favoriteFoods') {
+							// 	return (
+							// 		<>
+							// 			<Field
+							// 				key={field.name}
+							// 				name={field.name}
+							// 				label={field.label}
+							// 				options={field.options || []}
+							// 				placeholder={field.placeholder || ''}
+							// 				type={field.type as 'singleSelect' | 'multiSelect'}
+							// 			/>
+							// 			<TextFieldWithModal
+							// 				key="currentProducts"
+							// 				name="currentProducts"
+							// 				label="Какие продукты у вас сейчас есть"
+							// 				placeholder="Введите, какие продукты у вас сейчас есть"
+							// 				modalTitle="Введите, какие продукты у вас сейчас есть"
+							// 				modalPlaceholder="Например: курица, рис, помидоры, оливковое масло..."
+							// 			/>
+							// 		</>
+							// 	)
+							// }
 
 							let label = field.label
 							if (field.name === 'nutritionPreferences') {

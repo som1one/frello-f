@@ -98,12 +98,13 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		type: 'multiSelect',
 		options: favoriteFoodsOptions
 	},
-	{
-		name: 'currentProducts',
-		label: 'Какие продукты у вас сейчас есть',
-		placeholder: 'Введите, какие продукты у вас сейчас есть',
-		type: 'text'
-	},
+	// Поле currentProducts убрано - не используется
+	// {
+	// 	name: 'currentProducts',
+	// 	label: 'Какие продукты у вас сейчас есть',
+	// 	placeholder: 'Введите, какие продукты у вас сейчас есть',
+	// 	type: 'text'
+	// },
 	{
 		name: 'cookingPreferences',
 		label: 'Предпочтения по приготовлению',
