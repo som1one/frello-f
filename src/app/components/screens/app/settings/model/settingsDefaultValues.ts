@@ -31,6 +31,7 @@ export const settingsDefaultValues: SettingsForm = {
 		values: [],
 		customInputs: {}
 	},
-	activityLevel: { values: [], customInputs: {} },
-	currentProducts: ''
+	activityLevel: { values: [], customInputs: {} }
+	// currentProducts убрано - не используется
+	// currentProducts: ''
 }

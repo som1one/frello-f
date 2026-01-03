@@ -22,7 +22,7 @@ import { Btn, ModalWithTransition } from '@/shared/ui'
 import { ThemeToggle } from '@/app/components/ThemeToggle/ThemeToggle'
 import { FlexibleDaysInfoModal } from './components/FlexibleDaysInfoModal/FlexibleDaysInfoModal'
 import { SettingsSuccessModal } from './components/SettingsSuccessModal/SettingsSuccessModal'
-import { TextFieldWithModal } from './components/TextFieldWithModal/TextFieldWithModal'
+// import { TextFieldWithModal } from './components/TextFieldWithModal/TextFieldWithModal' - не используется, поле currentProducts убрано
 
 
 export default function NewSettings() {

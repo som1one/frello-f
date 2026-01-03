@@ -26,8 +26,14 @@ export const useSettingsForm = ({ onSuccess }: { onSuccess?: () => void } = {}) 
 	const {
 		handleSubmit,
 		reset,
-		formState: { isDirty }
+		formState: { isDirty },
+		unregister
 	} = methods
+	
+	// Убираем поле currentProducts из формы при инициализации
+	useEffect(() => {
+		unregister('currentProducts')
+	}, [unregister])
 	const [isValidationModalOpen, setIsValidationModalOpen] = useState(false)
 	const [missingFields, setMissingFields] = useState<string[]>([])
 

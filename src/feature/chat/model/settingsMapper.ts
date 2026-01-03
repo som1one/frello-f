@@ -57,8 +57,8 @@ export const mapSettingsFormToUserSettings = (
 		birthdate: form.birthdate,
 		height: form.height ?? undefined,
 		weight: form.weight ?? undefined,
-		mealFrequency: form.mealFrequency ?? undefined,
-		currentProducts: form.currentProducts ?? undefined
+		mealFrequency: form.mealFrequency ?? undefined
+		// currentProducts убрано - не используется
 	}
 
 	// Маппинг MultiSelectFields с customInputs
@@ -104,8 +104,9 @@ export const mapUserSettingsToSettingsForm = (
 		flexibleDayFrequency: defaultMultiSelect,
 		flexibleDayType: defaultMultiSelect,
 		flexibleDays: defaultMultiSelect,
-		hasOven: defaultMultiSelect,
-		currentProducts: settings?.currentProducts || ''
+		hasOven: defaultMultiSelect
+		// currentProducts убрано - не используется
+		// currentProducts: settings?.currentProducts || ''
 	}
 
 	// Заполнение MultiSelectFields с customInputs
@@ -179,12 +180,12 @@ export const getChangedFields = (
 		}
 	})
 
-	// Проверяем currentProducts
-	const formCurrentProducts = form.currentProducts ?? ''
-	const originalCurrentProducts = original.currentProducts || ''
-	if (formCurrentProducts !== originalCurrentProducts) {
-		changed.currentProducts = formCurrentProducts || undefined
-	}
+	// currentProducts убрано - не используется
+	// const formCurrentProducts = form.currentProducts ?? ''
+	// const originalCurrentProducts = original.currentProducts || ''
+	// if (formCurrentProducts !== originalCurrentProducts) {
+	// 	changed.currentProducts = formCurrentProducts || undefined
+	// }
 
 	return changed
 }
