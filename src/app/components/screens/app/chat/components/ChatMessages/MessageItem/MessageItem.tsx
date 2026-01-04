@@ -87,7 +87,6 @@ export const MessageItem = ({
 		})
 	}
 
-	// Кнопка "Сохранить" показывается для всех сообщений от AI
 	const isFavorable = !message.isUser
 
 	const getMessageClass = (message: Message) => {
