@@ -51,16 +51,16 @@ export default function NewSettings() {
 
 
 
-	const multiSelectFields = formFieldsConfig.filter(
+		const multiSelectFields = formFieldsConfig.filter(
 		(field): field is FieldConfig =>
 			'type' in field &&
 			field.type === 'multiSelect' &&
 			field.name !== 'flexibleDayType' &&
 			field.name !== 'flexibleDayType' &&
 			field.name !== 'flexibleDays' &&
-			field.name !== 'nutritionGoal' && // Exclude nutritionGoal - it's rendered separately
-			field.name !== 'hasOven' // Exclude hasOven - it's rendered next to mealFrequency
-	)
+			field.name !== 'nutritionGoal' // Exclude nutritionGoal - it's rendered separately
+			// hasOven убрано - не используется
+		)
 	const numberFields = formFieldsConfig.filter(
 		(field): field is FieldConfig =>
 			'type' in field &&
@@ -73,11 +73,12 @@ export default function NewSettings() {
 			field.type === 'number' &&
 			field.name === 'mealFrequency'
 	)
-	const hasOvenField = formFieldsConfig.find(
-		(field): field is FieldConfig =>
-			'type' in field &&
-			field.name === 'hasOven'
-	)
+	// hasOven убрано - не используется
+	// const hasOvenField = formFieldsConfig.find(
+	// 	(field): field is FieldConfig =>
+	// 		'type' in field &&
+	// 		field.name === 'hasOven'
+	// )
 	const activityLevelField = formFieldsConfig.find(
 		(field): field is FieldConfig =>
 			'type' in field &&
@@ -172,17 +173,7 @@ export default function NewSettings() {
 									/>
 								)}
 						</div>
-						<div className='w-full'>
-							{hasOvenField && (
-								<Field
-									name='hasOven'
-									label={hasOvenField.label}
-									options={hasOvenField.options || []}
-									placeholder={hasOvenField.placeholder || ''}
-									type='singleSelect'
-								/>
-							)}
-						</div>
+						{/* hasOven убрано - не используется */}
 					</div>
 
 					<div

@@ -22,7 +22,8 @@ export interface UserSettings {
 	cookingExperience?: string[]
 	nutritionGoal?: string[]
 	activityLevel?: string[]
-	hasOven?: string[]
+	// hasOven убрано - не используется
+	// hasOven?: string[]
 	flexibleDays?: string[]
 	flexibleDayFrequency?: string[]
 	flexibleDayType?: string[]

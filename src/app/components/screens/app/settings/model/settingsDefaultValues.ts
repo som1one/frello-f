@@ -27,10 +27,11 @@ export const settingsDefaultValues: SettingsForm = {
 		values: [],
 		customInputs: {}
 	},
-	hasOven: {
-		values: [],
-		customInputs: {}
-	},
+	// hasOven убрано - не используется
+	// hasOven: {
+	// 	values: [],
+	// 	customInputs: {}
+	// },
 	activityLevel: { values: [], customInputs: {} }
 	// currentProducts убрано - не используется
 	// currentProducts: ''

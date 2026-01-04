@@ -23,7 +23,7 @@ type MultiSelectFieldKeys = keyof Pick<
 	| 'flexibleDays'
 	| 'flexibleDayFrequency'
 	| 'flexibleDayType'
-	| 'hasOven'
+	// hasOven убрано - не используется
 >
 
 const multiSelectFields: MultiSelectFieldKeys[] = [
@@ -42,8 +42,8 @@ const multiSelectFields: MultiSelectFieldKeys[] = [
 	'activityLevel',
 	'flexibleDays',
 	'flexibleDayFrequency',
-	'flexibleDayType',
-	'hasOven'
+	'flexibleDayType'
+	// hasOven убрано - не используется
 ] as const
 
 
@@ -103,8 +103,9 @@ export const mapUserSettingsToSettingsForm = (
 		activityLevel: defaultMultiSelect,
 		flexibleDayFrequency: defaultMultiSelect,
 		flexibleDayType: defaultMultiSelect,
-		flexibleDays: defaultMultiSelect,
-		hasOven: defaultMultiSelect
+		flexibleDays: defaultMultiSelect
+		// hasOven убрано - не используется
+		// hasOven: defaultMultiSelect
 		// currentProducts убрано - не используется
 		// currentProducts: settings?.currentProducts || ''
 	}

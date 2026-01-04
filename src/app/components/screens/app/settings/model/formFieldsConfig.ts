@@ -14,8 +14,8 @@ import {
 	nutritionGoalOptions,
 	nutritionPreferencesOptions,
 	personalRestrictionsOptions,
-	seasonalPreferencesOptions,
-	hasOvenOptions
+	seasonalPreferencesOptions
+	// hasOvenOptions убрано - не используется
 } from './options'
 import { Option } from '@/app/components/ui/MultiSelectDropdown/MultiSelectDropdown'
 
@@ -84,13 +84,14 @@ export const formFieldsConfig: (FieldConfig | TabConfig)[] = [
 		min: 3,
 		max: 6
 	},
-	{
-		name: 'hasOven',
-		label: 'Есть ли у вас доступ к духовке?',
-		placeholder: 'Выберите вариант',
-		type: 'singleSelect',
-		options: hasOvenOptions
-	},
+	// hasOven убрано - не используется
+	// {
+	// 	name: 'hasOven',
+	// 	label: 'Есть ли у вас доступ к духовке?',
+	// 	placeholder: 'Выберите вариант',
+	// 	type: 'singleSelect',
+	// 	options: hasOvenOptions
+	// },
 	{
 		name: 'favoriteFoods',
 		label: 'Любимые продукты, блюда и напитки',
