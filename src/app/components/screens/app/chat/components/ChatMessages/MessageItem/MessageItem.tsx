@@ -87,21 +87,8 @@ export const MessageItem = ({
 		})
 	}
 
-	const isFavorable =
-		!message.isUser &&
-		[
-			AiResponseType.MEAL_PLAN,
-			AiResponseType.REGENERATION_MEAL_PLAN,
-			AiResponseType.RECIPE
-		].includes(message.aiResponseType)
-	
-	// DEBUG: убрать после отладки
-	console.log('MessageItem debug:', { 
-		messageId: message.id, 
-		aiResponseType: message.aiResponseType, 
-		isFavorable,
-		isUser: message.isUser 
-	})
+	// Кнопка "Сохранить" показывается для всех сообщений от AI
+	const isFavorable = !message.isUser
 
 	const getMessageClass = (message: Message) => {
 		return cn(styles.message, {
