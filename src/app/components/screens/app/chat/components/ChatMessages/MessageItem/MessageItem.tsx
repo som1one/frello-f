@@ -43,6 +43,7 @@ export const MessageItem = ({
 	lastUserMessageId
 }: PropTypes) => {
 	const [isLiked, setIsLiked] = useState(message.isLiked)
+	const [isSaving, setIsSaving] = useState(false)
 
 	// Sync local state with message prop
 	useEffect(() => {
@@ -50,6 +51,12 @@ export const MessageItem = ({
 	}, [message.isLiked])
 
 	const handleAddToFavorites = async () => {
+		// Предотвращаем множественные вызовы
+		if (isSaving || isLiked) {
+			return
+		}
+
+		setIsSaving(true)
 		try {
 			console.log('Save button clicked:', { chatId: activeChatId, messageId: message.id, isLiked })
 			
@@ -77,6 +84,8 @@ export const MessageItem = ({
 				duration: 10000
 			})
 			setIsLiked(false)
+		} finally {
+			setIsSaving(false)
 		}
 	}
 
@@ -159,7 +168,7 @@ export const MessageItem = ({
 								styles.firstButton
 							)}
 							onClick={handleAddToFavorites}
-							disabled={isLiked}
+							disabled={isLiked || isSaving}
 						>
 							<Image
 								src={
