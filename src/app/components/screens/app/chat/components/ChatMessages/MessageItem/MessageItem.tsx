@@ -44,49 +44,55 @@ export const MessageItem = ({
 }: PropTypes) => {
 	const [isLiked, setIsLiked] = useState(message.isLiked)
 	const [isSaving, setIsSaving] = useState(false)
+	const [isSaved, setIsSaved] = useState(Boolean(message.planId || message.dishId))
 
 	// Sync local state with message prop
 	useEffect(() => {
 		setIsLiked(message.isLiked)
-	}, [message.isLiked])
+		setIsSaved(Boolean(message.planId || message.dishId))
+	}, [message.isLiked, message.planId, message.dishId])
 
 	const handleAddToFavorites = async () => {
-		console.log('handleAddToFavorites called:', { isSaving, isLiked, messageId: message.id })
-		
-		// Предотвращаем множественные вызовы
-		if (isSaving || isLiked) {
-			console.log('Button blocked:', { isSaving, isLiked })
+		// Предотвращаем множественные вызовы и повторное сохранение
+		if (isSaving || isSaved) {
 			return
 		}
 
 		setIsSaving(true)
 		try {
-			console.log('Save button clicked:', { chatId: activeChatId, messageId: message.id, isLiked })
-			
 			// Сначала сохраняем план/рецепт в базу данных
 			const saveResult = await savePlanOrRecipe(message.id)
-			console.log('savePlanOrRecipe result:', saveResult)
 			
 			if (saveResult.alreadySaved) {
 				toast.success('План питания или рецепт уже сохранён', {
 					duration: 3000
 				})
+				setIsSaved(true)
 			} else if (saveResult.success) {
 				toast.success('План питания или рецепт успешно сохранён', {
 					duration: 3000
 				})
+				setIsSaved(true)
 			}
-			
-			// Затем добавляем в избранное (лайк)
-			await toggleFavorite({ chatId: activeChatId, messageId: message.id })
-			console.log('toggleFavorite completed successfully')
-			setIsLiked(true)
+
+			// Затем добавляем в избранное (лайк) — не блокируем сохранение, если лайк упадёт
+			if (!isLiked) {
+				try {
+					await toggleFavorite({ chatId: activeChatId, messageId: message.id })
+					setIsLiked(true)
+				} catch (e) {
+					// Сохранение уже произошло — показываем отдельное предупреждение
+					console.error('Error toggling favorite:', e)
+					toast.error('Сохранено, но не удалось добавить в избранное', {
+						duration: 8000
+					})
+				}
+			}
 		} catch (e) {
 			console.error('Error saving:', e)
 			toast.error('Произошла ошибка, попробуйте позже', {
 				duration: 10000
 			})
-			setIsLiked(false)
 		} finally {
 			setIsSaving(false)
 		}
@@ -100,20 +106,6 @@ export const MessageItem = ({
 	}
 
 	const isFavorable = !message.isUser
-
-	// Отладочная информация
-	useEffect(() => {
-		if (isFavorable) {
-			console.log('MessageItem debug:', {
-				messageId: message.id,
-				isUser: message.isUser,
-				isFavorable,
-				isLiked,
-				messageIsLiked: message.isLiked,
-				isSaving
-			})
-		}
-	}, [message.id, isFavorable, isLiked, message.isLiked, isSaving])
 
 	const getMessageClass = (message: Message) => {
 		return cn(styles.message, {
@@ -184,14 +176,9 @@ export const MessageItem = ({
 								styles.leftMessagePanelButton,
 								styles.firstButton
 							)}
-							onClick={(e) => {
-								e.preventDefault()
-								e.stopPropagation()
-								console.log('Button onClick triggered:', { isLiked, isSaving, messageId: message.id })
-								handleAddToFavorites()
-							}}
-							disabled={isLiked || isSaving}
-							type="button"
+							onClick={handleAddToFavorites}
+							disabled={isSaved || isSaving}
+							type='button'
 						>
 							<Image
 								src={
@@ -204,7 +191,7 @@ export const MessageItem = ({
 								height={28}
 							/>
 							<span className={styles.buttonText}>
-								{isLiked ? 'Сохранено' : 'Сохранить'}
+								{isSaved ? 'Сохранено' : 'Сохранить'}
 							</span>
 						</button>
 					</div>
