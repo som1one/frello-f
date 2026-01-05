@@ -51,8 +51,11 @@ export const MessageItem = ({
 	}, [message.isLiked])
 
 	const handleAddToFavorites = async () => {
+		console.log('handleAddToFavorites called:', { isSaving, isLiked, messageId: message.id })
+		
 		// Предотвращаем множественные вызовы
 		if (isSaving || isLiked) {
+			console.log('Button blocked:', { isSaving, isLiked })
 			return
 		}
 
@@ -97,6 +100,20 @@ export const MessageItem = ({
 	}
 
 	const isFavorable = !message.isUser
+
+	// Отладочная информация
+	useEffect(() => {
+		if (isFavorable) {
+			console.log('MessageItem debug:', {
+				messageId: message.id,
+				isUser: message.isUser,
+				isFavorable,
+				isLiked,
+				messageIsLiked: message.isLiked,
+				isSaving
+			})
+		}
+	}, [message.id, isFavorable, isLiked, message.isLiked, isSaving])
 
 	const getMessageClass = (message: Message) => {
 		return cn(styles.message, {
@@ -167,8 +184,14 @@ export const MessageItem = ({
 								styles.leftMessagePanelButton,
 								styles.firstButton
 							)}
-							onClick={handleAddToFavorites}
+							onClick={(e) => {
+								e.preventDefault()
+								e.stopPropagation()
+								console.log('Button onClick triggered:', { isLiked, isSaving, messageId: message.id })
+								handleAddToFavorites()
+							}}
 							disabled={isLiked || isSaving}
+							type="button"
 						>
 							<Image
 								src={
